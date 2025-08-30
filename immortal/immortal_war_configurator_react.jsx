@@ -64,9 +64,11 @@ const characterAvatar = (characters, name) => (characters || []).find((x) => x.n
    ========================= */
 function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOptions }) {
   const { map, mapImage, timeOfDay, character, fireflies } = selection;
-  const handleCharacterChange = (e) => onChange(idx, { character: e.target.value });
   const avatarUrl = characterAvatar(characters, character);
   const PREVIEW_H = "h-[120px]";
+  // Use mapImage from selection, fallback to lookup from maps
+  const effectiveMapImage = mapImage || (maps && findMapByName(maps, map)?.imageUrl) || "";
+
   return (
     <div className="rounded-2xl border border-gray-700/70 bg-black/40 backdrop-blur-sm p-4 shadow-sm">
       <div className="flex items-center justify-between gap-3">
@@ -78,24 +80,34 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOpt
       {fireflies && (
         <div className="mt-1 text-xs text-green-400 font-semibold">Fireflies!</div>
       )}
-      {/* Only character selection */}
-      <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-300">Character</label>
-          <select
-            className={classNames(
-              "w-full rounded-lg border px-3 py-2 text-sm bg-gray-900 text-gray-200",
-              errors?.character ? "border-red-500" : "border-gray-700"
-            )}
-            value={character || ""}
-            onChange={handleCharacterChange}
-          >
-            <option value="">Select a character…</option>
-            {characters.map((c) => (
-              <option key={c.name} value={c.name}>{c.name}</option>
-            ))}
-          </select>
-          {errors?.character && <p className="mt-1 text-xs text-red-400">{errors.character}</p>}
+      <div className="mt-5 grid grid-cols-[1fr_auto] items-center gap-4">
+        {/* Map preview */}
+        <div className={`relative w-full ${PREVIEW_H} overflow-hidden rounded-2xl border border-gray-700 shadow-inner`}>
+          {effectiveMapImage ? (
+            <img
+              src={effectiveMapImage}
+              alt={map || "Map"}
+              className="w-full h-full object-cover"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              onError={e => { e.currentTarget.src = "https://via.placeholder.com/960x540?text=Map+Preview"; }}
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-800/70 flex items-center justify-center text-xs text-gray-400">
+              No image
+            </div>
+          )}
+          {/* Chips */}
+          <div className="absolute top-2 left-2">
+            <span className="inline-flex items-center rounded-full bg-black/65 backdrop-blur px-2 py-0.5 text-[11px] text-white">
+              {map || "—"}
+            </span>
+          </div>
+          <div className="absolute bottom-2 left-2">
+            <span className="inline-flex items-center rounded-full bg-black/65 backdrop-blur px-2 py-0.5 text-[11px] text-white">
+              {timeOfDay || "—"}
+            </span>
+          </div>
         </div>
         {/* Character tile (same height as map) */}
         <div className="flex flex-col items-center">
@@ -107,13 +119,33 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOpt
                 className="w-full h-full object-cover"
                 loading="lazy"
                 referrerPolicy="no-referrer"
-                onError={(e) => { e.currentTarget.src = "https://via.placeholder.com/300x300?text=Avatar"; }}
+                onError={e => { e.currentTarget.src = "https://via.placeholder.com/300x300?text=Avatar"; }}
               />
             ) : (
               <div className="w-full h-full bg-gray-800" />
             )}
           </div>
           <div className="mt-1 text-[11px] text-gray-200 max-w-[140px] truncate">{character || ""}</div>
+        </div>
+      </div>
+      {/* Character select below */}
+      <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium mb-1 text-gray-300">Character</label>
+          <select
+            className={classNames(
+              "w-full rounded-lg border px-3 py-2 text-sm bg-gray-900 text-gray-200",
+              errors?.character ? "border-red-500" : "border-gray-700"
+            )}
+            value={character || ""}
+            onChange={e => onChange(idx, { character: e.target.value })}
+          >
+            <option value="">Select a character…</option>
+            {characters.map((c) => (
+              <option key={c.name} value={c.name}>{c.name}</option>
+            ))}
+          </select>
+          {errors?.character && <p className="mt-1 text-xs text-red-400">{errors.character}</p>}
         </div>
       </div>
     </div>
