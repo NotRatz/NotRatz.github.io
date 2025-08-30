@@ -52,8 +52,8 @@ const ROUND_ROTATION = [
 /* =========================
    Helpers
    ========================= */
-const normalizeCharacters = (arr) =>
-  (arr || []).map((c) => (typeof c === "string" ? { name: c } : { name: c?.name || "", avatarUrl: c?.avatarUrl || "" }));
+// const normalizeCharacters = (arr) =>
+//   (arr || []).map((c) => (typeof c === "string" ? { name: c } : { name: c?.name || "", avatarUrl: c?.avatarUrl || "" }));
 
 const findMapByName = (maps, name) => (maps || []).find((m) => m.name === name);
 const classNames = (...xs) => xs.filter(Boolean).join(" ");
@@ -62,10 +62,9 @@ const characterAvatar = (characters, name) => (characters || []).find((x) => x.n
 /* =========================
    Round Card
    ========================= */
-function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOptions }) {
+function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
   const { map, mapImage, timeOfDay, character, fireflies } = selection;
   const avatarUrl = characterAvatar(characters, character);
-  const PREVIEW_H = "h-[120px]";
   // Use mapImage from selection, fallback to lookup from maps
   const effectiveMapImage = mapImage || (maps && findMapByName(maps, map)?.imageUrl) || "";
 
@@ -158,11 +157,8 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOpt
 /* =========================
    Main Component (same logic)
    ========================= */
-function ImmortalWarConfigurator({
-  maps = DEFAULT_MAPS,
-  characters = DEFAULT_CHARACTERS
-}) {
-  const characterOptions = normalizeCharacters(characters);
+function ImmortalWarConfigurator() {
+  const characterOptions = DEFAULT_CHARACTERS;
   // Hardcoded initial rounds
   const initial = useMemo(
     () => ROUND_ROTATION.map((r, i) => ({
@@ -247,13 +243,10 @@ function ImmortalWarConfigurator({
   };
 
   // No time options needed
-  const getTimeOptionsFor = () => [];
-
-  // Summary just consumes selections
-  const summaryData = selections;
-
+  // No time options needed
+  // (removed unused getTimeOptionsFor and summaryData)
   return (
-  <div className="max-w-6xl mx-auto p-4 md:p-8 text-gray-200">
+    <div className="max-w-6xl mx-auto p-4 md:p-8 text-gray-200">
       <header className="mb-4">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-100">Immortal War - 6 Round Configurator</h1>
         <p className="text-sm text-gray-300 mt-1">
@@ -272,9 +265,9 @@ function ImmortalWarConfigurator({
       {!showSummary && (
         <form onSubmit={handleReview} className="space-y-4">
           <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-2 w-full">
               {selections.map((sel, idx) => (
-                <div key={sel.round} className="flex h-full min-h-[370px] max-h-[370px] max-w-md w-full mx-auto">
+                <div key={sel.round} className="flex h-full min-h-[180px] max-h-[180px] max-w-xl w-full mx-auto">
                   <RoundCard
                     idx={idx}
                     selection={sel}
@@ -301,95 +294,60 @@ function ImmortalWarConfigurator({
 
             <button
               type="submit"
-              disabled={!formIsValid}
               className={classNames(
-                "px-4 py-2 text-sm rounded-lg",
-                formIsValid
-                  ? "bg-yellow-500 text-gray-900 hover:bg-yellow-400"
-                  : "bg-gray-700 text-gray-400 cursor-not-allowed"
+                "px-4 py-2 text-sm rounded-lg bg-yellow-500 text-gray-900 hover:bg-yellow-400",
+                !formIsValid && "opacity-60 cursor-not-allowed"
               )}
-              aria-disabled={!formIsValid}
+              disabled={!formIsValid}
             >
-              Review Summary
+              Review & Confirm
             </button>
           </div>
         </form>
       )}
 
-      {/* Summary Panel */}
+      {/* Summary panel */}
       {showSummary && (
-        <section className="mt-2">
-          <div className="summary-panel-export rounded-2xl border border-green-700 bg-green-900/25 p-4">
-            <h2 className="text-xl font-semibold text-green-300">
-              Summary - All Selections Valid ✅
-            </h2>
-            <p className="text-sm text-green-200 mb-3">
-              Review your six rounds below. Confirm or go back to edit.
-            </p>
-
-            <ol className="space-y-3">
-              {summaryData.map((sel) => (
-                <li key={sel.round} className="flex items-center gap-3 p-3 rounded-xl bg-black/30 border border-gray-700">
-                  <div className="relative w-28 h-16 overflow-hidden rounded-lg border border-gray-700">
-                    {sel.mapImage ? (
-                      <img src={sel.mapImage} alt={sel.map} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full bg-gray-800 flex items-center justify-center text-xs text-gray-400">
-                        No image
-                      </div>
-                    )}
-                    <div className="absolute bottom-1 left-1 right-1">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-black/60 text-white px-2 py-0.5 text-[10px]">
-                        {sel.map} • {sel.timeOfDay}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm text-gray-400">Game {sel.round}</div>
-                    <div className="font-medium text-gray-100">{sel.map} - {sel.timeOfDay}</div>
-                    {sel.fireflies && <div className="text-xs text-green-400 font-semibold">Fireflies!</div>}
-                    <div className="text-sm text-gray-200">Character: {sel.character}</div>
-                  </div>
-                </li>
-              ))}
-            </ol>
-
-            <div className="mt-4 flex items-center justify-between">
-              <button
-                type="button"
-                onClick={() => setShowSummary(false)}
-                className="px-4 py-2 text-sm rounded-lg border border-gray-700 bg-gray-800 hover:bg-gray-700"
-              >
-                Edit Selections
-              </button>
-
-              <button
-                type="button"
-                className="px-4 py-2 text-sm rounded-lg bg-yellow-500 text-gray-900 hover:bg-yellow-400"
-                onClick={async () => {
-                  // Export summary panel as PNG
-                  const panel = document.querySelector('.summary-panel-export');
-                  if (!panel) return alert('Summary panel not found.');
-                  // Load html2canvas if not present
-                  if (!window.html2canvas) {
-                    const script = document.createElement('script');
-                    script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
-                    document.body.appendChild(script);
-                    await new Promise(res => { script.onload = res; });
-                  }
-                  window.html2canvas(panel, { backgroundColor: '#1a1a1a', useCORS: true }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = 'immortal-config-summary.png';
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                  });
-                }}
-              >
-                Confirm & Export PNG
-              </button>
-            </div>
+        <div className="summary-panel-export rounded-2xl border border-gray-700/70 bg-black/40 backdrop-blur-sm p-4 shadow-sm mt-6">
+          <h2 className="text-xl font-bold mb-2 text-gray-100">Summary</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {selections.map((sel, idx) => (
+              <RoundCard
+                key={sel.round}
+                idx={idx}
+                selection={sel}
+                characters={characterOptions}
+                errors={{}}
+              />
+            ))}
           </div>
-        </section>
+          <div className="flex justify-end mt-4">
+            <button
+              type="button"
+              className="px-4 py-2 text-sm rounded-lg bg-yellow-500 text-gray-900 hover:bg-yellow-400"
+              onClick={async () => {
+                // Export summary panel as PNG
+                const panel = document.querySelector('.summary-panel-export');
+                if (!panel) return alert('Summary panel not found.');
+                // Load html2canvas if not present
+                if (!window.html2canvas) {
+                  const script = document.createElement('script');
+                  script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+                  document.body.appendChild(script);
+                  await new Promise(res => { script.onload = res; });
+                }
+                window.html2canvas(panel, { backgroundColor: '#1a1a1a', useCORS: true }).then(canvas => {
+                  const link = document.createElement('a');
+                  link.download = 'immortal-config-summary.png';
+                  link.href = canvas.toDataURL('image/png');
+                  link.click();
+                });
+              }}
+            >
+              Confirm & Export PNG
+            </button>
+          </div>
+        </div>
       )}
 
       {/* Dev notes */}
