@@ -77,8 +77,10 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOpt
           {map} - {timeOfDay}
         </span>
       </div>
-      {fireflies && (
+      {fireflies ? (
         <div className="mt-1 text-xs text-green-400 font-semibold">Fireflies!</div>
+      ) : (
+        <div className="mt-1" style={{height:'18px'}}>&nbsp;</div>
       )}
   <div className="mt-5 grid grid-cols-[1fr_auto] gap-4">
         {/* Map preview */}
@@ -267,11 +269,10 @@ function ImmortalWarConfigurator({
       {!showSummary && (
         <form onSubmit={handleReview} className="space-y-4">
           <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 w-full">
               {selections.map((sel, idx) => (
-                <div className="flex h-full min-h-[370px] max-h-[370px] max-w-md w-full mx-auto">
+                <div key={sel.round} className="flex h-full min-h-[370px] max-h-[370px] max-w-md w-full mx-auto">
                   <RoundCard
-                    key={idx}
                     idx={idx}
                     selection={sel}
                     characters={characterOptions}
