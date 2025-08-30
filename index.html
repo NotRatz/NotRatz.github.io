@@ -33,6 +33,7 @@
           Team Strive is a community of Naraka: Bladepoint content creators and players.
           We strive to share epic gameplay, tips, and community events,
           fostering a vibrant and positive community for all Naraka enthusiasts.
+          Just don't be cuck
         </p>
         <!-- Buttons below About section -->
         <div class="flex flex-row flex-wrap justify-center md:justify-start gap-4 mb-8">
@@ -93,6 +94,12 @@
       window.location.href = href;
       return false;
     }
+
+    // Hide loading overlay if page is loaded from browser history (back/forward)
+    window.addEventListener('pageshow', function(event) {
+      const o = document.getElementById('loadingOverlay');
+      if (o) o.style.display = 'none';
+    });
   </script>
 </body>
 </html>

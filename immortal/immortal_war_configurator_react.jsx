@@ -268,16 +268,18 @@ function ImmortalWarConfigurator({
         <form onSubmit={handleReview} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {selections.map((sel, idx) => (
-              <RoundCard
-                key={idx}
-                idx={idx}
-                selection={sel}
-                characters={characterOptions}
-                onChange={setField}
-                errors={{
-                  character: touched[`${idx}-character`] ? perRoundErrors[idx].character : undefined,
-                }}
-              />
+              <div className="flex h-full">
+                <RoundCard
+                  key={idx}
+                  idx={idx}
+                  selection={sel}
+                  characters={characterOptions}
+                  onChange={setField}
+                  errors={{
+                    character: touched[`${idx}-character`] ? perRoundErrors[idx].character : undefined,
+                  }}
+                />
+              </div>
             ))}
           </div>
 
@@ -311,7 +313,7 @@ function ImmortalWarConfigurator({
       {/* Summary Panel */}
       {showSummary && (
         <section className="mt-2">
-          <div className="rounded-2xl border border-green-700 bg-green-900/25 p-4">
+          <div className="summary-panel-export rounded-2xl border border-green-700 bg-green-900/25 p-4">
             <h2 className="text-xl font-semibold text-green-300">
               Summary – All Selections Valid ✅
             </h2>
@@ -358,9 +360,26 @@ function ImmortalWarConfigurator({
               <button
                 type="button"
                 className="px-4 py-2 text-sm rounded-lg bg-yellow-500 text-gray-900 hover:bg-yellow-400"
-                onClick={() => alert("Selections confirmed. (Integrate with your submit flow.)")}
+                onClick={async () => {
+                  // Export summary panel as PNG
+                  const panel = document.querySelector('.summary-panel-export');
+                  if (!panel) return alert('Summary panel not found.');
+                  // Load html2canvas if not present
+                  if (!window.html2canvas) {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+                    document.body.appendChild(script);
+                    await new Promise(res => { script.onload = res; });
+                  }
+                  window.html2canvas(panel, { backgroundColor: '#1a1a1a' }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'immortal-config-summary.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                  });
+                }}
               >
-                Confirm
+                Confirm & Export PNG
               </button>
             </div>
           </div>
