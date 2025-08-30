@@ -125,8 +125,7 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOpt
    ========================= */
 function ImmortalWarConfigurator({
   maps = DEFAULT_MAPS,
-  characters = DEFAULT_CHARACTERS,
-  timeOptionsByMap = TIME_OPTIONS_BY_MAP
+  characters = DEFAULT_CHARACTERS
 }) {
   const characterOptions = normalizeCharacters(characters);
   // Hardcoded initial rounds
