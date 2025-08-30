@@ -130,9 +130,9 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
           <select
             className={classNames(
               "w-full rounded-lg border px-3 py-2 text-sm bg-gray-900 text-gray-200",
-              { style: { paddingBottom: '2px', paddingTop: '2px' } },
               errors?.character ? "border-red-500" : "border-gray-700"
             )}
+            style={{ paddingTop: '2px', paddingBottom: '2px' }}
             value={character || ""}
             onChange={e => onChange(idx, { character: e.target.value })}
           >
