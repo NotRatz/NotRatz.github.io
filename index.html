@@ -103,11 +103,13 @@
       return false;
     }
 
-    // Hide loading overlay if page is loaded from browser history (back/forward)
-    window.addEventListener('pageshow', function(event) {
+    // Hide loading overlay on page load and when loaded from browser history (back/forward)
+    function hideLoadingOverlay() {
       const o = document.getElementById('loadingOverlay');
       if (o) o.style.display = 'none';
-    });
+    }
+    window.addEventListener('pageshow', hideLoadingOverlay);
+    window.addEventListener('DOMContentLoaded', hideLoadingOverlay);
   </script>
 </body>
 </html>

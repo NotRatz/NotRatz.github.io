@@ -266,9 +266,9 @@ function ImmortalWarConfigurator({
       {/* Rounds form */}
       {!showSummary && (
         <form onSubmit={handleReview} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {selections.map((sel, idx) => (
-              <div className="flex h-full">
+              <div className="flex h-full min-h-[370px]">
                 <RoundCard
                   key={idx}
                   idx={idx}
@@ -371,7 +371,7 @@ function ImmortalWarConfigurator({
                     document.body.appendChild(script);
                     await new Promise(res => { script.onload = res; });
                   }
-                  window.html2canvas(panel, { backgroundColor: '#1a1a1a' }).then(canvas => {
+                  window.html2canvas(panel, { backgroundColor: '#1a1a1a', useCORS: true }).then(canvas => {
                     const link = document.createElement('a');
                     link.download = 'immortal-config-summary.png';
                     link.href = canvas.toDataURL('image/png');
