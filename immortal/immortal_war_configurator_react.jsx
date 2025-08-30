@@ -70,66 +70,69 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOpt
   const effectiveMapImage = mapImage || (maps && findMapByName(maps, map)?.imageUrl) || "";
 
   return (
-    <div className="rounded-2xl border border-gray-700/70 bg-black/40 backdrop-blur-sm p-4 shadow-sm flex flex-col justify-between min-h-[370px] max-h-[370px] w-full">
+  <div className="rounded-2xl border border-gray-700/70 bg-black/40 backdrop-blur-sm p-4 shadow-sm flex flex-col justify-between w-full" style={{minHeight:'180px',maxHeight:'180px',maxWidth:'520px',width:'100%'}}>
       <div className="flex items-center justify-between gap-3">
         <h3 className="text-lg font-semibold text-gray-100">Game {idx + 1}</h3>
         <span className="text-xs rounded-full px-2 py-1 border border-gray-700 bg-gray-800 text-gray-200">
           {map} - {timeOfDay}
         </span>
       </div>
-      {fireflies ? (
-        <div className="mt-1 text-xs text-green-400 font-semibold">Fireflies!</div>
+  {/* Fireflies overlay on map image */}
+  {/* ...existing code... */}
+  <div className="mt-3 flex flex-row gap-3 items-center w-full" style={{height:'90px'}}>
+    {/* Map preview - 80% width */}
+    <div className="relative overflow-hidden rounded-2xl border border-gray-700 shadow-inner" style={{width:'80%',height:'90px'}}>
+      {effectiveMapImage ? (
+        <img
+          src={effectiveMapImage}
+          alt={map || "Map"}
+          className="w-full h-full object-cover"
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          onError={e => { e.currentTarget.src = "https://via.placeholder.com/960x540?text=Map+Preview"; }}
+        />
       ) : (
-        <div className="mt-1" style={{height:'18px'}}>&nbsp;</div>
+        <div className="w-full h-full bg-gray-800/70 flex items-center justify-center text-xs text-gray-400">
+          No image
+        </div>
       )}
-  <div className="mt-5 grid grid-cols-[1fr_auto] gap-4">
-        {/* Map preview */}
-        <div className={`relative w-full ${PREVIEW_H} overflow-hidden rounded-2xl border border-gray-700 shadow-inner`}>
-          {effectiveMapImage ? (
-            <img
-              src={effectiveMapImage}
-              alt={map || "Map"}
-              className="w-full h-full object-cover"
-              loading="lazy"
-              referrerPolicy="no-referrer"
-              onError={e => { e.currentTarget.src = "https://via.placeholder.com/960x540?text=Map+Preview"; }}
-            />
-          ) : (
-            <div className="w-full h-full bg-gray-800/70 flex items-center justify-center text-xs text-gray-400">
-              No image
-            </div>
-          )}
-          {/* Chips */}
-          <div className="absolute top-2 left-2">
-            <span className="inline-flex items-center rounded-full bg-black/65 backdrop-blur px-2 py-0.5 text-[11px] text-white">
-              {map || "—"}
-            </span>
-          </div>
-          <div className="absolute bottom-2 left-2">
-            <span className="inline-flex items-center rounded-full bg-black/65 backdrop-blur px-2 py-0.5 text-[11px] text-white">
-              {timeOfDay || "—"}
-            </span>
-          </div>
+      {/* Fireflies overlay - top middle */}
+      {fireflies && (
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs text-green-400 font-semibold bg-black/60 rounded px-2 py-0.5 shadow">
+          Fireflies!
         </div>
-        {/* Character tile (same height as map) */}
-        <div className="flex flex-col items-center justify-center h-full">
-          <div className={`rounded-xl overflow-hidden border border-gray-700 shadow aspect-square ${PREVIEW_H}`}>
-            {avatarUrl ? (
-              <img
-                src={avatarUrl}
-                alt={character || "Character"}
-                className="w-full h-full object-cover"
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                onError={e => { e.currentTarget.src = "https://via.placeholder.com/300x300?text=Avatar"; }}
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-800" />
-            )}
-          </div>
-          <div className="mt-1 text-[11px] text-gray-200 max-w-[140px] truncate">{character || ""}</div>
-        </div>
+      )}
+      {/* Chips */}
+      <div className="absolute top-2 left-2" style={{top: fireflies ? '26px' : '8px'}}>
+        <span className="inline-flex items-center rounded-full bg-black/65 backdrop-blur px-2 py-0.5 text-[11px] text-white">
+          {map || "—"}
+        </span>
       </div>
+      <div className="absolute bottom-2 left-2">
+        <span className="inline-flex items-center rounded-full bg-black/65 backdrop-blur px-2 py-0.5 text-[11px] text-white">
+          {timeOfDay || "—"}
+        </span>
+      </div>
+    </div>
+    {/* Character tile - 20% width */}
+    <div className="flex flex-col items-center justify-center h-full" style={{width:'20%',height:'90px'}}>
+      <div className="rounded-xl overflow-hidden border border-gray-700 shadow aspect-square w-[70px] h-[70px]">
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt={character || "Character"}
+            className="w-full h-full object-cover"
+            loading="lazy"
+            referrerPolicy="no-referrer"
+            onError={e => { e.currentTarget.src = "https://via.placeholder.com/300x300?text=Avatar"; }}
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-800" />
+        )}
+      </div>
+      <div className="mt-1 text-[11px] text-gray-200 max-w-[80px] truncate">{character || ""}</div>
+    </div>
+  </div>
       {/* Character select below */}
       <div className="mt-6">
   <label className="block text-sm font-medium mb-1 text-gray-300">Character</label>
