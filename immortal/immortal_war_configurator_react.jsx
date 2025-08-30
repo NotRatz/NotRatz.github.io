@@ -129,25 +129,23 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOpt
         </div>
       </div>
       {/* Character select below */}
-      <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-300">Character</label>
-          <select
-            className={classNames(
-              "w-full rounded-lg border px-3 py-2 text-sm bg-gray-900 text-gray-200",
-              errors?.character ? "border-red-500" : "border-gray-700"
-            )}
-            value={character || ""}
-            onChange={e => onChange(idx, { character: e.target.value })}
-          >
-            <option value="">Select a character…</option>
-            {characters.map((c) => (
-              <option key={c.name} value={c.name}>{c.name}</option>
-            ))}
-          </select>
-          {errors?.character && <p className="mt-1 text-xs text-red-400">{errors.character}</p>}
-        </div>
-      </div>
+      <div className="mt-6">
+  <label className="block text-sm font-medium mb-1 text-gray-300">Character</label>
+  <select
+    className={classNames(
+      "w-full rounded-lg border px-3 py-2 text-sm bg-gray-900 text-gray-200",
+      errors?.character ? "border-red-500" : "border-gray-700"
+    )}
+    value={character || ""}
+    onChange={e => onChange(idx, { character: e.target.value })}
+  >
+    <option value="">Select a character…</option>
+    {characters.map((c) => (
+      <option key={c.name} value={c.name}>{c.name}</option>
+    ))}
+  </select>
+  {errors?.character && <p className="mt-1 text-xs text-red-400">{errors.character}</p>}
+</div>
     </div>
   );
 }
