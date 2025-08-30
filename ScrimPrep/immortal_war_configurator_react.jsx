@@ -125,11 +125,12 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
           </div>
         </div>
         {/* Character select below each card, inside box and visually contained */}
-        <div className="mt-4 w-full" style={{paddingLeft:0,paddingRight:0,boxSizing:'border-box'}}>
-          <label className="block text-sm font-medium mb-1 text-gray-300">Character</label>
+        <div className="mt-2 w-full" style={{paddingLeft:0,paddingRight:0,boxSizing:'border-box'}}>
+          <label className="block text-sm font-medium mb-0.5 text-gray-300">Character</label>
           <select
             className={classNames(
               "w-full rounded-lg border px-3 py-2 text-sm bg-gray-900 text-gray-200",
+              { style: { paddingBottom: '2px', paddingTop: '2px' } },
               errors?.character ? "border-red-500" : "border-gray-700"
             )}
             value={character || ""}
