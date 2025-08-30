@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Strive - Naraka: Bladepoint Community</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.css" />
+  <style>
+    body {
+      background: url('assets/naraka-bg.png') center/cover no-repeat fixed;
+      background-color: rgba(0, 0, 0, 0.85);
+      background-blend-mode: overlay;
+    }
+    #loadingOverlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .spinner { width: 3rem; height: 3rem; border: 4px solid #555; border-top-color: #ffd700; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-200 overflow-x-hidden">
+  <div id="loadingOverlay" class="flex"><div class="spinner"></div></div>
+
+  <header class="hero-section h-screen flex flex-col items-center justify-center text-center">
+    <img src="assets/strive-logo.png" alt="Strive Logo" class="w-64 md:w-80 lg:w-96 mb-8" data-aos="fade-down" />
+    <div class="text-gray-300 text-4xl animate-bounce" data-aos="fade-up" data-aos-delay="500">&#x2193;</div>
+
+      <!-- Side-by-side buttons under Strive logo -->
+      <div class="flex flex-row flex-wrap justify-center gap-4 mt-8" data-aos="fade-up" data-aos-delay="800">
+        <a href="immortal/index.html"
+           onclick="return nav(event, { useOverlay: true })"
+           class="px-6 py-3 text-yellow-500 border border-yellow-500 rounded-md font-semibold hover:bg-yellow-500 hover:text-gray-900 transition-colors">
+          ⚔️ EGL Scrim Preparation
+        </a>
+        <a href="https://notratz.github.io/NarakaTweaks" target="_blank"
+           class="px-6 py-3 text-yellow-500 border border-yellow-500 rounded-md font-semibold hover:bg-yellow-500 hover:text-gray-900 transition-colors">
+          🛠️ NarakaTweaks
+        </a>
+        <a href="https://ko-fi.com/notratz" target="_blank"
+           class="px-6 py-3 text-yellow-500 border border-yellow-500 rounded-md font-semibold hover:bg-yellow-500 hover:text-gray-900 transition-colors">
+          ☕ Ko-fi
+        </a>
+        <a href="https://throne.com/notratz" target="_blank"
+           class="px-6 py-3 text-yellow-500 border border-yellow-500 rounded-md font-semibold hover:bg-yellow-500 hover:text-gray-900 transition-colors">
+          🎁 Throne
+        </a>
+      </div>
+  </header>
+
+  <section class="about-section py-16 px-4" data-aos="fade-up">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4 text-center md:text-left">About Team Strive</h2>
+      <p class="text-lg leading-relaxed text-center md:text-left">
+        Team Strive is a community of Naraka: Bladepoint content creators and players.
+        We strive to share epic gameplay, tips, and community events,
+        fostering a vibrant and positive community for all Naraka enthusiasts.
+      </p>
+    </div>
+  </section>
+
+  <section class="mt-12 text-center px-4" data-aos="fade-up">
+    <h2 class="text-2xl font-semibold text-gray-100 mb-4">Connect with Us</h2>
+    <div class="flex flex-wrap items-center justify-center space-x-6">
+      <a href="https://www.twitch.tv/NotRatz" target="_blank" class="flex items-center text-gray-300 hover:text-yellow-500 transition transform hover:scale-110 my-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="mr-1" viewBox="0 0 16 16"><path d="M3.857 0L1 2.857v10.286h3.429V16l2.857-2.857H9.57L14.714 8V0H3.857zM13.571 7.429l-2.285 2.285H9l-2 2v-2H4.429V1.143h9.142v6.286z"/><path d="M11.857 3.143h-1.143V6.57h1.143V3.143zm-3.143 0H7.571V6.57h1.143V3.143z"/></svg>
+        <span class="font-medium">Twitch (<strong>NotRatz</strong>)</span>
+      </a>
+      <a href="https://www.twitch.tv/Skynyx" target="_blank" class="flex items-center text-gray-300 hover:text-yellow-500 transition transform hover:scale-110 my-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="mr-1" viewBox="0 0 16 16"><path d="M3.857 0L1 2.857v10.286h3.429V16l2.857-2.857H9.57L14.714 8V0H3.857zM13.571 7.429l-2.285 2.285H9l-2 2v-2H4.429V1.143h9.142v6.286z"/><path d="M11.857 3.143h-1.143V6.57h1.143V3.143zm-3.143 0H7.571V6.57h1.143V3.143z"/></svg>
+        <span class="font-medium">Twitch (<strong>Skynyx</strong>)</span>
+      </a>
+      <a href="https://www.youtube.com/@STRNaraka" target="_blank" class="flex items-center text-gray-300 hover:text-yellow-500 transition transform hover:scale-110 my-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="mr-1" viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.10..."/><path d="M6.4 5.209v4.818l4.157-2.408z"/></svg>
+        <span class="font-medium">YouTube (<strong>STRNaraka</strong>)</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="mt-12 px-4 text-center" data-aos="fade-up">
+    <h2 class="text-2xl font-semibold text-gray-100 mb-4">Join our Discord Community</h2>
+    <div class="mx-auto" style="max-width: 400px;">
+      <iframe src="https://discord.com/widget?id=1130709958225297510&theme=dark"
+              width="100%" height="500" allowtransparency="true" frameborder="0"
+              sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 800 });
+
+    // Robust nav helper (doesn't rely on global event; works across browsers)
+    function nav(e, opts = {}) {
+      if (!e) return true;
+      const link = e.currentTarget || e.target || null;
+      const href = link && (link.getAttribute && link.getAttribute('href'));
+      if (!href) return true;
+      e.preventDefault();
+
+      if (opts.useOverlay) {
+        const o = document.getElementById('loadingOverlay');
+        if (o) o.style.display = 'flex';
+      }
+
+      // Navigate immediately; no artificial delay for localhost
+      window.location.href = href;
+      return false;
+    }
+  </script>
+</body>
+</html>
