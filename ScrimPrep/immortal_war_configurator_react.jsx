@@ -187,7 +187,7 @@ const characterAvatar = (characters, name) =>
    ========================= */
 function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
   const { map, mapImage, timeOfDay, character, fireflies } = selection;
-  const avatarUrl = characterAvatar(characters, character);
+  const avatarUrl = characterAvatar(characters, (character || '').trim());
   // Use mapImage from selection, fallback to lookup from maps
   const effectiveMapImage =
     mapImage || (maps && findMapByName(maps, map)?.imageUrl) || "";
@@ -255,7 +255,7 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
           >
             <div
               className="border border-gray-700 shadow flex items-center justify-center hero-tile"
-              style={{ width: "90px", height: "90px" }}
+              style={{ width: "90px", height: "90px", position: 'relative', overflow: 'hidden', background: avatarUrl ? 'none' : '#222' }}
             >
               {avatarUrl ? (
                 <img
@@ -265,14 +265,31 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
                   loading="lazy"
                   crossOrigin="anonymous"
                   referrerPolicy="no-referrer"
+                  style={{
+                    clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 70%)',
+                    transition: 'clip-path 0.3s',
+                    background: '#222',
+                  }}
                   onError={(e) => {
                     e.currentTarget.src =
                       "https://via.placeholder.com/300x300?text=Avatar";
                   }}
                 />
               ) : (
-                <div className="w-full h-full bg-gray-800" />
+                <div className="w-full h-full bg-gray-800 flex items-center justify-center text-xs text-gray-400">No avatar</div>
               )}
+              {/* Diagonal overlay for e-sport look */}
+              <div style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                background: 'linear-gradient(120deg, rgba(0,0,0,0.0) 60%, rgba(255,255,0,0.12) 100%)',
+                clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 70%)',
+                zIndex: 2,
+              }} />
             </div>
           </div>
         </div>
@@ -287,11 +304,11 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
           <select
             className={classNames(
               "w-full rounded-lg border px-3 py-2 text-sm bg-gray-900 text-gray-200",
-              errors?.character ? "border-red-500" : "border-gray-700",
+              errors?.character ? "border-red-500" : "border-gray-700"
             )}
             style={{ paddingTop: "2px", paddingBottom: "2px" }}
             value={character || ""}
-            onChange={(e) => onChange(idx, { character: e.target.value })}
+            onChange={(e) => onChange(idx, { character: e.target.value.trim() })}
           >
             <option value="">Select a character…</option>
             {characters.map((c) => (
