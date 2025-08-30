@@ -1,71 +1,129 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="../favicon.png" />
-  <link rel="shortcut icon" href="../favicon.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Immortal War Configurator</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.css" />
-  <style>
-    /* Match homepage background + overlay */
-    body{
-      background: url('../assets/naraka-bg.png') center/cover no-repeat fixed;
-      background-color: rgba(0,0,0,.85);
-      background-blend-mode: overlay;
-    }
-    /* Form control tweaks for visibility */
-    select, button { outline: none; }
-  </style>
-</head>
-<body class="bg-gray-900 text-gray-200 overflow-x-hidden">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="../favicon.png" />
+    <link rel="shortcut icon" href="../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Immortal War Configurator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.css"
+    />
+    <style>
+      /* Match homepage background + overlay */
+      body {
+        background: url("../assets/naraka-bg.png") center/cover no-repeat fixed;
+        background-color: rgba(0, 0, 0, 0.85);
+        background-blend-mode: overlay;
+      }
+      /* Form control tweaks for visibility */
+      select,
+      button {
+        outline: none;
+      }
 
-  <!-- Back to Home -->
-  <header class="p-4">
-    <a href="../index.html"
-       onclick="return nav(event)"
-       class="inline-flex items-center gap-2 text-yellow-500 hover:text-yellow-400 transition">
-      ← Back to Home
-    </a>
-  </header>
+      /* Angled tile styles for map and hero images */
+      .angled-tile,
+      .hero-tile {
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+      }
+      .angled-tile {
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+      }
+      .hero-tile {
+        clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%, 0 15%);
+      }
+      .group:hover .angled-tile,
+      .group:hover .hero-tile {
+        transform: scale(1.05);
+      }
+      .angled-tile::before,
+      .hero-tile::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 2px solid rgba(250, 204, 21, 0.8); /* yellow */
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+      .group:hover .angled-tile::before,
+      .group:hover .hero-tile::before {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-gray-200 overflow-x-hidden">
+    <!-- Back to Home -->
+    <header class="p-4">
+      <a
+        href="../index.html"
+        onclick="return nav(event)"
+        class="inline-flex items-center gap-2 text-yellow-500 hover:text-yellow-400 transition"
+      >
+        ← Back to Home
+      </a>
+    </header>
 
-  <!-- Page Title -->
-  <section class="text-center px-4" data-aos="fade-up">
-    <h1 class="text-3xl md:text-4xl font-bold">Immortal War – 6 Round Configurator</h1>
-    <p class="text-sm text-gray-300 mt-2">Pick map, time, and character for each round. Summary unlocks only when all rules pass.</p>
-  </section>
+    <!-- Page Title -->
+    <section class="text-center px-4" data-aos="fade-up">
+      <h1 class="text-3xl md:text-4xl font-bold">
+        Immortal War – 6 Round Configurator
+      </h1>
+      <p class="text-sm text-gray-300 mt-2">
+        Pick map, time, and character for each round. Summary unlocks only when
+        all rules pass.
+      </p>
+    </section>
 
-  <!-- Configurator Mount -->
-  <main id="root" class="max-w-6xl mx-auto mt-6 mb-16 px-4" data-aos="fade-up"></main>
+    <!-- Configurator Mount -->
+    <main
+      id="root"
+      class="max-w-6xl mx-auto mt-6 mb-16 px-4"
+      data-aos="fade-up"
+    ></main>
 
-  <!-- React + Babel -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- React + Babel -->
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- AOS + nav helper (same pattern as home) -->
-  <script src="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.js"></script>
-  <script>
-    if (window.AOS) AOS.init({ once: true, duration: 800 });
-    function nav(e){
-      if(!e) return true;
-      const link = e.currentTarget || e.target;
-      const href = link && link.getAttribute && link.getAttribute('href');
-      if(!href) return true;
-      e.preventDefault();
-      window.location.href = href;
-      return false;
-    }
-  </script>
+    <!-- AOS + nav helper (same pattern as home) -->
+    <script src="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.js"></script>
+    <script>
+      if (window.AOS) AOS.init({ once: true, duration: 800 });
+      function nav(e) {
+        if (!e) return true;
+        const link = e.currentTarget || e.target;
+        const href = link && link.getAttribute && link.getAttribute("href");
+        if (!href) return true;
+        e.preventDefault();
+        window.location.href = href;
+        return false;
+      }
+    </script>
 
-  <!-- Component (same folder) -->
-  <script type="text/babel" src="immortal_war_configurator_react.jsx"></script>
+    <!-- Component (same folder) -->
+    <script
+      type="text/babel"
+      src="immortal_war_configurator_react.jsx"
+    ></script>
 
-  <!-- Mount -->
-  <script type="text/babel">
-    ReactDOM.createRoot(document.getElementById('root'))
-      .render(<ImmortalWarConfigurator />);
-  </script>
-</body>
+    <!-- Mount -->
+    <script type="text/babel">
+      ReactDOM.createRoot(document.getElementById("root")).render(
+        <ImmortalWarConfigurator />,
+      );
+    </script>
+  </body>
 </html>
