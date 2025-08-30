@@ -1,3 +1,39 @@
+  <script>
+    // Admin panel visibility logic
+    function isAdminPanel() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('admin') === '1') {
+        localStorage.setItem('adminPanel', '1');
+        return true;
+      }
+      return localStorage.getItem('adminPanel') === '1';
+    }
+    function getPanelLinks() {
+      const base = window.location.origin + window.location.pathname.replace(/\/index\.html$/, '/');
+      return {
+        admin: base + '?admin=1',
+        player: base + '?player=1',
+        spectator: base + '?spectator=1'
+      };
+    }
+    if (isAdminPanel()) {
+      document.addEventListener('DOMContentLoaded', function() {
+        const links = getPanelLinks();
+        const bar = document.createElement('div');
+        bar.className = 'w-full bg-yellow-500 text-gray-900 font-bold px-4 py-2 flex items-center justify-between shadow fixed top-0 left-0 z-50';
+        bar.innerHTML = `
+          <span>Admin Panel</span>
+          <div class="space-x-4">
+            <a href="${links.admin}" class="underline">Admin Link</a>
+            <a href="${links.player}" class="underline">Player Link</a>
+            <a href="${links.spectator}" class="underline">Spectator Link</a>
+          </div>
+        `;
+        document.body.prepend(bar);
+        document.body.style.paddingTop = '56px';
+      });
+    }
+  </script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
