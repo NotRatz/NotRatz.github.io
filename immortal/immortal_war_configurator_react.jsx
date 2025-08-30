@@ -80,7 +80,7 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOpt
       {fireflies && (
         <div className="mt-1 text-xs text-green-400 font-semibold">Fireflies!</div>
       )}
-      <div className="mt-5 grid grid-cols-[1fr_auto] items-center gap-4">
+  <div className="mt-5 grid grid-cols-[1fr_auto] gap-4">
         {/* Map preview */}
         <div className={`relative w-full ${PREVIEW_H} overflow-hidden rounded-2xl border border-gray-700 shadow-inner`}>
           {effectiveMapImage ? (
@@ -110,7 +110,7 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOpt
           </div>
         </div>
         {/* Character tile (same height as map) */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center justify-center h-full">
           <div className={`rounded-xl overflow-hidden border border-gray-700 shadow aspect-square ${PREVIEW_H}`}>
             {avatarUrl ? (
               <img
