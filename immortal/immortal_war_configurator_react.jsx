@@ -74,7 +74,7 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors, timeOpt
       <div className="flex items-center justify-between gap-3">
         <h3 className="text-lg font-semibold text-gray-100">Game {idx + 1}</h3>
         <span className="text-xs rounded-full px-2 py-1 border border-gray-700 bg-gray-800 text-gray-200">
-          {map} – {timeOfDay}
+          {map} - {timeOfDay}
         </span>
       </div>
       {fireflies && (
@@ -250,7 +250,7 @@ function ImmortalWarConfigurator({
   return (
   <div className="max-w-6xl mx-auto p-4 md:p-8 text-gray-200">
       <header className="mb-4">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-100">Immortal War – 6 Round Configurator</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-100">Immortal War - 6 Round Configurator</h1>
         <p className="text-sm text-gray-300 mt-1">
           Configure map, time of day, and character for each round. Review is only enabled when all rules are satisfied.
         </p>
@@ -317,7 +317,7 @@ function ImmortalWarConfigurator({
         <section className="mt-2">
           <div className="summary-panel-export rounded-2xl border border-green-700 bg-green-900/25 p-4">
             <h2 className="text-xl font-semibold text-green-300">
-              Summary – All Selections Valid ✅
+              Summary - All Selections Valid ✅
             </h2>
             <p className="text-sm text-green-200 mb-3">
               Review your six rounds below. Confirm or go back to edit.
@@ -342,7 +342,7 @@ function ImmortalWarConfigurator({
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-sm text-gray-400">Game {sel.round}</div>
-                    <div className="font-medium text-gray-100">{sel.map} – {sel.timeOfDay}</div>
+                    <div className="font-medium text-gray-100">{sel.map} - {sel.timeOfDay}</div>
                     {sel.fireflies && <div className="text-xs text-green-400 font-semibold">Fireflies!</div>}
                     <div className="text-sm text-gray-200">Character: {sel.character}</div>
                   </div>
