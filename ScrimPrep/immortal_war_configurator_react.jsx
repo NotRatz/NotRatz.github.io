@@ -179,8 +179,13 @@ const ROUND_ROTATION = [
 
 const findMapByName = (maps, name) => (maps || []).find((m) => m.name === name);
 const classNames = (...xs) => xs.filter(Boolean).join(" ");
-const characterAvatar = (characters, name) =>
-  (characters || []).find((x) => x.name === name)?.avatarUrl || "";
+const characterAvatar = (characters, name) => {
+  if (!name) return "";
+  const norm = (str) => String(str).trim().toLowerCase().replace(/\s+/g, " ");
+  const target = norm(name);
+  const found = (characters || []).find((x) => norm(x.name) === target);
+  return found?.avatarUrl || "";
+};
 
 /* =========================
    Round Card
