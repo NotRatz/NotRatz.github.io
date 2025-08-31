@@ -194,6 +194,7 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
         maxHeight: "180px",
         maxWidth: "520px",
         width: "100%",
+        fontFamily: 'Segoe UI, Arial, Helvetica, sans-serif',
       }}
     >
       <div className="flex flex-col w-full" style={{position:'relative'}}>
@@ -401,7 +402,7 @@ function ImmortalWarConfigurator() {
 
   // No time options needed
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-8 text-gray-200">
+  <div className="max-w-6xl mx-auto p-4 md:p-8 text-gray-200" style={{fontFamily: 'Segoe UI, Arial, Helvetica, sans-serif'}}>
       <header className="mb-4">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-100">
           Immortal War - 6 Round Configurator
