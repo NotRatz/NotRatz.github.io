@@ -234,17 +234,14 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
             width: '120px',
             height: '90px',
             transform: 'skew(-25deg)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             zIndex: 10,
             overflow: 'hidden',
             background: 'transparent',
+            boxShadow: '0 0 16px 0 #0004',
           }}>
-            {/* Diagonal cutout of map image */}
             <img
-              src={effectiveMapImage}
-              alt="Map cutout"
+              src={avatarUrl}
+              alt={character || "Character"}
               style={{
                 position: 'absolute',
                 left: 0,
@@ -254,22 +251,8 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
                 objectFit: 'cover',
                 zIndex: 1,
                 clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-              }}
-            />
-            {/* Avatar overlay */}
-            <img
-              src={avatarUrl}
-              alt={character || "Character"}
-              style={{
-                width: '56px',
-                height: '56px',
-                borderRadius: '50%',
-                objectFit: 'cover',
-                border: '3px solid #fff',
-                boxShadow: '0 2px 8px #0008',
                 opacity: 0,
                 animation: 'avatar-swipe-in 0.5s cubic-bezier(.7,1.5,.5,1) forwards',
-                zIndex: 2,
               }}
               loading="lazy"
             />
