@@ -233,15 +233,30 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
             top: '0',
             width: '120px',
             height: '90px',
-            background: '#880018',
             transform: 'skew(-25deg)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 10,
-            boxShadow: '0 0 16px 0 #88001888',
             overflow: 'hidden',
+            background: 'transparent',
           }}>
+            {/* Diagonal cutout of map image */}
+            <img
+              src={effectiveMapImage}
+              alt="Map cutout"
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                width: '120px',
+                height: '90px',
+                objectFit: 'cover',
+                zIndex: 1,
+                clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+              }}
+            />
+            {/* Avatar overlay */}
             <img
               src={avatarUrl}
               alt={character || "Character"}
@@ -252,14 +267,11 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
                 objectFit: 'cover',
                 border: '3px solid #fff',
                 boxShadow: '0 2px 8px #0008',
-                transform: 'translate(-40px, 40px) scale(0.7)',
                 opacity: 0,
                 animation: 'avatar-swipe-in 0.5s cubic-bezier(.7,1.5,.5,1) forwards',
+                zIndex: 2,
               }}
               loading="lazy"
-              crossOrigin="anonymous"
-              referrerPolicy="no-referrer"
-              onError={e => { e.currentTarget.src = "https://via.placeholder.com/56x56?text=Avatar"; }}
             />
             <style>{`
               @keyframes avatar-swipe-in {
