@@ -205,8 +205,8 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
       <div className="flex flex-col w-full" style={{position:'relative'}}>
         {/* Map and hero row */}
         <div className="flex flex-row items-center w-full" style={{height:'90px', position:'relative'}}>
-          {/* Map preview */}
-          <div className="relative border border-gray-700 shadow-inner flex-shrink-0 angled-tile" style={{width:'calc(100% - 92px)', height:'90px', overflow:'hidden'}}>
+          {/* Map preview - full rectangular */}
+          <div className="relative border border-gray-700 shadow-inner flex-shrink-0" style={{width:'100%', height:'90px', borderRadius:0, overflow:'hidden'}}>
             {effectiveMapImage ? (
               <img
                 src={effectiveMapImage}
@@ -230,27 +230,24 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
               <span className="inline-flex items-center rounded-full bg-black/65 backdrop-blur px-2 py-0.5 text-xs text-white">Game {idx + 1}</span>
             </div>
           </div>
-          {/* 2px padding between map and hero image */}
-          <div style={{width:'2px',height:'90px'}} />
-          {/* Character tile (hidden, avatar now in band) */}
-          <div style={{width:'90px',height:'90px',visibility:'hidden'}} />
         </div>
-        {/* Diagonal band overlay across card */}
-        <div style={{
-          position: 'absolute',
-          left: 'calc(100% - 182px)', // aligns band to slice across map and hero
-          top: '0',
-          width: '120px',
-          height: '90px',
-          background: '#880018',
-          transform: 'skew(-25deg)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 10,
-          boxShadow: '0 0 16px 0 #88001888',
-        }}>
-          {avatarUrl ? (
+        {/* Diagonal band overlay across card, avatar animates in when selected */}
+        {avatarUrl && (
+          <div style={{
+            position: 'absolute',
+            left: 'calc(100% - 182px)',
+            top: '0',
+            width: '120px',
+            height: '90px',
+            background: '#880018',
+            transform: 'skew(-25deg)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10,
+            boxShadow: '0 0 16px 0 #88001888',
+            overflow: 'hidden',
+          }}>
             <img
               src={avatarUrl}
               alt={character || "Character"}
@@ -261,16 +258,24 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
                 objectFit: 'cover',
                 border: '3px solid #fff',
                 boxShadow: '0 2px 8px #0008',
+                transform: 'translate(-40px, 40px) scale(0.7)',
+                opacity: 0,
+                animation: 'avatar-swipe-in 0.5s cubic-bezier(.7,1.5,.5,1) forwards',
               }}
               loading="lazy"
               crossOrigin="anonymous"
               referrerPolicy="no-referrer"
               onError={e => { e.currentTarget.src = "https://via.placeholder.com/56x56?text=Avatar"; }}
             />
-          ) : (
-            <div style={{width:'56px',height:'56px',borderRadius:'50%',background:'#222',color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'12px'}}>No avatar</div>
-          )}
-        </div>
+            <style>{`
+              @keyframes avatar-swipe-in {
+                0% { transform: translate(-40px, 40px) scale(0.7); opacity: 0; }
+                60% { transform: translate(10px, -10px) scale(1.1); opacity: 1; }
+                100% { transform: translate(0,0) scale(1); opacity: 1; }
+              }
+            `}</style>
+          </div>
+        )}
         {/* Character select below each card, inside box and visually contained */}
         <div
           className="mt-2 w-full"
