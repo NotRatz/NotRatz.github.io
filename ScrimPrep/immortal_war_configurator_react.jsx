@@ -25,99 +25,99 @@ const DEFAULT_MAPS = [
 const DEFAULT_CHARACTERS = [
   {
     name: "Viper Ning",
-    avatarUrl: "assets/icon_hero_mangjianke_01.png",
+  avatarUrl: "/assets/icon_hero_mangjianke_01.png",
   },
   {
     name: "Feria Shen",
-    avatarUrl: "assets/icon_hero_shenmiao_01.png",
+  avatarUrl: "/assets/icon_hero_shenmiao_01.png",
   },
   {
     name: "Tianhai",
-    avatarUrl: "assets/icon_hero_youseng_01.png",
+  avatarUrl: "/assets/icon_hero_youseng_01.png",
   },
   {
     name: "Ziping Yin",
-    avatarUrl: "assets/icon_hero_yinziping_01.png",
+  avatarUrl: "/assets/icon_hero_yinziping_01.png",
   },
   {
     name: "Temulch",
-    avatarUrl: "assets/icon_hero_caoyuan_01.png",
+  avatarUrl: "/assets/icon_hero_caoyuan_01.png",
   },
   {
     name: "Tarka Ji",
-    avatarUrl: "assets/icon_hero_haoxia_01.png",
+  avatarUrl: "/assets/icon_hero_haoxia_01.png",
   },
   {
     name: "Kurumi",
-    avatarUrl: "assets/icon_hero_onmyoji_01.png",
+  avatarUrl: "/assets/icon_hero_onmyoji_01.png",
   },
   {
     name: "Yoto Hime",
-    avatarUrl: "assets/icon_hero_yaodaoji_01.png",
+  avatarUrl: "/assets/icon_hero_yaodaoji_01.png",
   },
   {
     name: "Valda Cui",
-    avatarUrl: "assets/icon_hero_cuisanniang_01.png",
+  avatarUrl: "/assets/icon_hero_cuisanniang_01.png",
   },
   {
     name: "Yueshan",
-    avatarUrl: "assets/icon_hero_yueshan_01.png",
+  avatarUrl: "/assets/icon_hero_yueshan_01.png",
   },
   {
     name: "Wuchen",
-    avatarUrl: "assets/icon_hero_wuchen_01.png",
+  avatarUrl: "/assets/icon_hero_wuchen_01.png",
   },
   {
     name: "Justina Gu",
-    avatarUrl: "assets/icon_hero_guqinghan_01.png",
+  avatarUrl: "/assets/icon_hero_guqinghan_01.png",
   },
   {
     name: "Takeda Nobutada",
-    avatarUrl: "assets/icon_hero_wutian_01.png",
+  avatarUrl: "/assets/icon_hero_wutian_01.png",
   },
   {
     name: "Matari",
-    avatarUrl: "assets/icon_hero_hanhaimomin_01.png",
+  avatarUrl: "/assets/icon_hero_hanhaimomin_01.png",
   },
   {
     name: "Akos Hu",
-    avatarUrl: "assets/icon_hero_huwei_01.png",
+  avatarUrl: "/assets/icon_hero_huwei_01.png",
   },
   {
     name: "Zai",
-    avatarUrl: "assets/icon_hero_jiyingying_01.png",
+  avatarUrl: "/assets/icon_hero_jiyingying_01.png",
   },
   {
     name: "Tessa",
-    avatarUrl: "assets/icon_hero_yulinglong_01.png",
+  avatarUrl: "/assets/icon_hero_yulinglong_01.png",
   },
   {
     name: "Hadi",
-    avatarUrl: "assets/icon_hero_hadi_01.png",
+  avatarUrl: "/assets/icon_hero_hadi_01.png",
   },
   {
     name: "Shayol Wei",
-    avatarUrl: "assets/icon_hero_weiqing_01.png",
+  avatarUrl: "/assets/icon_hero_weiqing_01.png",
   },
   {
     name: "Lyam Liu",
-    avatarUrl: "assets/icon_hero_liulian_01.png",
+  avatarUrl: "/assets/icon_hero_liulian_01.png",
   },
   {
     name: "Kylin Zhang",
-    avatarUrl: "assets/icon_hero_zhangqiling_01.png",
+  avatarUrl: "/assets/icon_hero_zhangqiling_01.png",
   },
   {
     name: "Cyra",
-    avatarUrl: "assets/icon_hero_xila_01.png",
+  avatarUrl: "/assets/icon_hero_xila_01.png",
   },
   {
     name: "Lannie",
-    avatarUrl: "assets/icon_hero_lanmeng_01.png",
+  avatarUrl: "/assets/icon_hero_lanmeng_01.png",
   },
   {
     name: "Inor Wan",
-    avatarUrl: "assets/icon_hero_wanjun_01.png",
+  avatarUrl: "/assets/icon_hero_wanjun_01.png",
   },
 ];
 
