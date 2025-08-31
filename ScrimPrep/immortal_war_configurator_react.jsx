@@ -489,18 +489,18 @@ function ImmortalWarConfigurator() {
               type="button"
               className="px-4 py-2 text-sm rounded-lg bg-yellow-500 text-gray-900 hover:bg-yellow-400"
               onClick={async () => {
-                // Export summary panel as PNG
+                // Export summary panel as PNG, wait for all images to load
                 const panel = document.querySelector(".summary-panel-export");
                 if (!panel) return alert("Summary panel not found.");
+                // Wait for all images in panel to load
+                const imgs = Array.from(panel.querySelectorAll('img'));
+                await Promise.all(imgs.map(img => img.complete ? Promise.resolve() : new Promise(res => { img.onload = res; img.onerror = res; })));
                 // Load html-to-image if not present
                 if (!window.htmlToImage) {
                   const script = document.createElement("script");
-                  script.src =
-                    "https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js";
+                  script.src = "https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js";
                   document.body.appendChild(script);
-                  await new Promise((res) => {
-                    script.onload = res;
-                  });
+                  await new Promise((res) => { script.onload = res; });
                 }
                 const scale = 1280 / panel.offsetWidth;
                 const pngData = await window.htmlToImage.toPng(panel, {
@@ -515,9 +515,7 @@ function ImmortalWarConfigurator() {
                 });
                 const img = new Image();
                 img.src = pngData;
-                await new Promise((res) => {
-                  img.onload = res;
-                });
+                await new Promise((res) => { img.onload = res; });
                 const canvas = document.createElement("canvas");
                 canvas.width = 1280;
                 canvas.height = 720;
@@ -528,7 +526,7 @@ function ImmortalWarConfigurator() {
                 ctx.fillRect(0, 0, 1280, 720);
                 ctx.drawImage(img, 0, yOffset, 1280, imgHeight);
                 const link = document.createElement("a");
-                link.download = "immortal-config-summary.png";
+                link.download = "scrim-prep.png";
                 link.href = canvas.toDataURL("image/png");
                 link.click();
               }}
