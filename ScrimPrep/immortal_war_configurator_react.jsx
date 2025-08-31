@@ -492,8 +492,23 @@ function ImmortalWarConfigurator() {
                 // Export summary panel as PNG, wait for all images to load
                 const panel = document.querySelector(".summary-panel-export");
                 if (!panel) return alert("Summary panel not found.");
-                // Wait for all images in panel to load
+                // Convert all image src to absolute URLs
                 const imgs = Array.from(panel.querySelectorAll('img'));
+                const toAbsoluteUrl = (src) => {
+                  if (!src) return src;
+                  if (/^(https?:)?\/\//.test(src)) return src;
+                  // Handle root-relative URLs
+                  if (src.startsWith('/')) {
+                    return window.location.origin + src;
+                  }
+                  // Handle relative URLs
+                  const base = window.location.origin + window.location.pathname;
+                  return new URL(src, base).href;
+                };
+                imgs.forEach(img => {
+                  img.src = toAbsoluteUrl(img.getAttribute('src'));
+                });
+                // Wait for all images in panel to load
                 await Promise.all(imgs.map(img => img.complete ? Promise.resolve() : new Promise(res => { img.onload = res; img.onerror = res; })));
                 // Load html-to-image if not present
                 if (!window.htmlToImage) {
