@@ -202,16 +202,11 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
         width: "100%",
       }}
     >
-      <div className="flex flex-col w-full">
-        <div
-          className="flex flex-row items-center w-full"
-          style={{ height: "90px", position: "relative" }}
-        >
+      <div className="flex flex-col w-full" style={{position:'relative'}}>
+        {/* Map and hero row */}
+        <div className="flex flex-row items-center w-full" style={{height:'90px', position:'relative'}}>
           {/* Map preview */}
-          <div
-            className="relative border border-gray-700 shadow-inner flex-shrink-0 angled-tile"
-            style={{ width: "calc(100% - 92px)", height: "90px" }}
-          >
+          <div className="relative border border-gray-700 shadow-inner flex-shrink-0 angled-tile" style={{width:'calc(100% - 92px)', height:'90px', overflow:'hidden'}}>
             {effectiveMapImage ? (
               <img
                 src={effectiveMapImage}
@@ -220,78 +215,61 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
                 loading="lazy"
                 crossOrigin="anonymous"
                 referrerPolicy="no-referrer"
-                onError={(e) => {
-                  e.currentTarget.src =
-                    "https://via.placeholder.com/960x540?text=Map+Preview";
-                }}
+                onError={e => { e.currentTarget.src = "https://via.placeholder.com/960x540?text=Map+Preview"; }}
               />
             ) : (
-              <div className="w-full h-full bg-gray-800/70 flex items-center justify-center text-xs text-gray-400">
-                No image
-              </div>
+              <div className="w-full h-full bg-gray-800/70 flex items-center justify-center text-xs text-gray-400">No image</div>
             )}
             {/* Fireflies overlay - top middle */}
             {fireflies && (
-              <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs text-green-400 font-semibold bg-black/60 rounded px-2 py-0.5 shadow">
-                Fireflies!
-              </div>
+              <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs text-green-400 font-semibold bg-black/60 rounded px-2 py-0.5 shadow">Fireflies!</div>
             )}
             {/* Map & time of day bottom left */}
             <div className="absolute bottom-2 left-2 flex flex-col items-start">
-              <span className="inline-flex items-center rounded-full bg-black/65 backdrop-blur px-2 py-0.5 text-[11px] text-white mb-1">
-                {map || "—"} • {timeOfDay || "—"}
-              </span>
-              <span className="inline-flex items-center rounded-full bg-black/65 backdrop-blur px-2 py-0.5 text-xs text-white">
-                Game {idx + 1}
-              </span>
+              <span className="inline-flex items-center rounded-full bg-black/65 backdrop-blur px-2 py-0.5 text-[11px] text-white mb-1">{map || "—"} • {timeOfDay || "—"}</span>
+              <span className="inline-flex items-center rounded-full bg-black/65 backdrop-blur px-2 py-0.5 text-xs text-white">Game {idx + 1}</span>
             </div>
           </div>
           {/* 2px padding between map and hero image */}
-          <div style={{ width: "2px", height: "90px" }} />
-          {/* Character tile */}
-          <div
-            className="flex items-center justify-center flex-shrink-0"
-            style={{ width: "90px", height: "90px" }}
-          >
-            <div
-              className="border border-gray-700 shadow flex items-center justify-center hero-tile"
-              style={{ width: "90px", height: "90px", position: 'relative', overflow: 'hidden', background: avatarUrl ? 'none' : '#222' }}
-            >
-              {avatarUrl ? (
-                <img
-                  src={avatarUrl}
-                  alt={character || "Character"}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  crossOrigin="anonymous"
-                  referrerPolicy="no-referrer"
-                  style={{
-                    clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 70%)',
-                    transition: 'clip-path 0.3s',
-                    background: '#222',
-                  }}
-                  onError={(e) => {
-                    e.currentTarget.src =
-                      "https://via.placeholder.com/300x300?text=Avatar";
-                  }}
-                />
-              ) : (
-                <div className="w-full h-full bg-gray-800 flex items-center justify-center text-xs text-gray-400">No avatar</div>
-              )}
-              {/* Diagonal overlay for e-sport look */}
-              <div style={{
-                position: 'absolute',
-                left: 0,
-                top: 0,
-                width: '100%',
-                height: '100%',
-                pointerEvents: 'none',
-                background: 'linear-gradient(120deg, rgba(0,0,0,0.0) 60%, rgba(255,255,0,0.12) 100%)',
-                clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 70%)',
-                zIndex: 2,
-              }} />
-            </div>
-          </div>
+          <div style={{width:'2px',height:'90px'}} />
+          {/* Character tile (hidden, avatar now in band) */}
+          <div style={{width:'90px',height:'90px',visibility:'hidden'}} />
+        </div>
+        {/* Diagonal band overlay across card */}
+        <div style={{
+          position: 'absolute',
+          left: 'calc(100% - 182px)', // aligns band to slice across map and hero
+          top: '0',
+          width: '120px',
+          height: '90px',
+          background: '#880018',
+          transform: 'skew(-25deg)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 10,
+          boxShadow: '0 0 16px 0 #88001888',
+        }}>
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt={character || "Character"}
+              style={{
+                width: '56px',
+                height: '56px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                border: '3px solid #fff',
+                boxShadow: '0 2px 8px #0008',
+              }}
+              loading="lazy"
+              crossOrigin="anonymous"
+              referrerPolicy="no-referrer"
+              onError={e => { e.currentTarget.src = "https://via.placeholder.com/56x56?text=Avatar"; }}
+            />
+          ) : (
+            <div style={{width:'56px',height:'56px',borderRadius:'50%',background:'#222',color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'12px'}}>No avatar</div>
+          )}
         </div>
         {/* Character select below each card, inside box and visually contained */}
         <div
