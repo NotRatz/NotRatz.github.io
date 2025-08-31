@@ -25,107 +25,99 @@ const DEFAULT_MAPS = [
 const DEFAULT_CHARACTERS = [
   {
     name: "Viper Ning",
-    avatarUrl:
-      "https://naraka.wiki/icon_hero_select/icon_hero_mangjianke_01.png",
+    avatarUrl: "assets/viper-ning.png",
   },
   {
     name: "Feria Shen",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_shenmiao_01.png",
+    avatarUrl: "assets/feria-shen.png",
   },
   {
     name: "Tianhai",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_youseng_01.png",
+    avatarUrl: "assets/tianhai.png",
   },
   {
     name: "Ziping Yin",
-    avatarUrl:
-      "https://naraka.wiki/icon_hero_select/icon_hero_yinziping_01.png",
+    avatarUrl: "assets/ziping-yin.png",
   },
   {
     name: "Temulch",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_caoyuan_01.png",
+    avatarUrl: "assets/temulch.png",
   },
   {
     name: "Tarka Ji",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_haoxia_01.png",
+    avatarUrl: "assets/tarka-ji.png",
   },
   {
     name: "Kurumi",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_onmyoji_01.png",
+    avatarUrl: "assets/kurumi.png",
   },
   {
     name: "Yoto Hime",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_yaodaoji_01.png",
+    avatarUrl: "assets/yoto-hime.png",
   },
   {
     name: "Valda Cui",
-    avatarUrl:
-      "https://naraka.wiki/icon_hero_select/icon_hero_cuisanniang_01.png",
+    avatarUrl: "assets/valda-cui.png",
   },
   {
     name: "Yueshan",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_yueshan_01.png",
+    avatarUrl: "assets/yueshan.png",
   },
   {
     name: "Wuchen",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_wuchen_01.png",
+    avatarUrl: "assets/wuchen.png",
   },
   {
     name: "Justina Gu",
-    avatarUrl:
-      "https://naraka.wiki/icon_hero_select/icon_hero_guqinghan_01.png",
+    avatarUrl: "assets/justina-gu.png",
   },
   {
     name: "Takeda Nobutada",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_wutian_01.png",
+    avatarUrl: "assets/takeda-nobutada.png",
   },
   {
     name: "Matari",
-    avatarUrl:
-      "https://naraka.wiki/icon_hero_select/icon_hero_hanhaimomin_01.png",
+    avatarUrl: "assets/matari.png",
   },
   {
     name: "Akos Hu",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_huwei_01.png",
+    avatarUrl: "assets/akos-hu.png",
   },
   {
     name: "Zai",
-    avatarUrl:
-      "https://naraka.wiki/icon_hero_select/icon_hero_jiyingying_01.png",
+    avatarUrl: "assets/zai.png",
   },
   {
     name: "Tessa",
-    avatarUrl:
-      "https://naraka.wiki/icon_hero_select/icon_hero_yulinglong_01.png",
+    avatarUrl: "assets/tessa.png",
   },
   {
     name: "Hadi",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_hadi_01.png",
+    avatarUrl: "assets/hadi.png",
   },
   {
     name: "Shayol Wei",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_weiqing_01.png",
+    avatarUrl: "assets/shayol-wei.png",
   },
   {
     name: "Lyam Liu",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_liulian_01.png",
+    avatarUrl: "assets/lyam-liu.png",
   },
   {
     name: "Kylin Zhang",
-    avatarUrl:
-      "https://naraka.wiki/icon_hero_select/icon_hero_zhangqiling_01.png",
+    avatarUrl: "assets/kylin-zhang.png",
   },
   {
     name: "Cyra",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_xila_01.png",
+    avatarUrl: "assets/cyra.png",
   },
   {
     name: "Lannie",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_lanmeng_01.png",
+    avatarUrl: "assets/lannie.png",
   },
   {
     name: "Inor Wan",
-    avatarUrl: "https://naraka.wiki/icon_hero_select/icon_hero_wanjun_01.png",
+    avatarUrl: "assets/inor-wan.png",
   },
 ];
 
@@ -568,4 +560,47 @@ function ImmortalWarConfigurator() {
 }
 
 // expose globally for inline Babel mount
+// AvatarBand component for fade-out/fade-in animation
+function AvatarBand({ avatarUrl, character }) {
+  const [visible, setVisible] = React.useState(false);
+  React.useEffect(() => {
+    setVisible(false);
+    const timeout = setTimeout(() => setVisible(true), 50);
+    return () => clearTimeout(timeout);
+  }, [avatarUrl]);
+  if (!avatarUrl) return null;
+  return (
+    <div style={{
+      position: 'absolute',
+      left: 'calc(100% - 182px)',
+      top: '0',
+      width: '120px',
+      height: '90px',
+      background: '#880018',
+      transform: 'skew(-25deg)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 10,
+      boxShadow: '0 0 16px 0 #88001888',
+      overflow: 'hidden',
+    }}>
+      <img
+        src={avatarUrl}
+        alt={character || "Character"}
+        style={{
+          width: '56px',
+          height: '56px',
+          borderRadius: '50%',
+          objectFit: 'cover',
+          border: '3px solid #fff',
+          boxShadow: '0 2px 8px #0008',
+          opacity: visible ? 1 : 0,
+          transition: 'opacity 0.4s',
+        }}
+        loading="lazy"
+      />
+    </div>
+  );
+}
 window.ImmortalWarConfigurator = ImmortalWarConfigurator;
