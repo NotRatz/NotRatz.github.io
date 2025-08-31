@@ -7,18 +7,15 @@ const { useMemo, useState } = React;
 const DEFAULT_MAPS = [
   {
     name: "Morus Isle",
-    imageUrl:
-      "https://static1.thegamerimages.com/wordpress/wp-content/uploads/2021/08/Naraka-Bladepoint-Beginners-Tips-And-Tricks.jpg",
+    imageUrl: "/assets/morus-isle.png",
   },
   {
     name: "Holoroth",
-    imageUrl:
-      "https://www.narakathegame.com/pc/zt/20220722165632/img/bg_ab32b039.jpg",
+    imageUrl: "/assets/holoroth.png",
   },
   {
     name: "Perdoria",
-    imageUrl:
-      "https://nie.res.netease.com/r/pic/20240702/e22a5db3-18bb-404f-9843-d42fb2d83ad8.png",
+    imageUrl: "/assets/perdoria.png",
   },
 ];
 
@@ -238,6 +235,9 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
             overflow: 'hidden',
             background: 'transparent',
             boxShadow: '0 0 16px 0 #0004',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}>
             <img
               src={avatarUrl}
@@ -248,11 +248,13 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
                 top: 0,
                 width: '120px',
                 height: '90px',
-                objectFit: 'cover',
+                objectFit: 'contain',
+                objectPosition: 'center',
                 zIndex: 1,
                 clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
                 opacity: 0,
                 animation: 'avatar-swipe-in 0.5s cubic-bezier(.7,1.5,.5,1) forwards',
+                background: 'transparent',
               }}
               loading="lazy"
             />
