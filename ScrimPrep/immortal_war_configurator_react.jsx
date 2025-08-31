@@ -248,7 +248,7 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
                 top: 0,
                 width: '120px',
                 height: '90px',
-                objectFit: 'contain',
+                objectFit: 'cover',
                 objectPosition: 'center',
                 zIndex: 1,
                 clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
