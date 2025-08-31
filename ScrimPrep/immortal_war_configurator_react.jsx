@@ -25,99 +25,99 @@ const DEFAULT_MAPS = [
 const DEFAULT_CHARACTERS = [
   {
     name: "Viper Ning",
-    avatarUrl: "assets/viper-ning.png",
+    avatarUrl: "assets/icon_hero_mangjianke_01.png",
   },
   {
     name: "Feria Shen",
-    avatarUrl: "assets/feria-shen.png",
+    avatarUrl: "assets/icon_hero_shenmiao_01.png",
   },
   {
     name: "Tianhai",
-    avatarUrl: "assets/tianhai.png",
+    avatarUrl: "assets/icon_hero_youseng_01.png",
   },
   {
     name: "Ziping Yin",
-    avatarUrl: "assets/ziping-yin.png",
+    avatarUrl: "assets/icon_hero_yinziping_01.png",
   },
   {
     name: "Temulch",
-    avatarUrl: "assets/temulch.png",
+    avatarUrl: "assets/icon_hero_caoyuan_01.png",
   },
   {
     name: "Tarka Ji",
-    avatarUrl: "assets/tarka-ji.png",
+    avatarUrl: "assets/icon_hero_haoxia_01.png",
   },
   {
     name: "Kurumi",
-    avatarUrl: "assets/kurumi.png",
+    avatarUrl: "assets/icon_hero_onmyoji_01.png",
   },
   {
     name: "Yoto Hime",
-    avatarUrl: "assets/yoto-hime.png",
+    avatarUrl: "assets/icon_hero_yaodaoji_01.png",
   },
   {
     name: "Valda Cui",
-    avatarUrl: "assets/valda-cui.png",
+    avatarUrl: "assets/icon_hero_cuisanniang_01.png",
   },
   {
     name: "Yueshan",
-    avatarUrl: "assets/yueshan.png",
+    avatarUrl: "assets/icon_hero_yueshan_01.png",
   },
   {
     name: "Wuchen",
-    avatarUrl: "assets/wuchen.png",
+    avatarUrl: "assets/icon_hero_wuchen_01.png",
   },
   {
     name: "Justina Gu",
-    avatarUrl: "assets/justina-gu.png",
+    avatarUrl: "assets/icon_hero_guqinghan_01.png",
   },
   {
     name: "Takeda Nobutada",
-    avatarUrl: "assets/takeda-nobutada.png",
+    avatarUrl: "assets/icon_hero_wutian_01.png",
   },
   {
     name: "Matari",
-    avatarUrl: "assets/matari.png",
+    avatarUrl: "assets/icon_hero_hanhaimomin_01.png",
   },
   {
     name: "Akos Hu",
-    avatarUrl: "assets/akos-hu.png",
+    avatarUrl: "assets/icon_hero_huwei_01.png",
   },
   {
     name: "Zai",
-    avatarUrl: "assets/zai.png",
+    avatarUrl: "assets/icon_hero_jiyingying_01.png",
   },
   {
     name: "Tessa",
-    avatarUrl: "assets/tessa.png",
+    avatarUrl: "assets/icon_hero_yulinglong_01.png",
   },
   {
     name: "Hadi",
-    avatarUrl: "assets/hadi.png",
+    avatarUrl: "assets/icon_hero_hadi_01.png",
   },
   {
     name: "Shayol Wei",
-    avatarUrl: "assets/shayol-wei.png",
+    avatarUrl: "assets/icon_hero_weiqing_01.png",
   },
   {
     name: "Lyam Liu",
-    avatarUrl: "assets/lyam-liu.png",
+    avatarUrl: "assets/icon_hero_liulian_01.png",
   },
   {
     name: "Kylin Zhang",
-    avatarUrl: "assets/kylin-zhang.png",
+    avatarUrl: "assets/icon_hero_zhangqiling_01.png",
   },
   {
     name: "Cyra",
-    avatarUrl: "assets/cyra.png",
+    avatarUrl: "assets/icon_hero_xila_01.png",
   },
   {
     name: "Lannie",
-    avatarUrl: "assets/lannie.png",
+    avatarUrl: "assets/icon_hero_lanmeng_01.png",
   },
   {
     name: "Inor Wan",
-    avatarUrl: "assets/inor-wan.png",
+    avatarUrl: "assets/icon_hero_wanjun_01.png",
   },
 ];
 
@@ -210,9 +210,6 @@ function RoundCard({ idx, selection, maps, characters, onChange, errors }) {
                 alt={map || "Map"}
                 className="w-full h-full object-cover"
                 loading="lazy"
-                crossOrigin="anonymous"
-                referrerPolicy="no-referrer"
-                onError={e => { e.currentTarget.src = "https://via.placeholder.com/960x540?text=Map+Preview"; }}
               />
             ) : (
               <div className="w-full h-full bg-gray-800/70 flex items-center justify-center text-xs text-gray-400">No image</div>
