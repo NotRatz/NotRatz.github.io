@@ -32,13 +32,156 @@
     #loadingOverlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
     .spinner { width: 3rem; height: 3rem; border: 4px solid #555; border-top-color: #ffd700; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Easter Egg Styles */
+    .easter-egg-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* KO Animation */
+    .ko-animation {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 8rem;
+      font-weight: bold;
+      color: #ff0000;
+      text-shadow: 4px 4px 0px #000, -4px -4px 0px #000, 4px -4px 0px #000, -4px 4px 0px #000;
+      opacity: 0;
+      animation: koEffect 2s ease-out forwards;
+    }
+
+    @keyframes koEffect {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(-10deg); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(5deg); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+    }
+
+    /* Victory Animation */
+    .victory-animation {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      font-weight: bold;
+      color: #ffd700;
+      text-shadow: 2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000;
+      opacity: 0;
+      animation: victoryEffect 3s ease-out forwards;
+    }
+
+    @keyframes victoryEffect {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
+      20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+      80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    }
+
+    /* Hadouken Fireball Animation */
+    .hadouken-fireball {
+      position: fixed;
+      left: -100px;
+      top: 50%;
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, #ff4500 0%, #ffd700 50%, #ff6b00 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 20px #ff4500, 0 0 40px #ffd700;
+      animation: fireballMove 2s linear forwards;
+    }
+
+    @keyframes fireballMove {
+      0% { left: -100px; transform: rotate(0deg) scale(0.5); }
+      50% { transform: rotate(180deg) scale(1); }
+      100% { left: calc(100% + 100px); transform: rotate(360deg) scale(0.5); }
+    }
+
+    /* Secret Power-up Button */
+    .secret-powerup {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #ffd700, #ffed4e);
+      border: 3px solid #ff6b00;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      animation: powerupPulse 2s infinite;
+      z-index: 1000;
+    }
+
+    .secret-powerup.visible {
+      opacity: 0.8;
+    }
+
+    .secret-powerup:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    @keyframes powerupPulse {
+      0%, 100% { box-shadow: 0 0 10px #ffd700; }
+      50% { box-shadow: 0 0 20px #ff6b00, 0 0 30px #ffd700; }
+    }
+
+    /* Sword Clash Effect */
+    .sword-clash {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(135,206,250,0.6) 30%, rgba(0,0,0,0) 70%);
+      border-radius: 50%;
+      animation: clashEffect 1s ease-out forwards;
+    }
+
+    @keyframes clashEffect {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
+    }
+
+    /* Logo pulsing effect */
+    .logo-secret-active {
+      animation: secretLogoPulse 0.5s ease-in-out;
+    }
+
+    @keyframes secretLogoPulse {
+      0%, 100% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.05); filter: brightness(1.2); }
+    }
   </style>
 </head>
 <body class="bg-gray-900 text-gray-200 overflow-x-hidden">
   <div id="loadingOverlay" class="flex"><div class="spinner"></div></div>
+  
+  <!-- Easter Egg Overlay Container -->
+  <div id="easterEggOverlay" class="easter-egg-overlay"></div>
+  
+  <!-- Secret Power-up Button -->
+  <div id="secretPowerup" class="secret-powerup" title="Power Up!">
+    ⚡
+  </div>
 
   <header class="hero-section h-screen flex flex-col items-center justify-center text-center">
-    <img src="assets/strive-logo.png" alt="Strive Logo" class="w-64 md:w-80 lg:w-96 mb-8" data-aos="fade-down" />
+    <img id="striveLogo" src="assets/strive-logo.png" alt="Strive Logo" class="w-64 md:w-80 lg:w-96 mb-8 cursor-pointer" data-aos="fade-down" />
     <div class="text-gray-300 text-4xl animate-bounce" data-aos="fade-up" data-aos-delay="500">&#x2193;</div>
   </header>
 
@@ -91,7 +234,14 @@
 
   <script src="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.js"></script>
   <script>
-    AOS.init({ once: true, duration: 800 });
+    // Initialize AOS if available
+    try {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ once: true, duration: 800 });
+      }
+    } catch (e) {
+      console.log('AOS initialization failed:', e);
+    }
 
     // Robust nav helper (doesn't rely on global event; works across browsers)
     function nav(e, opts = {}) {
@@ -118,6 +268,311 @@
     }
     window.addEventListener('pageshow', hideLoadingOverlay);
     window.addEventListener('DOMContentLoaded', hideLoadingOverlay);
+
+    // EASTER EGGS IMPLEMENTATION
+    class EasterEggSounds {
+      constructor() {
+        this.audioContext = null;
+        this.init();
+      }
+
+      async init() {
+        try {
+          this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (e) {
+          console.log('Web Audio API not supported');
+        }
+      }
+
+      playKOSound() {
+        if (!this.audioContext) return;
+        
+        // Create dramatic KO sound effect
+        const oscillator1 = this.audioContext.createOscillator();
+        const oscillator2 = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        
+        oscillator1.connect(gainNode);
+        oscillator2.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+        
+        oscillator1.frequency.setValueAtTime(150, this.audioContext.currentTime);
+        oscillator1.frequency.exponentialRampToValueAtTime(50, this.audioContext.currentTime + 0.5);
+        
+        oscillator2.frequency.setValueAtTime(80, this.audioContext.currentTime);
+        oscillator2.frequency.exponentialRampToValueAtTime(30, this.audioContext.currentTime + 0.8);
+        
+        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.8);
+        
+        oscillator1.start();
+        oscillator2.start();
+        oscillator1.stop(this.audioContext.currentTime + 0.8);
+        oscillator2.stop(this.audioContext.currentTime + 0.8);
+      }
+
+      playVictorySound() {
+        if (!this.audioContext) return;
+        
+        // Create victory fanfare
+        const frequencies = [262, 330, 392, 523]; // C, E, G, C octave
+        frequencies.forEach((freq, i) => {
+          setTimeout(() => {
+            const oscillator = this.audioContext.createOscillator();
+            const gainNode = this.audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(freq, this.audioContext.currentTime);
+            gainNode.gain.setValueAtTime(0.2, this.audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.3);
+            
+            oscillator.start();
+            oscillator.stop(this.audioContext.currentTime + 0.3);
+          }, i * 150);
+        });
+      }
+
+      playSwordClashSound() {
+        if (!this.audioContext) return;
+        
+        // Create metallic clash sound
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        const filterNode = this.audioContext.createBiquadFilter();
+        
+        oscillator.connect(filterNode);
+        filterNode.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+        
+        oscillator.type = 'sawtooth';
+        oscillator.frequency.setValueAtTime(800, this.audioContext.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(200, this.audioContext.currentTime + 0.2);
+        
+        filterNode.type = 'highpass';
+        filterNode.frequency.setValueAtTime(1000, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.4, this.audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.3);
+        
+        oscillator.start();
+        oscillator.stop(this.audioContext.currentTime + 0.3);
+      }
+
+      playHadoukenSound() {
+        if (!this.audioContext) return;
+        
+        // Create whoosh sound for fireball
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        const filterNode = this.audioContext.createBiquadFilter();
+        
+        oscillator.connect(filterNode);
+        filterNode.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+        
+        oscillator.type = 'sawtooth';
+        oscillator.frequency.setValueAtTime(60, this.audioContext.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(300, this.audioContext.currentTime + 0.5);
+        
+        filterNode.type = 'lowpass';
+        filterNode.frequency.setValueAtTime(2000, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.7);
+        
+        oscillator.start();
+        oscillator.stop(this.audioContext.currentTime + 0.7);
+      }
+    }
+
+    class EasterEggManager {
+      constructor() {
+        this.sounds = new EasterEggSounds();
+        this.konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+        this.konamiProgress = 0;
+        this.typedText = '';
+        this.logoClickTimer = null;
+        this.secretPowerupVisible = false;
+        
+        this.init();
+      }
+
+      init() {
+        // Konami code detection
+        document.addEventListener('keydown', this.handleKeyDown.bind(this));
+        
+        // Logo click detection
+        const logo = document.getElementById('striveLogo');
+        if (logo) {
+          logo.addEventListener('mousedown', this.handleLogoMouseDown.bind(this));
+          logo.addEventListener('mouseup', this.handleLogoMouseUp.bind(this));
+          logo.addEventListener('mouseleave', this.handleLogoMouseUp.bind(this));
+        }
+        
+        // Secret power-up button
+        const powerup = document.getElementById('secretPowerup');
+        if (powerup) {
+          powerup.addEventListener('click', this.handlePowerupClick.bind(this));
+        }
+        
+        // Show secret powerup after some interaction
+        setTimeout(() => this.showSecretPowerup(), 10000);
+        
+        // Text input detection
+        document.addEventListener('keypress', this.handleTextInput.bind(this));
+      }
+
+      handleKeyDown(event) {
+        // Konami code detection
+        if (event.code === this.konamiCode[this.konamiProgress]) {
+          this.konamiProgress++;
+          if (this.konamiProgress === this.konamiCode.length) {
+            this.triggerKOEffect();
+            this.konamiProgress = 0;
+          }
+        } else {
+          this.konamiProgress = 0;
+        }
+      }
+
+      handleTextInput(event) {
+        this.typedText += event.key.toLowerCase();
+        
+        // Keep only last 20 characters
+        if (this.typedText.length > 20) {
+          this.typedText = this.typedText.slice(-20);
+        }
+        
+        // Check for "hadouken"
+        if (this.typedText.includes('hadouken')) {
+          this.triggerHadoukenEffect();
+          this.typedText = '';
+        }
+      }
+
+      handleLogoMouseDown() {
+        this.logoClickTimer = setTimeout(() => {
+          this.triggerVictoryEffect();
+        }, 1000); // Hold for 1 second
+        
+        const logo = document.getElementById('striveLogo');
+        if (logo) {
+          logo.classList.add('logo-secret-active');
+        }
+      }
+
+      handleLogoMouseUp() {
+        if (this.logoClickTimer) {
+          clearTimeout(this.logoClickTimer);
+          this.logoClickTimer = null;
+        }
+        
+        const logo = document.getElementById('striveLogo');
+        if (logo) {
+          logo.classList.remove('logo-secret-active');
+        }
+      }
+
+      handlePowerupClick() {
+        this.triggerSwordClashEffect();
+        this.hideSecretPowerup();
+        
+        // Show again after 30 seconds
+        setTimeout(() => this.showSecretPowerup(), 30000);
+      }
+
+      showSecretPowerup() {
+        const powerup = document.getElementById('secretPowerup');
+        if (powerup && !this.secretPowerupVisible) {
+          powerup.classList.add('visible');
+          this.secretPowerupVisible = true;
+        }
+      }
+
+      hideSecretPowerup() {
+        const powerup = document.getElementById('secretPowerup');
+        if (powerup) {
+          powerup.classList.remove('visible');
+          this.secretPowerupVisible = false;
+        }
+      }
+
+      triggerKOEffect() {
+        this.sounds.playKOSound();
+        this.showAnimation('ko-animation', 'K.O.!', 2000);
+      }
+
+      triggerVictoryEffect() {
+        this.sounds.playVictorySound();
+        const messages = [
+          'GG, you win!',
+          'Victory!',
+          'Flawless Victory!',
+          'Perfect!',
+          'Excellent!'
+        ];
+        const message = messages[Math.floor(Math.random() * messages.length)];
+        this.showAnimation('victory-animation', message, 3000);
+      }
+
+      triggerSwordClashEffect() {
+        this.sounds.playSwordClashSound();
+        this.showAnimation('sword-clash', '', 1000);
+      }
+
+      triggerHadoukenEffect() {
+        this.sounds.playHadoukenSound();
+        
+        const overlay = document.getElementById('easterEggOverlay');
+        if (overlay) {
+          const fireball = document.createElement('div');
+          fireball.className = 'hadouken-fireball';
+          overlay.appendChild(fireball);
+          
+          setTimeout(() => {
+            if (overlay.contains(fireball)) {
+              overlay.removeChild(fireball);
+            }
+          }, 2000);
+        }
+      }
+
+      showAnimation(className, text, duration) {
+        const overlay = document.getElementById('easterEggOverlay');
+        if (overlay) {
+          const element = document.createElement('div');
+          element.className = className;
+          element.textContent = text;
+          overlay.appendChild(element);
+          
+          setTimeout(() => {
+            if (overlay.contains(element)) {
+              overlay.removeChild(element);
+            }
+          }, duration);
+        }
+      }
+    }
+
+    // Initialize Easter Eggs when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Easter eggs immediately, but audio will be initialized on first interaction
+      const easterEggManager = new EasterEggManager();
+      
+      // Initialize audio context on first user interaction
+      const initAudioOnce = () => {
+        if (!easterEggManager.sounds.audioContext) {
+          easterEggManager.sounds.init();
+        }
+        document.removeEventListener('click', initAudioOnce);
+        document.removeEventListener('keydown', initAudioOnce);
+      };
+      
+      document.addEventListener('click', initAudioOnce);
+      document.addEventListener('keydown', initAudioOnce);
+    });
   </script>
 </body>
 </html>
