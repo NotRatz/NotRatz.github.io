@@ -1,0 +1,35 @@
+[
+  {
+    "id": "patch-2024-09",
+    "title": "Tournament scoring revamp deployed",
+    "body": "CSV ingestion now remembers your column mapping per tournament and exposes a deterministic audit log for manual overrides.",
+    "type": "release",
+    "date": "2024-09-10T15:00:00Z",
+    "cta": {
+      "label": "Review admin console",
+      "href": "/scoring/admin/?slug=strive-showcase"
+    }
+  },
+  {
+    "id": "naraka-presets",
+    "title": "NarakaTweaks presets refreshed",
+    "body": "GPU overclock guardrails, new network MTU scripts, and OS scheduler toggles are ready for team presets.",
+    "type": "narakatweaks",
+    "date": "2024-09-05T20:00:00Z",
+    "cta": {
+      "label": "Open NarakaTweaks",
+      "href": "/naraka-tweaks/"
+    }
+  },
+  {
+    "id": "egl-sync",
+    "title": "EGL planner broadcast sync",
+    "body": "Planner updates now broadcast via BroadcastChannel so each staff member sees attendance and notes in real-time across tabs.",
+    "type": "egl",
+    "date": "2024-08-28T17:00:00Z",
+    "cta": {
+      "label": "Plan your week",
+      "href": "/egl/"
+    }
+  }
+]

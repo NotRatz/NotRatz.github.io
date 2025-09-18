@@ -1,578 +1,299 @@
-  <!-- Top navigation bar -->
-  <nav class="fixed top-0 left-0 right-0 bg-black/70 backdrop-blur z-50">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <span class="font-bold text-yellow-400">Team Strive</span>
-      <div class="flex items-center gap-5 text-sm md:text-base">
-        <a href="https://twitch.tv/notratz" target="_blank" rel="noopener" class="hover:underline">Twitch</a>
-        <a href="https://www.youtube.com/@notratz" target="_blank" rel="noopener" class="hover:underline">YouTube</a>
-        <a href="https://discord.gg/teamstrive" target="_blank" rel="noopener" class="hover:underline">Discord</a>
-        <a href="https://ko-fi.com/notratz" target="_blank" rel="noopener" class="hover:underline">Ko‑Fi</a>
-        <a href="https://throne.com/notratz" target="_blank" rel="noopener" class="hover:underline">Throne</a>
-  <a href="https://github.com/notratz/Strive" target="_blank" rel="noopener" class="hover:underline">Source</a>
-      </div>
-    </div>
-  </nav>
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="shortcut icon" href="favicon.png" />
-  <link rel="shortcut icon" href="favicon.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Team Strive - Naraka: Bladepoint Community</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.css" />
-  <style>
-    body {
-      background: url('assets/naraka-bg.png') center/cover no-repeat fixed;
-      background-color: rgba(0, 0, 0, 0.85);
-      background-blend-mode: overlay;
-    }
-    #loadingOverlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
-    .spinner { width: 3rem; height: 3rem; border: 4px solid #555; border-top-color: #ffd700; border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Easter Egg Styles */
-    .easter-egg-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    /* KO Animation */
-    .ko-animation {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 8rem;
-      font-weight: bold;
-      color: #ff0000;
-      text-shadow: 4px 4px 0px #000, -4px -4px 0px #000, 4px -4px 0px #000, -4px 4px 0px #000;
-      opacity: 0;
-      animation: koEffect 2s ease-out forwards;
-    }
-
-    @keyframes koEffect {
-      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(-10deg); }
-      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(5deg); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-    }
-
-    /* Victory Animation */
-    .victory-animation {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 3rem;
-      font-weight: bold;
-      color: #ffd700;
-      text-shadow: 2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000;
-      opacity: 0;
-      animation: victoryEffect 3s ease-out forwards;
-    }
-
-    @keyframes victoryEffect {
-      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
-      20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-      80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-    }
-
-    /* Hadouken Fireball Animation */
-    .hadouken-fireball {
-      position: fixed;
-      left: -100px;
-      top: 50%;
-      width: 80px;
-      height: 80px;
-      background: radial-gradient(circle, #ff4500 0%, #ffd700 50%, #ff6b00 100%);
-      border-radius: 50%;
-      box-shadow: 0 0 20px #ff4500, 0 0 40px #ffd700;
-      animation: fireballMove 2s linear forwards;
-    }
-
-    @keyframes fireballMove {
-      0% { left: -100px; transform: rotate(0deg) scale(0.5); }
-      50% { transform: rotate(180deg) scale(1); }
-      100% { left: calc(100% + 100px); transform: rotate(360deg) scale(0.5); }
-    }
-
-    /* Secret Power-up Button */
-    .secret-powerup {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(45deg, #ffd700, #ffed4e);
-      border: 3px solid #ff6b00;
-      border-radius: 50%;
-      cursor: pointer;
-      opacity: 0;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      animation: powerupPulse 2s infinite;
-      z-index: 1000;
-    }
-
-    .secret-powerup.visible {
-      opacity: 0.8;
-    }
-
-    .secret-powerup:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
-    @keyframes powerupPulse {
-      0%, 100% { box-shadow: 0 0 10px #ffd700; }
-      50% { box-shadow: 0 0 20px #ff6b00, 0 0 30px #ffd700; }
-    }
-
-    /* Sword Clash Effect */
-    .sword-clash {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(135,206,250,0.6) 30%, rgba(0,0,0,0) 70%);
-      border-radius: 50%;
-      animation: clashEffect 1s ease-out forwards;
-    }
-
-    @keyframes clashEffect {
-      0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
-    }
-
-    /* Logo pulsing effect */
-    .logo-secret-active {
-      animation: secretLogoPulse 0.5s ease-in-out;
-    }
-
-    @keyframes secretLogoPulse {
-      0%, 100% { transform: scale(1); filter: brightness(1); }
-      50% { transform: scale(1.05); filter: brightness(1.2); }
-    }
-  </style>
-</head>
-<body class="bg-gray-900 text-gray-200 overflow-x-hidden">
-  <div id="loadingOverlay" class="flex"><div class="spinner"></div></div>
-  
-  <!-- Easter Egg Overlay Container -->
-  <div id="easterEggOverlay" class="easter-egg-overlay"></div>
-  
-  <!-- Secret Power-up Button -->
-  <div id="secretPowerup" class="secret-powerup" title="Power Up!">
-    ⚡
-  </div>
-
-  <header class="hero-section h-screen flex flex-col items-center justify-center text-center">
-    <img id="striveLogo" src="assets/strive-logo.png" alt="Strive Logo" class="w-64 md:w-80 lg:w-96 mb-8 cursor-pointer" data-aos="fade-down" />
-    <div class="text-gray-300 text-4xl animate-bounce" data-aos="fade-up" data-aos-delay="500">&#x2193;</div>
-  </header>
-
-  <section class="about-section py-16 px-4" data-aos="fade-up">
-    <div class="flex flex-col md:flex-row gap-8 max-w-5xl mx-auto items-start">
-      <div class="flex-1">
-        <h2 class="text-3xl font-bold mb-4 text-center md:text-left">About Team Strive</h2>
-        <p class="text-lg leading-relaxed text-center md:text-left mb-8">
-          Team Strive is a community of Naraka: Bladepoint content creators and players.
-          We strive to share epic gameplay, tips, and community events,
-          fostering a vibrant and positive community for all Naraka enthusiasts.
-          Just don't be cuck
-        </p>
-        <!-- Main tool buttons below About section -->
-        <div class="flex flex-row flex-wrap justify-center md:justify-start gap-4 mb-8 mt-8">
-          <a href="ScrimPrep/index.html"
-             class="px-6 py-3 text-yellow-500 border border-yellow-500 rounded-md font-semibold hover:bg-yellow-500 hover:text-gray-900 transition-colors">
-            ⚔️ EGL Scrim Preparation
-          </a>
-          <a href="https://notratz.github.io/NarakaTweaks"
-             class="px-6 py-3 text-yellow-500 border border-yellow-500 rounded-md font-semibold hover:bg-yellow-500 hover:text-gray-900 transition-colors">
-            🛠️ NarakaTweaks
-          </a>
-        </div>
-        <!-- Scoring Tool button with title bar below all other buttons -->
-        <div class="mb-8">
-          <div class="w-full flex justify-center mb-2">
-            <span class="inline-block bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded-t-md shadow">Work in Progress</span>
-          </div>
-          <div class="flex justify-center">
-            <a href="scoring/index.html"
-               onclick="return nav(event, { useOverlay: true })"
-               class="px-6 py-3 text-yellow-500 border border-yellow-500 rounded-b-md font-semibold hover:bg-yellow-500 hover:text-gray-900 transition-colors">
-              📊 Scoring Tool
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Discord widget on the right -->
-      <div class="w-full md:w-[400px] flex-shrink-0">
-        <h2 class="text-2xl font-semibold text-gray-100 mb-4 text-center">Join our Discord Community</h2>
-        <div class="mx-auto" style="max-width: 400px;">
-          <iframe src="https://discord.com/widget?id=1130709958225297510&theme=dark"
-                  width="100%" height="500" allowtransparency="true" frameborder="0"
-                  sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <script src="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.js"></script>
-  <script>
-    // Initialize AOS if available
-    try {
-      if (typeof AOS !== 'undefined') {
-        AOS.init({ once: true, duration: 800 });
-      }
-    } catch (e) {
-      console.log('AOS initialization failed:', e);
-    }
-
-    // Robust nav helper (doesn't rely on global event; works across browsers)
-    function nav(e, opts = {}) {
-      if (!e) return true;
-      const link = e.currentTarget || e.target || null;
-      const href = link && (link.getAttribute && link.getAttribute('href'));
-      if (!href) return true;
-      e.preventDefault();
-
-      if (opts.useOverlay) {
-        const o = document.getElementById('loadingOverlay');
-        if (o) o.style.display = 'flex';
-      }
-
-      // Navigate immediately; no artificial delay for localhost
-      window.location.href = href;
-      return false;
-    }
-
-    // Hide loading overlay on page load and when loaded from browser history (back/forward)
-    function hideLoadingOverlay() {
-      const o = document.getElementById('loadingOverlay');
-      if (o) o.style.display = 'none';
-    }
-    window.addEventListener('pageshow', hideLoadingOverlay);
-    window.addEventListener('DOMContentLoaded', hideLoadingOverlay);
-
-    // EASTER EGGS IMPLEMENTATION
-    class EasterEggSounds {
-      constructor() {
-        this.audioContext = null;
-        this.init();
-      }
-
-      async init() {
-        try {
-          this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        } catch (e) {
-          console.log('Web Audio API not supported');
-        }
-      }
-
-      playKOSound() {
-        if (!this.audioContext) return;
-        
-        // Create dramatic KO sound effect
-        const oscillator1 = this.audioContext.createOscillator();
-        const oscillator2 = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        
-        oscillator1.connect(gainNode);
-        oscillator2.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator1.frequency.setValueAtTime(150, this.audioContext.currentTime);
-        oscillator1.frequency.exponentialRampToValueAtTime(50, this.audioContext.currentTime + 0.5);
-        
-        oscillator2.frequency.setValueAtTime(80, this.audioContext.currentTime);
-        oscillator2.frequency.exponentialRampToValueAtTime(30, this.audioContext.currentTime + 0.8);
-        
-        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.8);
-        
-        oscillator1.start();
-        oscillator2.start();
-        oscillator1.stop(this.audioContext.currentTime + 0.8);
-        oscillator2.stop(this.audioContext.currentTime + 0.8);
-      }
-
-      playVictorySound() {
-        if (!this.audioContext) return;
-        
-        // Create victory fanfare
-        const frequencies = [262, 330, 392, 523]; // C, E, G, C octave
-        frequencies.forEach((freq, i) => {
-          setTimeout(() => {
-            const oscillator = this.audioContext.createOscillator();
-            const gainNode = this.audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(this.audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(freq, this.audioContext.currentTime);
-            gainNode.gain.setValueAtTime(0.2, this.audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.3);
-            
-            oscillator.start();
-            oscillator.stop(this.audioContext.currentTime + 0.3);
-          }, i * 150);
-        });
-      }
-
-      playSwordClashSound() {
-        if (!this.audioContext) return;
-        
-        // Create metallic clash sound
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        const filterNode = this.audioContext.createBiquadFilter();
-        
-        oscillator.connect(filterNode);
-        filterNode.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator.type = 'sawtooth';
-        oscillator.frequency.setValueAtTime(800, this.audioContext.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(200, this.audioContext.currentTime + 0.2);
-        
-        filterNode.type = 'highpass';
-        filterNode.frequency.setValueAtTime(1000, this.audioContext.currentTime);
-        
-        gainNode.gain.setValueAtTime(0.4, this.audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.3);
-        
-        oscillator.start();
-        oscillator.stop(this.audioContext.currentTime + 0.3);
-      }
-
-      playHadoukenSound() {
-        if (!this.audioContext) return;
-        
-        // Create whoosh sound for fireball
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        const filterNode = this.audioContext.createBiquadFilter();
-        
-        oscillator.connect(filterNode);
-        filterNode.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator.type = 'sawtooth';
-        oscillator.frequency.setValueAtTime(60, this.audioContext.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(300, this.audioContext.currentTime + 0.5);
-        
-        filterNode.type = 'lowpass';
-        filterNode.frequency.setValueAtTime(2000, this.audioContext.currentTime);
-        
-        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.7);
-        
-        oscillator.start();
-        oscillator.stop(this.audioContext.currentTime + 0.7);
-      }
-    }
-
-    class EasterEggManager {
-      constructor() {
-        this.sounds = new EasterEggSounds();
-        this.konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
-        this.konamiProgress = 0;
-        this.typedText = '';
-        this.logoClickTimer = null;
-        this.secretPowerupVisible = false;
-        
-        this.init();
-      }
-
-      init() {
-        // Konami code detection
-        document.addEventListener('keydown', this.handleKeyDown.bind(this));
-        
-        // Logo click detection
-        const logo = document.getElementById('striveLogo');
-        if (logo) {
-          logo.addEventListener('mousedown', this.handleLogoMouseDown.bind(this));
-          logo.addEventListener('mouseup', this.handleLogoMouseUp.bind(this));
-          logo.addEventListener('mouseleave', this.handleLogoMouseUp.bind(this));
-        }
-        
-        // Secret power-up button
-        const powerup = document.getElementById('secretPowerup');
-        if (powerup) {
-          powerup.addEventListener('click', this.handlePowerupClick.bind(this));
-        }
-        
-        // Show secret powerup after some interaction
-        setTimeout(() => this.showSecretPowerup(), 10000);
-        
-        // Text input detection
-        document.addEventListener('keypress', this.handleTextInput.bind(this));
-      }
-
-      handleKeyDown(event) {
-        // Konami code detection
-        if (event.code === this.konamiCode[this.konamiProgress]) {
-          this.konamiProgress++;
-          if (this.konamiProgress === this.konamiCode.length) {
-            this.triggerKOEffect();
-            this.konamiProgress = 0;
-          }
-        } else {
-          this.konamiProgress = 0;
-        }
-      }
-
-      handleTextInput(event) {
-        this.typedText += event.key.toLowerCase();
-        
-        // Keep only last 20 characters
-        if (this.typedText.length > 20) {
-          this.typedText = this.typedText.slice(-20);
-        }
-        
-        // Check for "hadouken"
-        if (this.typedText.includes('hadouken')) {
-          this.triggerHadoukenEffect();
-          this.typedText = '';
-        }
-      }
-
-      handleLogoMouseDown() {
-        this.logoClickTimer = setTimeout(() => {
-          this.triggerVictoryEffect();
-        }, 1000); // Hold for 1 second
-        
-        const logo = document.getElementById('striveLogo');
-        if (logo) {
-          logo.classList.add('logo-secret-active');
-        }
-      }
-
-      handleLogoMouseUp() {
-        if (this.logoClickTimer) {
-          clearTimeout(this.logoClickTimer);
-          this.logoClickTimer = null;
-        }
-        
-        const logo = document.getElementById('striveLogo');
-        if (logo) {
-          logo.classList.remove('logo-secret-active');
-        }
-      }
-
-      handlePowerupClick() {
-        this.triggerSwordClashEffect();
-        this.hideSecretPowerup();
-        
-        // Show again after 30 seconds
-        setTimeout(() => this.showSecretPowerup(), 30000);
-      }
-
-      showSecretPowerup() {
-        const powerup = document.getElementById('secretPowerup');
-        if (powerup && !this.secretPowerupVisible) {
-          powerup.classList.add('visible');
-          this.secretPowerupVisible = true;
-        }
-      }
-
-      hideSecretPowerup() {
-        const powerup = document.getElementById('secretPowerup');
-        if (powerup) {
-          powerup.classList.remove('visible');
-          this.secretPowerupVisible = false;
-        }
-      }
-
-      triggerKOEffect() {
-        this.sounds.playKOSound();
-        this.showAnimation('ko-animation', 'K.O.!', 2000);
-      }
-
-      triggerVictoryEffect() {
-        this.sounds.playVictorySound();
-        const messages = [
-          'GG, you win!',
-          'Victory!',
-          'Flawless Victory!',
-          'Perfect!',
-          'Excellent!'
-        ];
-        const message = messages[Math.floor(Math.random() * messages.length)];
-        this.showAnimation('victory-animation', message, 3000);
-      }
-
-      triggerSwordClashEffect() {
-        this.sounds.playSwordClashSound();
-        this.showAnimation('sword-clash', '', 1000);
-      }
-
-      triggerHadoukenEffect() {
-        this.sounds.playHadoukenSound();
-        
-        const overlay = document.getElementById('easterEggOverlay');
-        if (overlay) {
-          const fireball = document.createElement('div');
-          fireball.className = 'hadouken-fireball';
-          overlay.appendChild(fireball);
-          
-          setTimeout(() => {
-            if (overlay.contains(fireball)) {
-              overlay.removeChild(fireball);
-            }
-          }, 2000);
-        }
-      }
-
-      showAnimation(className, text, duration) {
-        const overlay = document.getElementById('easterEggOverlay');
-        if (overlay) {
-          const element = document.createElement('div');
-          element.className = className;
-          element.textContent = text;
-          overlay.appendChild(element);
-          
-          setTimeout(() => {
-            if (overlay.contains(element)) {
-              overlay.removeChild(element);
-            }
-          }, duration);
-        }
-      }
-    }
-
-    // Initialize Easter Eggs when DOM is loaded
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize Easter eggs immediately, but audio will be initialized on first interaction
-      const easterEggManager = new EasterEggManager();
-      
-      // Initialize audio context on first user interaction
-      const initAudioOnce = () => {
-        if (!easterEggManager.sounds.audioContext) {
-          easterEggManager.sounds.init();
-        }
-        document.removeEventListener('click', initAudioOnce);
-        document.removeEventListener('keydown', initAudioOnce);
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#05060a" />
+    <title>Team Strive · Naraka Tools & Competitive Suite</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap"
+    />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script>
+      window.__FEATURE_FLAGS = {
+        FEATURE_SERVERLESS: false,
+        FEATURE_SMOOTH_SCROLL: true,
+        FEATURE_VIEW_TRANSITIONS: true
       };
-      
-      document.addEventListener('click', initAudioOnce);
-      document.addEventListener('keydown', initAudioOnce);
-    });
-  </script>
-</body>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              base: {
+                900: 'oklch(10% 0.02 260)',
+                800: 'oklch(14% 0.02 260)',
+                700: 'oklch(19% 0.02 260)'
+              },
+              brand: {
+                cyan: {
+                  400: 'oklch(80% 0.14 205)',
+                  500: 'oklch(74% 0.16 205)'
+                },
+                pink: {
+                  400: 'oklch(80% 0.18 350)',
+                  500: 'oklch(74% 0.21 350)'
+                },
+                lime: {
+                  400: 'oklch(86% 0.18 125)',
+                  500: 'oklch(80% 0.20 125)'
+                }
+              }
+            },
+            fontFamily: {
+              display: ['\"Rajdhani\"', 'sans-serif'],
+              sans: ['\"Inter\"', 'system-ui', 'sans-serif']
+            },
+            boxShadow: {
+              glow: '0 0 0 1px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 70%), 0 14px 45px -10px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 30%)'
+            },
+            borderRadius: {
+              '2xl': '1.25rem'
+            },
+            backdropBlur: {
+              xs: '2px'
+            }
+          }
+        }
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link rel="stylesheet" href="./src/styles/base.css" />
+  </head>
+  <body class="bg-base-900 text-white min-h-screen" data-page="landing">
+    <div id="app-shell"></div>
+    <main class="relative pt-28 pb-24 overflow-hidden">
+      <div class="absolute inset-0 -z-10">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(120,255,255,0.08),_transparent_55%)]"></div>
+        <div class="absolute -right-32 top-20 h-80 w-80 rounded-full bg-brand-pink-500/20 blur-3xl"></div>
+        <div class="absolute -left-24 bottom-16 h-96 w-96 rounded-full bg-brand-cyan-500/20 blur-3xl"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(120deg,_rgba(255,255,255,0.05)_0%,_rgba(5,6,10,0.9)_45%,_rgba(5,6,10,1)_100%)]"></div>
+      </div>
+      <section class="relative z-10 px-6">
+        <div class="mx-auto max-w-6xl grid gap-12 lg:grid-cols-[1.15fr,_0.85fr] lg:items-center">
+          <div class="space-y-8">
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.35em] text-slate-300">
+              <span class="h-2 w-2 rounded-full bg-brand-cyan-400 animate-pulse"></span>
+              TEAM STRIVE SUITE
+            </span>
+            <h1 class="font-display text-4xl leading-tight text-white md:text-5xl xl:text-6xl">
+              Competitive Naraka workflows refined into one cohesive control center.
+            </h1>
+            <p class="max-w-2xl text-lg text-slate-300 md:text-xl">
+              From high performance NarakaTweaks to tournament-grade scoring dashboards, the Strive suite powers staffers, captains,
+              and competitors with reliable tooling that works offline or across your Discord-connected roster.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a
+                class="group rounded-2xl border border-brand-cyan-500/60 bg-brand-cyan-500/10 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-brand-cyan-200 transition hover:bg-brand-cyan-500 hover:text-base-900"
+                href="./naraka-tweaks/"
+              >
+                Launch NarakaTweaks
+              </a>
+              <a
+                class="group rounded-2xl border border-white/10 bg-white/5 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-slate-200 transition hover:bg-white/10 hover:text-white"
+                href="./egl/"
+              >
+                Plan scrims
+              </a>
+              <a
+                class="group rounded-2xl border border-brand-pink-500/60 bg-brand-pink-500/10 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-brand-pink-200 transition hover:bg-brand-pink-500 hover:text-base-900"
+                href="./scoring/"
+              >
+                Manage tournaments
+              </a>
+            </div>
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-glow">
+                <p class="font-semibold text-sm uppercase tracking-[0.3em] text-slate-400">Dual-mode deployment</p>
+                <p class="mt-2 text-slate-300">
+                  Static GitHub Pages bundle with offline caching. Flip FEATURE_SERVERLESS to connect to Cloudflare Workers for Discord
+                  OAuth and shared state.
+                </p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-glow">
+                <p class="font-semibold text-sm uppercase tracking-[0.3em] text-slate-400">Motion that respects context</p>
+                <p class="mt-2 text-slate-300">
+                  Motion One animations, Lenis smooth scroll, and View Transitions power the glow without breaking focus or
+                  accessibility. Toggle to Minimal anytime.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="relative mx-auto flex max-w-md flex-col gap-6 rounded-3xl border border-white/10 bg-white/5/80 p-6 backdrop-blur">
+              <header class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Live Ops Snapshot</p>
+                  <p class="mt-1 font-display text-2xl text-white">Strive Control Deck</p>
+                </div>
+                <span class="rounded-full border border-brand-cyan-500/40 bg-brand-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-brand-cyan-200">
+                  Dev Mode
+                </span>
+              </header>
+              <dl class="grid gap-4">
+                <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
+                  <dt class="text-xs uppercase tracking-[0.3em] text-slate-400">Tournament health</dt>
+                  <dd class="mt-2 flex items-center justify-between">
+                    <span class="font-display text-3xl">92%</span>
+                    <span class="text-sm text-slate-300">CSV ingestion locked · 2 matches pending review</span>
+                  </dd>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
+                  <dt class="text-xs uppercase tracking-[0.3em] text-slate-400">Scrim attendance</dt>
+                  <dd class="mt-2 flex items-center justify-between">
+                    <span class="font-display text-3xl">18</span>
+                    <span class="text-sm text-slate-300">Players confirmed for tonight</span>
+                  </dd>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
+                  <dt class="text-xs uppercase tracking-[0.3em] text-slate-400">Preset sync</dt>
+                  <dd class="mt-2 flex items-center justify-between">
+                    <span class="font-display text-3xl">5</span>
+                    <span class="text-sm text-slate-300">GPU/Network bundles cached offline</span>
+                  </dd>
+                </div>
+              </dl>
+              <footer class="rounded-2xl border border-brand-cyan-500/40 bg-brand-cyan-500/10 px-4 py-3 text-sm text-brand-cyan-200">
+                Discord-authenticated collaboration unlocks shared scoring, pick/ban audit logs, and roster sync.
+              </footer>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative z-10 mt-24 px-6">
+        <div class="mx-auto max-w-6xl">
+          <header class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p class="text-xs uppercase tracking-[0.35em] text-brand-cyan-200">Announcements</p>
+              <h2 class="mt-2 font-display text-3xl text-white md:text-4xl">Operational heartbeat</h2>
+            </div>
+            <a
+              href="#announcements"
+              class="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200 transition hover:text-white"
+            >
+              View archive
+            </a>
+          </header>
+          <div class="mt-10 grid gap-6 lg:grid-cols-[2fr,1fr]">
+            <div id="announcement-feed" class="grid gap-4">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-slate-300">
+                Loading announcements...
+              </div>
+            </div>
+            <aside class="space-y-4">
+              <div class="rounded-2xl border border-brand-lime-500/40 bg-brand-lime-500/10 p-6 shadow-glow">
+                <p class="text-xs uppercase tracking-[0.35em] text-brand-lime-200">Status</p>
+                <p class="mt-3 text-sm text-brand-lime-100">All services operational · Last publish synced 12 minutes ago.</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <h3 class="font-semibold uppercase tracking-[0.3em] text-slate-400">Quick actions</h3>
+                <ul class="mt-4 space-y-3 text-sm text-slate-300">
+                  <li><a class="hover:text-white" href="./naraka-tweaks/#presets">Review preset manager</a></li>
+                  <li><a class="hover:text-white" href="./egl/#calendar">Schedule next EGL block</a></li>
+                  <li><a class="hover:text-white" href="./scoring/#create">Configure new tournament</a></li>
+                </ul>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative z-10 mt-24 px-6">
+        <div class="mx-auto max-w-6xl">
+          <header class="text-center">
+            <p class="text-xs uppercase tracking-[0.35em] text-brand-pink-200">Product pillars</p>
+            <h2 class="mt-3 font-display text-3xl text-white md:text-4xl">Designed for staffers, pilots, and analysts</h2>
+          </header>
+          <div class="mt-12 grid gap-6 md:grid-cols-3">
+            <article class="pillar-card group">
+              <div class="pillar-card__body">
+                <h3 class="pillar-card__title">NarakaTweaks</h3>
+                <p class="pillar-card__copy">
+                  Curated GPU/CPU/OS tweaks, per-category restore scripts, and preset bundles synced to your Discord login or cached
+                  offline for LAN day.
+                </p>
+              </div>
+              <footer class="pillar-card__footer">
+                <a class="pillar-card__cta" href="./naraka-tweaks/">Open hub</a>
+                <span class="pillar-card__meta">Preset import/export · Instant search</span>
+              </footer>
+            </article>
+            <article class="pillar-card group">
+              <div class="pillar-card__body">
+                <h3 class="pillar-card__title">EGL Scrim Planner</h3>
+                <p class="pillar-card__copy">
+                  Drag-and-drop weekly calendar, squad attendance tracking, CSV/JSON exports, and shareable read-only snapshots for your
+                  staff to align.
+                </p>
+              </div>
+              <footer class="pillar-card__footer">
+                <a class="pillar-card__cta" href="./egl/">Plan scrims</a>
+                <span class="pillar-card__meta">Discord post builder · Broadcast sync</span>
+              </footer>
+            </article>
+            <article class="pillar-card group">
+              <div class="pillar-card__body">
+                <h3 class="pillar-card__title">Tournament Scoring Suite</h3>
+                <p class="pillar-card__copy">
+                  CSV ingestion with persistent column mapping, pick/ban desk with audit log, live standings, and publishing pipeline
+                  tuned for Naraka metas.
+                </p>
+              </div>
+              <footer class="pillar-card__footer">
+                <a class="pillar-card__cta" href="./scoring/">Manage brackets</a>
+                <span class="pillar-card__meta">Kill multipliers · Hero pools</span>
+              </footer>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative z-10 mt-24 px-6">
+        <div class="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-white/5 p-10">
+          <div class="grid gap-10 lg:grid-cols-[1.2fr,_0.8fr] lg:items-center">
+            <div class="space-y-6">
+              <h2 class="font-display text-3xl text-white md:text-4xl">Community and broadcasts</h2>
+              <p class="text-lg text-slate-300">
+                Catch live tournament coverage, weekly coaching streams, and Discord scrim alerts. Sponsor integrations and partner
+                shoutouts live here instead of raw link dumps.
+              </p>
+              <div class="flex flex-wrap gap-4 text-sm">
+                <a class="community-link" href="https://twitch.tv/notratz" target="_blank" rel="noopener">Twitch</a>
+                <a class="community-link" href="https://www.youtube.com/@notratz" target="_blank" rel="noopener">YouTube</a>
+                <a class="community-link" href="https://discord.gg/teamstrive" target="_blank" rel="noopener">Discord</a>
+                <a class="community-link" href="https://ko-fi.com/notratz" target="_blank" rel="noopener">Ko‑Fi</a>
+                <a class="community-link" href="https://throne.com/notratz" target="_blank" rel="noopener">Throne</a>
+                <a class="community-link" href="https://github.com/notratz/Strive" target="_blank" rel="noopener">GitHub Source</a>
+              </div>
+            </div>
+            <div class="space-y-4 text-sm text-slate-300">
+              <div class="rounded-2xl border border-white/10 bg-base-800/70 p-5">
+                <h3 class="text-xs uppercase tracking-[0.3em] text-slate-400">Broadcast schedule</h3>
+                <ul class="mt-3 space-y-2">
+                  <li>Thu · 19:00 ET — Naraka scrim review</li>
+                  <li>Sat · 15:00 ET — Team Strive community day</li>
+                  <li>Sun · 20:00 ET — Tournament desk with live scoring</li>
+                </ul>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-base-800/70 p-5">
+                <h3 class="text-xs uppercase tracking-[0.3em] text-slate-400">Partner highlights</h3>
+                <ul class="mt-3 space-y-2">
+                  <li>GamerSupps × Strive limited bundle</li>
+                  <li>Naraka Academy VOD library</li>
+                  <li>Community mod toolkit</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div id="modal-root"></div>
+    <script type="module" src="./src/js/app-shell.js"></script>
+    <script type="module" src="./src/js/landing-page.js"></script>
+  </body>
 </html>
