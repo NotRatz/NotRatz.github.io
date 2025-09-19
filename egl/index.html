@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#05060a" />
+    <title>EGL Scrim Planner · Team Strive</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap"
+    />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script>
+      window.__FEATURE_FLAGS = {
+        FEATURE_SERVERLESS: false,
+        FEATURE_SMOOTH_SCROLL: true,
+        FEATURE_VIEW_TRANSITIONS: true
+      };
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              base: {
+                900: 'oklch(10% 0.02 260)',
+                800: 'oklch(14% 0.02 260)',
+                700: 'oklch(19% 0.02 260)'
+              },
+              brand: {
+                cyan: {
+                  400: 'oklch(80% 0.14 205)',
+                  500: 'oklch(74% 0.16 205)'
+                },
+                pink: {
+                  400: 'oklch(80% 0.18 350)',
+                  500: 'oklch(74% 0.21 350)'
+                },
+                lime: {
+                  400: 'oklch(86% 0.18 125)',
+                  500: 'oklch(80% 0.20 125)'
+                }
+              }
+            },
+            fontFamily: {
+              display: ['\"Rajdhani\"', 'sans-serif'],
+              sans: ['\"Inter\"', 'system-ui', 'sans-serif']
+            },
+            boxShadow: {
+              glow: '0 0 0 1px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 70%), 0 14px 45px -10px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 30%)'
+            },
+            borderRadius: {
+              '2xl': '1.25rem'
+            }
+          }
+        }
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link rel="stylesheet" href="../src/styles/base.css" />
+  </head>
+  <body class="bg-base-900 text-white min-h-screen" data-page="egl">
+    <div id="app-shell"></div>
+    <main class="relative pt-28 pb-24">
+      <section class="px-6">
+        <div class="mx-auto max-w-6xl">
+          <span class="inline-flex items-center gap-2 rounded-full border border-brand-lime-500/40 bg-brand-lime-500/10 px-4 py-1.5 text-xs uppercase tracking-[0.35em] text-brand-lime-200">
+            EGL Scrim Planner
+          </span>
+          <div class="mt-6 grid gap-12 lg:grid-cols-[1.2fr,_0.8fr] lg:items-start">
+            <div class="space-y-6">
+              <h1 class="font-display text-4xl text-white md:text-5xl">Plan scrims, track attendance, and publish Discord-ready posts.</h1>
+              <p class="text-lg text-slate-300">
+                Build your weekly scrim schedule, assign squads and substitutes, capture notes, and export data for analysts. Broadcast
+                updates across tabs automatically with shareable read-only links.
+              </p>
+              <div class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
+                <span data-chip data-tag-lime>Calendar</span>
+                <span data-chip data-tag-cyan>Discord posts</span>
+                <span data-chip data-tag-pink>Broadcast sync</span>
+              </div>
+            </div>
+            <div data-surface class="p-6 space-y-4">
+              <h2 class="font-display text-xl text-white">Planner health</h2>
+              <dl class="grid gap-3 text-sm text-slate-300">
+                <div class="flex items-center justify-between"><dt>Scheduled scrims</dt><dd id="metric-total-events">0</dd></div>
+                <div class="flex items-center justify-between"><dt>Attendance confirmed</dt><dd id="metric-attendance">0</dd></div>
+                <div class="flex items-center justify-between"><dt>Last saved</dt><dd id="metric-last-saved">Not saved</dd></div>
+              </dl>
+              <button
+                type="button"
+                data-generate-discord
+                class="rounded-2xl border border-brand-cyan-500/40 bg-brand-cyan-500/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-brand-cyan-200 transition hover:bg-brand-cyan-500 hover:text-base-950"
+              >Copy Discord summary</button>
+              <p class="text-xs uppercase tracking-[0.3em] text-slate-500" id="share-status">Share link ready once generated.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-16 px-6" id="calendar">
+        <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[2fr,_1fr]">
+          <div data-surface class="p-6 space-y-4">
+            <header class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 class="font-display text-2xl text-white">Weekly grid</h2>
+                <p class="text-sm text-slate-400">Click a slot to create a scrim. Drag to adjust duration.</p>
+              </div>
+              <div class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.3em]">
+                <button type="button" data-add-event class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-200 transition hover:text-white">New scrim</button>
+                <button type="button" data-clear-week class="rounded-full border border-brand-pink-500/40 bg-brand-pink-500/10 px-4 py-2 text-brand-pink-200 transition hover:bg-brand-pink-500 hover:text-base-950">Clear week</button>
+              </div>
+            </header>
+            <div class="overflow-x-auto" data-scroll-shadow-bottom>
+              <div id="planner-grid" class="min-w-[800px] border border-white/10 rounded-2xl overflow-hidden"></div>
+            </div>
+          </div>
+          <aside class="space-y-6">
+            <div data-surface class="p-6 space-y-4">
+              <header class="flex items-center justify-between">
+                <h3 class="font-display text-xl text-white">Roster & squads</h3>
+                <button type="button" data-add-squad class="text-xs uppercase tracking-[0.3em] text-brand-cyan-200 hover:text-brand-cyan-100">Add squad</button>
+              </header>
+              <div id="squad-list" class="space-y-4 text-sm text-slate-300"></div>
+            </div>
+            <div data-surface class="p-6 space-y-4">
+              <header class="flex items-center justify-between">
+                <h3 class="font-display text-xl text-white">Event details</h3>
+                <span class="text-xs uppercase tracking-[0.3em] text-slate-500" id="event-detail-label">Select a scrim</span>
+              </header>
+              <div id="event-detail" class="space-y-4 text-sm text-slate-300">
+                <p>No scrim selected.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="mt-12 px-6">
+        <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.5fr,_1fr]">
+          <div data-surface class="p-6 space-y-4">
+            <header class="flex items-center justify-between">
+              <h3 class="font-display text-xl text-white">Notes</h3>
+              <span class="text-xs uppercase tracking-[0.3em] text-slate-500">Auto-saves</span>
+            </header>
+            <textarea
+              id="planner-notes"
+              class="min-h-[200px] w-full rounded-2xl border border-white/10 bg-base-800/70 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-brand-cyan-500"
+              placeholder="Matchups, hero requests, staff reminders..."
+            ></textarea>
+            <div class="text-xs uppercase tracking-[0.3em] text-slate-500" id="notes-preview"></div>
+          </div>
+          <aside data-surface class="p-6 space-y-4">
+            <h3 class="font-display text-xl text-white">Exports & sharing</h3>
+            <div class="grid gap-3 text-sm">
+              <button type="button" data-export-json class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200 transition hover:text-white">Download JSON</button>
+              <button type="button" data-export-csv class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200 transition hover:text-white">Download CSV</button>
+              <button type="button" data-generate-share class="rounded-2xl border border-brand-cyan-500/40 bg-brand-cyan-500/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-brand-cyan-200 transition hover:bg-brand-cyan-500 hover:text-base-950">Generate share link</button>
+              <input type="text" id="share-link" readonly class="w-full rounded-2xl border border-white/10 bg-base-800/70 px-4 py-2 text-xs text-slate-300" placeholder="Shareable link appears here" />
+            </div>
+            <p class="text-xs uppercase tracking-[0.3em] text-slate-500">
+              BroadcastChannel keeps local tabs synced. Share link encodes read-only snapshot for staff.
+            </p>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <div id="modal-root"></div>
+    <script type="module" src="../src/js/app-shell.js"></script>
+    <script type="module" src="../src/js/egl-planner.js"></script>
+  </body>
+</html>
