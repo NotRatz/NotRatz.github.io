@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#05060a" />
+    <title>NarakaTweaks Hub · Team Strive</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap"
+    />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script>
+      window.__FEATURE_FLAGS = {
+        FEATURE_SERVERLESS: false,
+        FEATURE_SMOOTH_SCROLL: true,
+        FEATURE_VIEW_TRANSITIONS: true
+      };
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              base: {
+                900: 'oklch(10% 0.02 260)',
+                800: 'oklch(14% 0.02 260)',
+                700: 'oklch(19% 0.02 260)'
+              },
+              brand: {
+                cyan: {
+                  400: 'oklch(80% 0.14 205)',
+                  500: 'oklch(74% 0.16 205)'
+                },
+                pink: {
+                  400: 'oklch(80% 0.18 350)',
+                  500: 'oklch(74% 0.21 350)'
+                },
+                lime: {
+                  400: 'oklch(86% 0.18 125)',
+                  500: 'oklch(80% 0.20 125)'
+                }
+              }
+            },
+            fontFamily: {
+              display: ['\"Rajdhani\"', 'sans-serif'],
+              sans: ['\"Inter\"', 'system-ui', 'sans-serif']
+            },
+            boxShadow: {
+              glow: '0 0 0 1px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 70%), 0 14px 45px -10px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 30%)'
+            },
+            borderRadius: {
+              '2xl': '1.25rem'
+            }
+          }
+        }
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link rel="stylesheet" href="../src/styles/base.css" />
+  </head>
+  <body class="bg-base-900 text-white min-h-screen" data-page="naraka-tweaks">
+    <div id="app-shell"></div>
+    <main class="relative pt-28 pb-24">
+      <section class="px-6">
+        <div class="mx-auto max-w-6xl">
+          <span class="inline-flex items-center gap-2 rounded-full border border-brand-pink-500/40 bg-brand-pink-500/10 px-4 py-1.5 text-xs uppercase tracking-[0.35em] text-brand-pink-200">
+            NarakaTweaks Hub
+          </span>
+          <div class="mt-6 grid gap-12 lg:grid-cols-[1.1fr,_0.9fr] lg:items-start">
+            <div class="space-y-6">
+              <h1 class="font-display text-4xl text-white md:text-5xl">Preset-driven performance for LAN day reliability.</h1>
+              <p class="text-lg text-slate-300">
+                Curate GPU, CPU, OS, and network adjustments with instant search, copyable scripts, and automatic JSON exports per
+                Discord ID. Everything works offline and syncs when serverless mode connects.
+              </p>
+              <div class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
+                <span data-chip data-tag-pink>Preset sync</span>
+                <span data-chip data-tag-cyan>Copy scripts</span>
+                <span data-chip data-tag-lime>Offline ready</span>
+              </div>
+            </div>
+            <div class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-glow">
+              <header class="flex items-center justify-between gap-3">
+                <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Active selection</p>
+                <button
+                  type="button"
+                  data-clear-selection
+                  class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200 transition hover:text-white"
+                >Clear all</button>
+              </header>
+              <div data-divider></div>
+              <ul id="selection-summary" class="space-y-3 text-sm text-slate-300">
+                <li>No tweaks selected yet. Pick entries below to build your preset.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-16 px-6" id="filters">
+        <div class="mx-auto max-w-6xl grid gap-6 lg:grid-cols-[2fr,_1fr]">
+          <div data-surface class="p-6">
+            <form class="grid gap-4" data-search-form>
+              <label class="text-xs uppercase tracking-[0.3em] text-slate-400">Search tweaks</label>
+              <input
+                type="search"
+                name="query"
+                placeholder="Search GPU, scheduler, MTU..."
+                class="rounded-2xl border border-white/10 bg-base-800/70 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-brand-cyan-500"
+              />
+              <div class="flex flex-wrap gap-2" role="tablist" aria-label="Tweak categories">
+                <button type="button" class="category-pill" data-category="all">All</button>
+              </div>
+            </form>
+          </div>
+          <aside data-surface class="p-6">
+            <header class="flex items-center justify-between gap-2">
+              <h2 class="font-display text-xl text-white">Preset manager</h2>
+              <button
+                type="button"
+                data-export-presets
+                class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-300 transition hover:text-white"
+              >Export</button>
+            </header>
+            <p class="mt-2 text-sm text-slate-400">
+              Save multiple preset bundles, import from teammates, and sync once Discord auth is connected.
+            </p>
+            <div data-divider></div>
+            <div class="space-y-4" id="preset-list" aria-live="polite"></div>
+            <div class="mt-6 grid gap-3 text-sm">
+              <button
+                type="button"
+                data-save-preset
+                class="rounded-2xl border border-brand-cyan-500/40 bg-brand-cyan-500/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-brand-cyan-200 transition hover:bg-brand-cyan-500 hover:text-base-950"
+              >Save selection as preset</button>
+              <label class="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200 transition hover:text-white">
+                <span>Import JSON</span>
+                <input type="file" accept="application/json" class="hidden" data-import-presets />
+              </label>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="mt-12 px-6" id="results">
+        <div class="mx-auto max-w-6xl grid gap-6 lg:grid-cols-[2fr,_1fr]">
+          <div id="tweak-results" class="grid gap-4">
+            <div data-empty-state>Loading tweaks...</div>
+          </div>
+          <aside data-surface class="p-6 space-y-4">
+            <h2 class="font-display text-xl text-white">Knowledge base</h2>
+            <p class="text-sm text-slate-300">
+              Need extra context? Expand FAQs sourced from Team Strive analysts. Motion is minimal to keep reading comfortable.
+            </p>
+            <details class="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <summary class="cursor-pointer text-sm font-semibold text-white">How do presets sync across devices?</summary>
+              <p class="mt-2 text-sm text-slate-300">
+                Presets are stored locally first. When you authenticate with Discord in serverless mode, your namespace syncs to
+                Workers KV and merges automatically. Conflicts prompt you inside the preset manager.
+              </p>
+            </details>
+            <details class="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <summary class="cursor-pointer text-sm font-semibold text-white">Can I revert everything quickly?</summary>
+              <p class="mt-2 text-sm text-slate-300">
+                Each tweak has a revert script. Use the multi-select to create a "Restore" preset before a LAN so you can roll back
+                in one click.
+              </p>
+            </details>
+            <details class="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <summary class="cursor-pointer text-sm font-semibold text-white">Is there telemetry?</summary>
+              <p class="mt-2 text-sm text-slate-300">
+                No tracking scripts, no analytics. Metrics live client-side only. Opt into anonymous export if you want to share
+                aggregated settings with staff.
+              </p>
+            </details>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <div id="modal-root"></div>
+    <script type="module" src="../src/js/app-shell.js"></script>
+    <script type="module" src="../src/js/naraka-tweaks.js"></script>
+  </body>
+</html>

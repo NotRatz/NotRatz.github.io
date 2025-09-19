@@ -1,0 +1,102 @@
+[
+  {
+    "id": "gpu",
+    "label": "GPU",
+    "description": "Optimise rendering latency and frame pacing for competitive play.",
+    "items": [
+      {
+        "id": "gpu-priority",
+        "title": "High priority renderer",
+        "summary": "Forces Naraka.exe into high priority with reliable GPU scheduling.",
+        "script": "reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl /v Win32PrioritySeparation /t REG_DWORD /d 26 /f",
+        "revert": "reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl /v Win32PrioritySeparation /t REG_DWORD /d 2 /f",
+        "tags": ["Windows", "Scheduler"]
+      },
+      {
+        "id": "gpu-hags",
+        "title": "Hardware accelerated GPU scheduling",
+        "summary": "Enables hardware accelerated GPU scheduling and disables MPO flicker.",
+        "script": "reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers /v HwSchMode /t REG_DWORD /d 2 /f\nreg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers /v OverlayTestMode /t REG_DWORD /d 5 /f",
+        "revert": "reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers /v HwSchMode /t REG_DWORD /d 1 /f\nreg delete HKLM\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers /v OverlayTestMode /f",
+        "tags": ["NVIDIA", "AMD"]
+      },
+      {
+        "id": "gpu-cache",
+        "title": "Shader cache purge",
+        "summary": "Clears DXCache and GLCache folders before stage play.",
+        "script": "powershell -Command \"Remove-Item -Recurse -Force $env:LOCALAPPDATA\\NVIDIA\\GLCache, $env:LOCALAPPDATA\\NVIDIA\\DXCache\"",
+        "revert": "No revert needed — caches rebuild automatically.",
+        "tags": ["Housekeeping"]
+      }
+    ]
+  },
+  {
+    "id": "cpu",
+    "label": "CPU",
+    "description": "Reduce context switching and improve input thread responsiveness.",
+    "items": [
+      {
+        "id": "cpu-park",
+        "title": "Unpark performance cores",
+        "summary": "Disables core parking on plugged-in power plans.",
+        "script": "powercfg -setacvalueindex SCHEME_CURRENT SUB_PROCESSOR CPMINCORES 100\npowercfg -setactive SCHEME_CURRENT",
+        "revert": "powercfg -setacvalueindex SCHEME_CURRENT SUB_PROCESSOR CPMINCORES 10\npowercfg -setactive SCHEME_CURRENT",
+        "tags": ["Power"]
+      },
+      {
+        "id": "cpu-game-mode",
+        "title": "Game mode essentials",
+        "summary": "Keeps Windows Game Mode enabled but disables DVR and captures.",
+        "script": "reg add HKCU\\System\\GameConfigStore /v GameDVR_FSEBehaviorMode /t REG_DWORD /d 2 /f\nreg add HKCU\\System\\GameConfigStore /v GameDVR_FSEBehavior /t REG_DWORD /d 2 /f\nreg add HKCU\\System\\GameConfigStore /v GameDVR_Enabled /t REG_DWORD /d 0 /f",
+        "revert": "reg delete HKCU\\System\\GameConfigStore /v GameDVR_FSEBehaviorMode /f\nreg delete HKCU\\System\\GameConfigStore /v GameDVR_FSEBehavior /f\nreg add HKCU\\System\\GameConfigStore /v GameDVR_Enabled /t REG_DWORD /d 1 /f",
+        "tags": ["Windows", "Input"]
+      }
+    ]
+  },
+  {
+    "id": "os",
+    "label": "OS",
+    "description": "Trim background noise and apply Naraka specific shell tweaks.",
+    "items": [
+      {
+        "id": "os-services",
+        "title": "Disable extraneous services",
+        "summary": "Turns off SysMain and DiagTrack for consistent frametimes.",
+        "script": "sc stop SysMain\nsc config SysMain start= disabled\nsc stop DiagTrack\nsc config DiagTrack start= disabled",
+        "revert": "sc config SysMain start= auto\nsc start SysMain\nsc config DiagTrack start= demand",
+        "tags": ["Services"]
+      },
+      {
+        "id": "os-visuals",
+        "title": "Minimal desktop composition",
+        "summary": "Applies dark high-contrast theme, disables animations, and sets focus visuals.",
+        "script": "reg add HKCU\\Control Panel\\Desktop /v DragFullWindows /t REG_SZ /d 0 /f\nreg add HKCU\\Control Panel\\Desktop /v UserPreferencesMask /t REG_BINARY /d 9001008010000000 /f",
+        "revert": "reg add HKCU\\Control Panel\\Desktop /v DragFullWindows /t REG_SZ /d 1 /f",
+        "tags": ["Accessibility"]
+      }
+    ]
+  },
+  {
+    "id": "network",
+    "label": "Network",
+    "description": "Stabilise packet delivery for EGL scrims and tournament hosting.",
+    "items": [
+      {
+        "id": "network-mtu",
+        "title": "Optimised MTU",
+        "summary": "Sets adapter MTU to 1480 and disables ECN for scrim environments.",
+        "script": "netsh interface ipv4 set subinterface \"Ethernet\" mtu=1480 store=persistent\nnetsh interface tcp set global ecncapability=disabled",
+        "revert": "netsh interface ipv4 set subinterface \"Ethernet\" mtu=1500 store=persistent\nnetsh interface tcp set global ecncapability=default",
+        "tags": ["LAN", "Reliability"]
+      },
+      {
+        "id": "network-qos",
+        "title": "Naraka QoS prioritisation",
+        "summary": "Tags Naraka.exe outbound traffic with DSCP 46 and disables Nagle's algorithm.",
+        "script": "reg add HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Psched /v NonBestEffortLimit /t REG_DWORD /d 0 /f\nreg add HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters /v TcpNoDelay /t REG_DWORD /d 1 /f",
+        "revert": "reg delete HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Psched /v NonBestEffortLimit /f\nreg delete HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters /v TcpNoDelay /f",
+        "tags": ["QoS"]
+      }
+    ]
+  }
+]
