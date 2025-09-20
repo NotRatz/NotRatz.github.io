@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#05060a" />
+    <title>Tournaments · Team Strive Scoring Desk</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap"
+    />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script>
+      window.__FEATURE_FLAGS = {
+        FEATURE_SERVERLESS: false,
+        FEATURE_SMOOTH_SCROLL: true,
+        FEATURE_VIEW_TRANSITIONS: true
+      };
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              base: {
+                900: 'oklch(10% 0.02 260)',
+                850: 'oklch(13% 0.03 260)',
+                800: 'oklch(19% 0.02 260)'
+              },
+              brand: {
+                cyan: {
+                  400: 'oklch(80% 0.14 205)',
+                  500: 'oklch(74% 0.16 205)'
+                },
+                pink: {
+                  400: 'oklch(80% 0.18 350)',
+                  500: 'oklch(74% 0.21 350)'
+                },
+                lime: {
+                  400: 'oklch(86% 0.18 125)',
+                  500: 'oklch(80% 0.20 125)'
+                }
+              }
+            },
+            fontFamily: {
+              display: ['\"Rajdhani\"', 'sans-serif'],
+              sans: ['\"Inter\"', 'system-ui', 'sans-serif']
+            },
+            boxShadow: {
+              glow: '0 0 0 1px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 70%), 0 18px 50px -12px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 35%)'
+            },
+            borderRadius: {
+              '2xl': '1.25rem'
+            }
+          }
+        }
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link rel="stylesheet" href="../src/styles/base.css" />
+  </head>
+  <body class="bg-base-900 text-white min-h-screen" data-page="tournaments">
+    <div id="app-shell"></div>
+    <main class="relative pt-28 pb-24">
+      <div class="absolute inset-0 -z-10">
+        <div class="absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(circle_at_top,_rgba(255,170,255,0.18),_transparent_65%)]"></div>
+        <div class="absolute -left-32 top-24 h-[26rem] w-[26rem] rounded-full bg-brand-cyan-500/25 blur-3xl"></div>
+        <div class="absolute -right-36 top-10 h-[28rem] w-[28rem] rounded-full bg-brand-pink-500/25 blur-3xl"></div>
+        <div class="absolute left-1/2 bottom-0 h-[26rem] w-[26rem] -translate-x-1/2 rounded-full bg-brand-lime-500/20 blur-[140px]"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(155deg,_rgba(5,6,10,0.95)_0%,_rgba(11,14,22,0.88)_35%,_rgba(5,6,10,0.96)_100%)]"></div>
+      </div>
+
+      <section class="relative z-10 px-6" data-tournaments-hero>
+        <div class="mx-auto max-w-6xl grid gap-12 lg:grid-cols-[1.15fr,_0.85fr]">
+          <div class="space-y-6">
+            <span class="inline-flex items-center gap-2 rounded-full border border-brand-pink-500/40 bg-brand-pink-500/15 px-4 py-1.5 text-xs uppercase tracking-[0.45em] text-brand-pink-100">
+              Tournaments
+            </span>
+            <h1 class="font-display text-4xl text-white md:text-5xl">
+              The Strive scoring desk is back with guided exports and tuned presets.
+            </h1>
+            <p class="text-lg text-slate-300">
+              Upload up to six Naraka CSV exports, adjust kill multipliers and placement points, then publish polished standings in
+              seconds. The workflow mirrors the classic EGL prep—now simply renamed for tournaments.
+            </p>
+            <div data-surface class="p-6 space-y-5">
+              <label class="block space-y-3">
+                <span class="text-xs uppercase tracking-[0.4em] text-slate-400">Attach CSV results</span>
+                <div class="flex flex-col gap-3 rounded-2xl border border-dashed border-white/15 bg-base-850/80 p-5 text-sm text-slate-300">
+                  <input
+                    type="file"
+                    accept=".csv"
+                    multiple
+                    data-file-input
+                    class="hidden"
+                  />
+                  <button
+                    type="button"
+                    data-file-label
+                    class="w-full rounded-full border border-white/15 bg-white/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200 transition hover:bg-white/20 hover:text-white"
+                  >
+                    Choose CSV files
+                  </button>
+                  <p class="text-xs uppercase tracking-[0.3em] text-slate-500" data-file-info>No files selected</p>
+                </div>
+              </label>
+              <div class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.35em]">
+                <button
+                  type="button"
+                  data-process
+                  class="rounded-full border border-brand-cyan-500/50 bg-brand-cyan-500/10 px-5 py-2 font-semibold text-brand-cyan-100 transition hover:bg-brand-cyan-500 hover:text-base-950"
+                >
+                  Generate standings
+                </button>
+                <button
+                  type="button"
+                  data-clear
+                  class="rounded-full border border-white/15 bg-white/10 px-5 py-2 font-semibold text-slate-200 transition hover:bg-white/20 hover:text-white"
+                >
+                  Reset inputs
+                </button>
+              </div>
+              <p class="text-xs uppercase tracking-[0.35em] text-slate-500" data-processing-status>
+                Expecting CSV exports from the Naraka results viewer.
+              </p>
+            </div>
+            <div class="rounded-[1.75rem] border border-white/10 bg-base-850/80 p-6">
+              <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">Expected columns</h2>
+              <p class="mt-3 text-sm text-slate-300">
+                Required headers: <code class="text-brand-cyan-200">TeamID</code>, <code class="text-brand-cyan-200">PlayerName</code>,
+                <code class="text-brand-cyan-200">Rank</code>, <code class="text-brand-cyan-200">KillCount</code>,
+                <code class="text-brand-cyan-200">TotalHurt</code>.
+              </p>
+              <p class="mt-2 text-xs uppercase tracking-[0.35em] text-slate-500">Optional: MatchID, Placement, Damage, Notes.</p>
+            </div>
+          </div>
+          <div class="space-y-6">
+            <div data-surface class="p-6 space-y-4">
+              <h2 class="font-display text-2xl text-white">Scoring template</h2>
+              <p class="text-sm text-slate-300">
+                Adjust multipliers and placement values to match your ruleset. Placement points are divided evenly across the configured
+                team size so triads receive the classic Strive balance.
+              </p>
+              <div class="grid gap-4 sm:grid-cols-2">
+                <label class="space-y-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+                  Team size
+                  <input
+                    type="number"
+                    min="1"
+                    max="6"
+                    step="1"
+                    value="3"
+                    data-config="teamSize"
+                    class="w-full rounded-2xl border border-white/15 bg-base-850/80 px-4 py-2 text-sm text-white"
+                  />
+                </label>
+                <label class="space-y-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+                  Kill multiplier · 1st
+                  <input
+                    type="number"
+                    step="0.1"
+                    value="1.2"
+                    data-config="kill1"
+                    class="w-full rounded-2xl border border-white/15 bg-base-850/80 px-4 py-2 text-sm text-white"
+                  />
+                </label>
+                <label class="space-y-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+                  Kill multiplier · 2nd
+                  <input
+                    type="number"
+                    step="0.1"
+                    value="1.0"
+                    data-config="kill2"
+                    class="w-full rounded-2xl border border-white/15 bg-base-850/80 px-4 py-2 text-sm text-white"
+                  />
+                </label>
+                <label class="space-y-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+                  Kill multiplier · 3rd
+                  <input
+                    type="number"
+                    step="0.1"
+                    value="0.8"
+                    data-config="kill3"
+                    class="w-full rounded-2xl border border-white/15 bg-base-850/80 px-4 py-2 text-sm text-white"
+                  />
+                </label>
+                <label class="space-y-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+                  Kill multiplier · others
+                  <input
+                    type="number"
+                    step="0.1"
+                    value="0.6"
+                    data-config="killDefault"
+                    class="w-full rounded-2xl border border-white/15 bg-base-850/80 px-4 py-2 text-sm text-white"
+                  />
+                </label>
+                <label class="space-y-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+                  Placement points · 1st
+                  <input
+                    type="number"
+                    step="1"
+                    value="3"
+                    data-config="place1"
+                    class="w-full rounded-2xl border border-white/15 bg-base-850/80 px-4 py-2 text-sm text-white"
+                  />
+                </label>
+                <label class="space-y-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+                  Placement points · 2nd
+                  <input
+                    type="number"
+                    step="1"
+                    value="2"
+                    data-config="place2"
+                    class="w-full rounded-2xl border border-white/15 bg-base-850/80 px-4 py-2 text-sm text-white"
+                  />
+                </label>
+                <label class="space-y-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+                  Placement points · 3rd
+                  <input
+                    type="number"
+                    step="1"
+                    value="1"
+                    data-config="place3"
+                    class="w-full rounded-2xl border border-white/15 bg-base-850/80 px-4 py-2 text-sm text-white"
+                  />
+                </label>
+                <label class="space-y-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+                  Placement points · others
+                  <input
+                    type="number"
+                    step="1"
+                    value="0"
+                    data-config="placeDefault"
+                    class="w-full rounded-2xl border border-white/15 bg-base-850/80 px-4 py-2 text-sm text-white"
+                  />
+                </label>
+              </div>
+            </div>
+            <div data-surface class="p-6">
+              <h2 class="text-xs uppercase tracking-[0.35em] text-slate-400">Processing metrics</h2>
+              <div class="metric-grid mt-4">
+                <div class="metric-card">
+                  <span>Teams</span>
+                  <strong data-metric="teams">--</strong>
+                </div>
+                <div class="metric-card">
+                  <span>Players</span>
+                  <strong data-metric="players">--</strong>
+                </div>
+                <div class="metric-card">
+                  <span>Total kills</span>
+                  <strong data-metric="kills">--</strong>
+                </div>
+                <div class="metric-card">
+                  <span>Top score</span>
+                  <strong data-metric="score">--</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative z-10 mt-20 px-6" id="standings">
+        <div class="mx-auto max-w-6xl space-y-8">
+          <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p class="text-xs uppercase tracking-[0.45em] text-brand-cyan-200">Standings</p>
+              <h2 class="mt-2 font-display text-3xl text-white md:text-4xl">Latest Strive computation</h2>
+            </div>
+            <div class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.35em]">
+              <button
+                type="button"
+                data-export
+                class="rounded-full border border-white/15 bg-white/10 px-5 py-2 font-semibold text-slate-200 transition hover:bg-white/20 hover:text-white disabled:opacity-40 disabled:pointer-events-none"
+                disabled
+              >
+                Download standings CSV
+              </button>
+            </div>
+          </header>
+          <div id="tournament-scoreboard" class="scoreboard-empty">
+            Upload your CSV files and press “Generate standings” to populate the tournament leaderboard.
+          </div>
+        </div>
+      </section>
+    </main>
+    <div id="modal-root"></div>
+    <script type="module" src="../src/js/app-shell.js"></script>
+    <script type="module" src="../src/js/tournaments.js"></script>
+  </body>
+</html>

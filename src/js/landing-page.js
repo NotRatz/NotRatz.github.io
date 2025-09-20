@@ -2,7 +2,8 @@ import { getAnnouncements, formatAnnouncementDate } from './announcements.js';
 import { animate, inView } from './motion.js';
 
 const feed = document.getElementById('announcement-feed');
-const heroSection = document.querySelector('section');
+const heroSection = document.querySelector('[data-hero]');
+const heroElements = heroSection ? heroSection.querySelectorAll('[data-animate]') : null;
 const productCards = document.querySelectorAll('.pillar-card');
 
 async function renderAnnouncements() {
@@ -37,8 +38,8 @@ async function renderAnnouncements() {
 }
 
 function animateHero() {
-  if (!heroSection) return;
-  animate(heroSection.querySelectorAll('h1, p, .flex.flex-wrap, .grid'), { opacity: [0, 1], transform: ['translateY(24px)', 'translateY(0)'] }, { delay: 0.08, duration: 0.5, easing: 'cubic-bezier(.2,.8,.2,1)', stagger: 0.05 });
+  if (!heroElements || heroElements.length === 0) return;
+  animate(heroElements, { opacity: [0, 1], transform: ['translateY(24px)', 'translateY(0)'] }, { delay: 0.08, duration: 0.5, easing: 'cubic-bezier(.2,.8,.2,1)', stagger: 0.06 });
 }
 
 function animateProductCards() {
