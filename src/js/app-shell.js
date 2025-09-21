@@ -16,7 +16,7 @@ const NAVIGATION = [
   { label: 'Home', href: '/', page: 'landing' },
   { label: 'NarakaTweaks', href: '/naraka-tweaks/', page: 'naraka-tweaks' },
   { label: 'EGL Planner', href: '/egl/', page: 'egl' },
-  { label: 'Tournaments', href: '/tournaments/', page: 'tournaments' }
+  { label: 'Scoring Suite', href: '/scoring/', page: 'scoring' }
 ];
 
 let navElement;

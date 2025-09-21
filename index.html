@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#05060a" />
-    <title>Team Strive · Competitive Portal</title>
+    <title>Team Strive · Naraka Tools & Competitive Suite</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
@@ -24,8 +24,8 @@
             colors: {
               base: {
                 900: 'oklch(10% 0.02 260)',
-                850: 'oklch(13% 0.03 260)',
-                800: 'oklch(19% 0.02 260)'
+                800: 'oklch(14% 0.02 260)',
+                700: 'oklch(19% 0.02 260)'
               },
               brand: {
                 cyan: {
@@ -47,7 +47,7 @@
               sans: ['\"Inter\"', 'system-ui', 'sans-serif']
             },
             boxShadow: {
-              glow: '0 0 0 1px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 70%), 0 18px 50px -12px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 35%)'
+              glow: '0 0 0 1px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 70%), 0 14px 45px -10px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 30%)'
             },
             borderRadius: {
               '2xl': '1.25rem'
@@ -64,133 +64,137 @@
   </head>
   <body class="bg-base-900 text-white min-h-screen" data-page="landing">
     <div id="app-shell"></div>
-    <main class="relative overflow-hidden pt-28 pb-24">
+    <main class="relative pt-28 pb-24 overflow-hidden">
       <div class="absolute inset-0 -z-10">
-        <div class="absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(circle_at_top,_rgba(120,255,255,0.2),_transparent_65%)]"></div>
-        <div class="absolute -left-32 top-40 h-96 w-96 rounded-full bg-brand-cyan-500/25 blur-3xl"></div>
-        <div class="absolute -right-36 top-12 h-[28rem] w-[28rem] rounded-full bg-brand-pink-500/25 blur-3xl"></div>
-        <div class="absolute left-1/3 bottom-0 h-[24rem] w-[24rem] rounded-full bg-brand-lime-500/20 blur-[140px]"></div>
-        <div class="absolute inset-0 bg-[linear-gradient(160deg,_rgba(5,6,10,0.95)_0%,_rgba(5,6,10,0.85)_40%,_rgba(13,16,24,0.92)_100%)]"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(120,255,255,0.08),_transparent_55%)]"></div>
+        <div class="absolute -right-32 top-20 h-80 w-80 rounded-full bg-brand-pink-500/20 blur-3xl"></div>
+        <div class="absolute -left-24 bottom-16 h-96 w-96 rounded-full bg-brand-cyan-500/20 blur-3xl"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(120deg,_rgba(255,255,255,0.05)_0%,_rgba(5,6,10,0.9)_45%,_rgba(5,6,10,1)_100%)]"></div>
       </div>
-
-      <section class="relative z-10 px-6" data-hero>
-        <div class="mx-auto flex min-h-[70vh] max-w-6xl flex-col items-center justify-center gap-10 text-center lg:min-h-[75vh]">
-          <div class="relative mx-auto w-60 sm:w-72 md:w-80" data-hero-emblem data-animate>
-            <div class="hero-emblem__halo" aria-hidden="true"></div>
-            <div class="hero-emblem__orb" aria-hidden="true"></div>
-            <img src="./assets/strive-logo.png" alt="Team Strive logo" class="hero-emblem__logo" />
-            <div class="hero-emblem__orbit hero-emblem__orbit--cyan" aria-hidden="true"></div>
-            <div class="hero-emblem__orbit hero-emblem__orbit--pink" aria-hidden="true"></div>
-          </div>
-          <div class="space-y-4" data-animate>
-            <p class="text-xs uppercase tracking-[0.55em] text-brand-cyan-200">Team Strive competitive network</p>
-            <h1 class="font-display text-4xl leading-tight text-white md:text-5xl">
-              One guided home for optimization, scrim planning, and tournament scoring.
+      <section class="relative z-10 px-6">
+        <div class="mx-auto max-w-6xl grid gap-12 lg:grid-cols-[1.15fr,_0.85fr] lg:items-center">
+          <div class="space-y-8">
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.35em] text-slate-300">
+              <span class="h-2 w-2 rounded-full bg-brand-cyan-400 animate-pulse"></span>
+              TEAM STRIVE SUITE
+            </span>
+            <h1 class="font-display text-4xl leading-tight text-white md:text-5xl xl:text-6xl">
+              Competitive Naraka workflows refined into one cohesive control center.
             </h1>
-            <p class="mx-auto max-w-3xl text-lg text-slate-300 md:text-xl">
-              The original Strive emblem returns front and center, anchoring a refreshed portal that shepherds players, staffers,
-              and analysts directly to the tools that matter.
+            <p class="max-w-2xl text-lg text-slate-300 md:text-xl">
+              From high performance NarakaTweaks to tournament-grade scoring dashboards, the Strive suite powers staffers, captains,
+              and competitors with reliable tooling that works offline or across your Discord-connected roster.
             </p>
+            <div class="flex flex-wrap gap-4">
+              <a
+                class="group rounded-2xl border border-brand-cyan-500/60 bg-brand-cyan-500/10 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-brand-cyan-200 transition hover:bg-brand-cyan-500 hover:text-base-900"
+                href="./naraka-tweaks/"
+              >
+                Launch NarakaTweaks
+              </a>
+              <a
+                class="group rounded-2xl border border-white/10 bg-white/5 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-slate-200 transition hover:bg-white/10 hover:text-white"
+                href="./egl/"
+              >
+                Plan scrims
+              </a>
+              <a
+                class="group rounded-2xl border border-brand-pink-500/60 bg-brand-pink-500/10 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-brand-pink-200 transition hover:bg-brand-pink-500 hover:text-base-900"
+                href="./scoring/"
+              >
+                Manage tournaments
+              </a>
+            </div>
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-glow">
+                <p class="font-semibold text-sm uppercase tracking-[0.3em] text-slate-400">Dual-mode deployment</p>
+                <p class="mt-2 text-slate-300">
+                  Static GitHub Pages bundle with offline caching. Flip FEATURE_SERVERLESS to connect to Cloudflare Workers for Discord
+                  OAuth and shared state.
+                </p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-glow">
+                <p class="font-semibold text-sm uppercase tracking-[0.3em] text-slate-400">Motion that respects context</p>
+                <p class="mt-2 text-slate-300">
+                  Motion One animations, Lenis smooth scroll, and View Transitions power the glow without breaking focus or
+                  accessibility. Toggle to Minimal anytime.
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="grid w-full max-w-4xl gap-4 sm:grid-cols-3" data-animate>
-            <a class="hero-cta" data-accent="cyan" href="./naraka-tweaks/">
-              <span class="hero-cta__step">1</span>
-              <div class="hero-cta__body">
-                <h2 class="hero-cta__title">Optimize &amp; sync</h2>
-                <p class="hero-cta__copy">Curated Naraka tweaks, preset bundles, and offline-ready restore points.</p>
-                <span class="hero-cta__link">Launch NarakaTweaks</span>
-              </div>
-            </a>
-            <a class="hero-cta" data-accent="lime" href="./egl/">
-              <span class="hero-cta__step">2</span>
-              <div class="hero-cta__body">
-                <h2 class="hero-cta__title">Stage your squad</h2>
-                <p class="hero-cta__copy">Weekly grids, attendance, and Discord-ready summaries for EGL prep.</p>
-                <span class="hero-cta__link">Plan scrims</span>
-              </div>
-            </a>
-            <a class="hero-cta" data-accent="pink" href="./tournaments/">
-              <span class="hero-cta__step">3</span>
-              <div class="hero-cta__body">
-                <h2 class="hero-cta__title">Publish results</h2>
-                <p class="hero-cta__copy">Upload CSVs, tally kills, and export standings in moments.</p>
-                <span class="hero-cta__link">Open tournaments</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section class="relative z-10 mt-24 px-6" id="flow">
-        <div class="mx-auto max-w-6xl">
-          <header class="mx-auto max-w-3xl text-center">
-            <p class="text-xs uppercase tracking-[0.55em] text-brand-lime-200">Follow the route</p>
-            <h2 class="mt-3 font-display text-3xl text-white md:text-4xl">A purposeful flow that meets you where you are</h2>
-            <p class="mt-4 text-base text-slate-300 md:text-lg">
-              Start with hardware, align rosters, and close with polished scoreboards. Each stop glows with its own accent so you
-              never lose sight of the next destination.
-            </p>
-          </header>
-          <div class="flow-grid mt-12" data-flow-grid>
-            <article class="flow-step" data-accent="cyan">
-              <div class="flow-step__badge">Step 1</div>
-              <h3 class="flow-step__title">Prep every machine</h3>
-              <p class="flow-step__copy">
-                Search by GPU, CPU, or network profile. Save presets to local storage, sync to Discord accounts, and keep LAN
-                stations aligned.
-              </p>
-              <a class="flow-step__cta" href="./naraka-tweaks/">Review NarakaTweaks</a>
-            </article>
-            <article class="flow-step" data-accent="lime">
-              <div class="flow-step__badge">Step 2</div>
-              <h3 class="flow-step__title">Direct scrim prep</h3>
-              <p class="flow-step__copy">
-                Build weekly grids, capture role assignments, and auto-generate Discord posts so coaches and captains stay in lock
-                step.
-              </p>
-              <a class="flow-step__cta" href="./egl/">Coordinate EGL nights</a>
-            </article>
-            <article class="flow-step" data-accent="pink">
-              <div class="flow-step__badge">Step 3</div>
-              <h3 class="flow-step__title">Score tournaments</h3>
-              <p class="flow-step__copy">
-                Upload CSVs from Naraka results, apply tuned multipliers, and publish exports without breaking the broadcast pace.
-              </p>
-              <a class="flow-step__cta" href="./tournaments/">Open tournaments</a>
-            </article>
+          <div class="relative">
+            <div class="relative mx-auto flex max-w-md flex-col gap-6 rounded-3xl border border-white/10 bg-white/5/80 p-6 backdrop-blur">
+              <header class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Live Ops Snapshot</p>
+                  <p class="mt-1 font-display text-2xl text-white">Strive Control Deck</p>
+                </div>
+                <span class="rounded-full border border-brand-cyan-500/40 bg-brand-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-brand-cyan-200">
+                  Dev Mode
+                </span>
+              </header>
+              <dl class="grid gap-4">
+                <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
+                  <dt class="text-xs uppercase tracking-[0.3em] text-slate-400">Tournament health</dt>
+                  <dd class="mt-2 flex items-center justify-between">
+                    <span class="font-display text-3xl">92%</span>
+                    <span class="text-sm text-slate-300">CSV ingestion locked · 2 matches pending review</span>
+                  </dd>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
+                  <dt class="text-xs uppercase tracking-[0.3em] text-slate-400">Scrim attendance</dt>
+                  <dd class="mt-2 flex items-center justify-between">
+                    <span class="font-display text-3xl">18</span>
+                    <span class="text-sm text-slate-300">Players confirmed for tonight</span>
+                  </dd>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
+                  <dt class="text-xs uppercase tracking-[0.3em] text-slate-400">Preset sync</dt>
+                  <dd class="mt-2 flex items-center justify-between">
+                    <span class="font-display text-3xl">5</span>
+                    <span class="text-sm text-slate-300">GPU/Network bundles cached offline</span>
+                  </dd>
+                </div>
+              </dl>
+              <footer class="rounded-2xl border border-brand-cyan-500/40 bg-brand-cyan-500/10 px-4 py-3 text-sm text-brand-cyan-200">
+                Discord-authenticated collaboration unlocks shared scoring, pick/ban audit logs, and roster sync.
+              </footer>
+            </div>
           </div>
         </div>
       </section>
 
       <section class="relative z-10 mt-24 px-6">
-        <div class="mx-auto max-w-6xl rounded-[2.25rem] border border-white/10 bg-white/5 p-8 md:p-12">
-          <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div class="mx-auto max-w-6xl">
+          <header class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p class="text-xs uppercase tracking-[0.45em] text-brand-cyan-200">Announcements</p>
+              <p class="text-xs uppercase tracking-[0.35em] text-brand-cyan-200">Announcements</p>
               <h2 class="mt-2 font-display text-3xl text-white md:text-4xl">Operational heartbeat</h2>
             </div>
             <a
               href="#announcements"
-              class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200 transition hover:bg-white/20 hover:text-white"
+              class="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200 transition hover:text-white"
             >
               View archive
             </a>
           </header>
-          <div class="mt-10 grid gap-8 lg:grid-cols-[2fr,_1fr]">
+          <div class="mt-10 grid gap-6 lg:grid-cols-[2fr,1fr]">
             <div id="announcement-feed" class="grid gap-4">
-              <div class="rounded-[1.75rem] border border-white/10 bg-white/5 p-6 text-slate-300">Loading announcements...</div>
-            </div>
-            <aside class="space-y-5">
-              <div class="rounded-[1.75rem] border border-brand-lime-500/40 bg-brand-lime-500/15 p-6 shadow-glow">
-                <p class="text-xs uppercase tracking-[0.45em] text-brand-lime-100">Status</p>
-                <p class="mt-3 text-sm text-brand-lime-50">All services operational · Last publish synced moments ago.</p>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-slate-300">
+                Loading announcements...
               </div>
-              <div class="rounded-[1.75rem] border border-white/10 bg-base-850/80 p-6">
-                <h3 class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">Quick actions</h3>
+            </div>
+            <aside class="space-y-4">
+              <div class="rounded-2xl border border-brand-lime-500/40 bg-brand-lime-500/10 p-6 shadow-glow">
+                <p class="text-xs uppercase tracking-[0.35em] text-brand-lime-200">Status</p>
+                <p class="mt-3 text-sm text-brand-lime-100">All services operational · Last publish synced 12 minutes ago.</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <h3 class="font-semibold uppercase tracking-[0.3em] text-slate-400">Quick actions</h3>
                 <ul class="mt-4 space-y-3 text-sm text-slate-300">
-                  <li><a class="transition hover:text-white" href="./naraka-tweaks/#presets">Review preset manager</a></li>
-                  <li><a class="transition hover:text-white" href="./egl/#calendar">Schedule next EGL block</a></li>
-                  <li><a class="transition hover:text-white" href="./tournaments/#standings">Generate standings</a></li>
+                  <li><a class="hover:text-white" href="./naraka-tweaks/#presets">Review preset manager</a></li>
+                  <li><a class="hover:text-white" href="./egl/#calendar">Schedule next EGL block</a></li>
+                  <li><a class="hover:text-white" href="./scoring/#create">Configure new tournament</a></li>
                 </ul>
               </div>
             </aside>
@@ -201,45 +205,47 @@
       <section class="relative z-10 mt-24 px-6">
         <div class="mx-auto max-w-6xl">
           <header class="text-center">
-            <p class="text-xs uppercase tracking-[0.55em] text-brand-pink-200">Product pillars</p>
+            <p class="text-xs uppercase tracking-[0.35em] text-brand-pink-200">Product pillars</p>
             <h2 class="mt-3 font-display text-3xl text-white md:text-4xl">Designed for staffers, pilots, and analysts</h2>
           </header>
           <div class="mt-12 grid gap-6 md:grid-cols-3">
-            <article class="pillar-card group" data-pillar="naraka">
+            <article class="pillar-card group">
               <div class="pillar-card__body">
                 <h3 class="pillar-card__title">NarakaTweaks</h3>
                 <p class="pillar-card__copy">
-                  Curated GPU, CPU, OS, and network tweaks with instant search, revert snippets, and preset sharing for every LAN
-                  station.
+                  Curated GPU/CPU/OS tweaks, per-category restore scripts, and preset bundles synced to your Discord login or cached
+                  offline for LAN day.
                 </p>
               </div>
               <footer class="pillar-card__footer">
                 <a class="pillar-card__cta" href="./naraka-tweaks/">Open hub</a>
-                <span class="pillar-card__meta">Preset import/export · Offline ready</span>
+                <span class="pillar-card__meta">Preset import/export · Instant search</span>
               </footer>
             </article>
-            <article class="pillar-card group" data-pillar="egl">
+            <article class="pillar-card group">
               <div class="pillar-card__body">
                 <h3 class="pillar-card__title">EGL Scrim Planner</h3>
                 <p class="pillar-card__copy">
-                  Weekly grid builder, roster assignments, attendance tracking, and Discord formatted exports tuned for EGL prep.
+                  Drag-and-drop weekly calendar, squad attendance tracking, CSV/JSON exports, and shareable read-only snapshots for your
+                  staff to align.
                 </p>
               </div>
               <footer class="pillar-card__footer">
                 <a class="pillar-card__cta" href="./egl/">Plan scrims</a>
-                <span class="pillar-card__meta">Broadcast sync · Markdown notes</span>
+                <span class="pillar-card__meta">Discord post builder · Broadcast sync</span>
               </footer>
             </article>
-            <article class="pillar-card group" data-pillar="tournaments">
+            <article class="pillar-card group">
               <div class="pillar-card__body">
-                <h3 class="pillar-card__title">Tournaments</h3>
+                <h3 class="pillar-card__title">Tournament Scoring Suite</h3>
                 <p class="pillar-card__copy">
-                  Upload Naraka CSV exports, apply Strive scoring presets, and publish polished standings with a single export.
+                  CSV ingestion with persistent column mapping, pick/ban desk with audit log, live standings, and publishing pipeline
+                  tuned for Naraka metas.
                 </p>
               </div>
               <footer class="pillar-card__footer">
-                <a class="pillar-card__cta" href="./tournaments/">Manage brackets</a>
-                <span class="pillar-card__meta">Custom multipliers · CSV output</span>
+                <a class="pillar-card__cta" href="./scoring/">Manage brackets</a>
+                <span class="pillar-card__meta">Kill multipliers · Hero pools</span>
               </footer>
             </article>
           </div>
@@ -247,13 +253,13 @@
       </section>
 
       <section class="relative z-10 mt-24 px-6">
-        <div class="mx-auto max-w-6xl rounded-[2.25rem] border border-white/10 bg-base-850/80 p-10">
+        <div class="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-white/5 p-10">
           <div class="grid gap-10 lg:grid-cols-[1.2fr,_0.8fr] lg:items-center">
             <div class="space-y-6">
               <h2 class="font-display text-3xl text-white md:text-4xl">Community and broadcasts</h2>
               <p class="text-lg text-slate-300">
-                Catch live tournament coverage, weekly coaching streams, and Discord scrim alerts. Sponsor integrations and
-                partner shoutouts live here instead of raw link dumps.
+                Catch live tournament coverage, weekly coaching streams, and Discord scrim alerts. Sponsor integrations and partner
+                shoutouts live here instead of raw link dumps.
               </p>
               <div class="flex flex-wrap gap-4 text-sm">
                 <a class="community-link" href="https://twitch.tv/notratz" target="_blank" rel="noopener">Twitch</a>
@@ -265,16 +271,16 @@
               </div>
             </div>
             <div class="space-y-4 text-sm text-slate-300">
-              <div class="rounded-[1.75rem] border border-white/10 bg-base-800/70 p-5">
-                <h3 class="text-xs uppercase tracking-[0.35em] text-slate-400">Broadcast schedule</h3>
+              <div class="rounded-2xl border border-white/10 bg-base-800/70 p-5">
+                <h3 class="text-xs uppercase tracking-[0.3em] text-slate-400">Broadcast schedule</h3>
                 <ul class="mt-3 space-y-2">
                   <li>Thu · 19:00 ET — Naraka scrim review</li>
                   <li>Sat · 15:00 ET — Team Strive community day</li>
                   <li>Sun · 20:00 ET — Tournament desk with live scoring</li>
                 </ul>
               </div>
-              <div class="rounded-[1.75rem] border border-white/10 bg-base-800/70 p-5">
-                <h3 class="text-xs uppercase tracking-[0.35em] text-slate-400">Partner highlights</h3>
+              <div class="rounded-2xl border border-white/10 bg-base-800/70 p-5">
+                <h3 class="text-xs uppercase tracking-[0.3em] text-slate-400">Partner highlights</h3>
                 <ul class="mt-3 space-y-2">
                   <li>GamerSupps × Strive limited bundle</li>
                   <li>Naraka Academy VOD library</li>

@@ -7,7 +7,7 @@
     "date": "2024-09-10T15:00:00Z",
     "cta": {
       "label": "Review admin console",
-      "href": "/tournaments/#admin"
+      "href": "/scoring/admin/?slug=strive-showcase"
     }
   },
   {

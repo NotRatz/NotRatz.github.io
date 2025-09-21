@@ -3,7 +3,7 @@
 _Last updated: 2025-09-18 20:58 UTC_
 
 ## 1. Current Snapshot
-- **Information architecture**: `/` (landing), `/naraka-tweaks/`, `/egl/`, and `/tournaments/` are live HTML entry points using the shared app shell. The tournaments page now covers CSV upload + standings; deeper admin/public flows from the original scoring spec remain to be built.
+- **Information architecture**: `/` (landing), `/naraka-tweaks/`, and `/egl/` are live HTML entry points that mount the shared app shell and page-specific modules. Tournament scoring routes exist only as empty folders (`/scoring/…`) and still need markup and logic.
 - **Shared runtime**: `src/js/app-shell.js` injects the global nav, footer, auth modal, toast system, feature toggles, and service worker registration across every page. Motion helpers (`src/js/motion.js`) lazily load Motion One & Lenis based on stored user preferences.
 - **State & auth**: `src/js/storage.js` persists per-identity state (mock Discord ID or `local`) in `localStorage` with BroadcastChannel fan-out. `src/js/auth.js` only exposes a developer login modal; no real Discord OAuth flow is wired yet.
 - **Data sources**: Structured JSON lives under `assets/data/` (`announcements.json`, `tweaks.json`). Hero/heroine art for the future scoring UI is pre-seeded under `assets/`.
@@ -32,7 +32,7 @@ _Last updated: 2025-09-18 20:58 UTC_
 
 ## 3. Outstanding Work / TODOs
 ### Tournament Scoring Suite
-- Extend the tournaments experience with the advanced admin/public flows (creation, scoring config, pick/ban desk, live standings, registration, exports) originally scoped for the `/scoring/...` routes. Decide whether to keep `/tournaments/` naming or alias legacy paths.
+- Build HTML + JS for `/scoring/`, `/scoring/admin/`, `/scoring/t/:slug/`, and `/scoring/t/:slug/admin/` matching the spec (tournament creation, scoring config, pick/ban desk, live standings, registration, exports).
 - Implement scoring data models, CSV ingestion wizard, deterministic computation helpers, and hero pool UI using the seeded assets.
 - Wire storage sync for tournaments + CSV mappings in `storage.js` (stubs exist but unused).
 
