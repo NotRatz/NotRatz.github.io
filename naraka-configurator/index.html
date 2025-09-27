@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Naraka Settings Configurator</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>Naraka Bladepoint - Settings Configurator</h1>
+      <p class="muted">Edit the settings below and export a new <code>QualitySettingsData.json</code>.</p>
+    </header>
+
+    <main class="layout">
+      <section class="panel" id="editor-panel">
+        <div class="toolbar">
+          <button id="btn-reset">Reset to default</button>
+          <button id="btn-load-file">Load from file…</button>
+          <input id="file-input" type="file" accept="application/json" style="display:none" />
+          <button id="btn-copy">Copy JSON</button>
+          <button id="btn-download">Download JSON</button>
+        </div>
+
+        <div id="editor"></div>
+      </section>
+
+      <aside class="panel" id="preview-panel">
+        <h2>Preview</h2>
+        <pre id="json-preview" class="preview"></pre>
+        <div class="presets">
+          <label>Presets:</label>
+          <select id="preset-select">
+            <option value="">-- choose preset --</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="custom">Custom (no changes)</option>
+          </select>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer muted">Reference: https://old.naraka.wiki/en/Graphic-Settings</footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
