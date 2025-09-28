@@ -64,21 +64,45 @@
   </head>
   <body class="bg-base-900 text-white min-h-screen" data-page="landing">
     <div id="app-shell"></div>
+    <!-- Prominent centered site header/logo -->
+    <header class="site-header" id="siteHeader">
+      <div class="mx-auto max-w-6xl px-6 flex justify-center">
+        <img id="siteLogo" src="/assets/strive-logo.png" alt="Strive" class="site-logo" />
+      </div>
+    </header>
+    <script>
+      (function(){
+        const hdr = document.getElementById('siteHeader');
+        const logo = document.getElementById('siteLogo');
+        // entrance animation
+        requestAnimationFrame(()=>{
+          logo.classList.add('animate-pop');
+          logo.classList.add('logo-enter');
+        });
+        // toggle sticky blur when scrolled
+        let lastScroll = 0;
+        function onScroll(){
+          const y = window.scrollY || document.documentElement.scrollTop;
+          if (y > 24) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled');
+          lastScroll = y;
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      })();
+    </script>
     <main class="relative pt-28 pb-24 overflow-hidden">
       <div class="absolute inset-0 -z-10">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(120,255,255,0.08),_transparent_55%)]"></div>
         <div class="absolute -right-32 top-20 h-80 w-80 rounded-full bg-brand-pink-500/20 blur-3xl"></div>
         <div class="absolute -left-24 bottom-16 h-96 w-96 rounded-full bg-brand-cyan-500/20 blur-3xl"></div>
-        <div class="absolute inset-0 bg-[linear-gradient(120deg,_rgba(255,255,255,0.05)_0%,_rgba(5,6,10,0.9)_45%,_rgba(5,6,10,1)_100%)]"></div>
-        <div class="hero-slow-zoom" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-[linear-gradient(120deg,_rgba(255,255,255,0.05)_0%,_rgba(5,6,10,0.9)_45%,_rgba(5,6,10,1)_100%)]"></div>
+  <!-- hero background uses CSS variable --hero-bg; default points to /assets/naraka-bg.png -->
+  <div class="hero-slow-zoom" aria-hidden="true" style="--hero-bg: url('/assets/naraka-bg.png')"></div>
       </div>
       <section class="relative z-10 px-6">
         <div class="mx-auto max-w-6xl grid gap-12 lg:grid-cols-[1.15fr,_0.85fr] lg:items-center">
           <div class="space-y-8">
-            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.35em] text-slate-300">
-              <span class="h-2 w-2 rounded-full bg-brand-cyan-400 animate-pulse"></span>
-              TOOL AGGREGATOR
-            </span>
+            <!-- badge removed -->
             <h1 class="font-display text-4xl leading-tight text-white md:text-5xl xl:text-6xl">
               Fast presets, match prep, and tweakable settings.
             </h1>
@@ -86,7 +110,6 @@
               Scrim-ready tools: planner, presets, and a JSON settings editor.
             </p>
             <div class="flex flex-wrap gap-4 items-center">
-              <img src="./assets/strive-logo.png" alt="Strive logo" class="h-12 w-12 rounded-md drop-shadow-md transform transition-all duration-700 hover:scale-105 animate-fade-in" />
               <a
                 class="group rounded-2xl border border-brand-cyan-500/60 bg-brand-cyan-500/10 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-brand-cyan-200 transition hover:bg-brand-cyan-500 hover:text-base-900"
                 href="https://notratz.github.io/NarakaTweaks"

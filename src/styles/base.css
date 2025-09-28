@@ -419,25 +419,79 @@ button[disabled] {
 .hero-slow-zoom {
   position: absolute;
   inset: 0;
-  background-position: center;
-  background-size: 110%;
-  transition: transform 16s ease;
+  /* configurable background via CSS variable --hero-bg (url('...')) */
+  background-image: var(--hero-bg, url('/assets/naraka-bg.png'));
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  filter: saturate(0.85) contrast(0.9) brightness(0.55);
+  transition: transform 18s linear;
   will-change: transform;
   pointer-events: none;
-  z-index: -1;
+  /* ensure hero image is the farthest-back layer so overlays and gradient wash sit above it */
+  z-index: -20;
+  transform-origin: center center;
 }
-.hero-slow-zoom::before {
+.hero-slow-zoom::after {
+  /* subtle color wash overlay to preserve text contrast */
   content: '';
   position: absolute; inset: 0;
-  background-image: radial-gradient(circle at 10% 10%, rgba(120,255,255,0.04), transparent 30%), radial-gradient(circle at 90% 80%, rgba(255,170,255,0.03), transparent 35%);
-  opacity: 1;
+  background: linear-gradient(120deg, rgba(5,6,10,0.35) 0%, rgba(5,6,10,0.55) 60%, rgba(5,6,10,0.7) 100%);
+  mix-blend-mode: multiply;
+}
+.hero-slow-zoom[aria-hidden='true']::before {
+  /* animated gentle zoom */
+  content: '';
+  position: absolute; inset: 0;
   transform: scale(1);
-  animation: heroZoom 18s linear infinite alternate;
+  animation: heroZoom 24s linear infinite alternate;
 }
 @keyframes heroZoom {
   0% { transform: scale(1); }
   100% { transform: scale(1.04); }
 }
+
+/* Site header / logo entrance and responsive sizing */
+.site-header {
+  position: fixed;
+  top: 12px;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* allow clicks through except the image */
+  transition: background-color 240ms ease, backdrop-filter 240ms ease, transform 240ms ease;
+}
+.site-header.scrolled {
+  background-color: rgba(5,6,10,0.45);
+  backdrop-filter: blur(6px);
+}
+.site-logo {
+  height: 5rem; /* default h-20 */
+  width: auto;
+  pointer-events: auto;
+  transform-origin: center;
+  transition: transform 420ms cubic-bezier(.2,.8,.2,1), opacity 320ms ease;
+  opacity: 0;
+}
+.site-logo.logo-enter {
+  opacity: 1;
+  transform: scale(1);
+}
+@media (max-width: 768px) {
+  .site-logo { height: 3.25rem; /* reduce on small screens */ }
+}
+@media (max-width: 420px) {
+  .site-logo { height: 2.5rem; }
+}
+
+@keyframes logoPop {
+  0% { transform: scale(0.88); opacity: 0; }
+  60% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.site-logo.animate-pop { animation: logoPop 540ms cubic-bezier(.2,.9,.2,1) both; }
 
 [data-readonly='true'] .event-slot {
   opacity: 0.4;

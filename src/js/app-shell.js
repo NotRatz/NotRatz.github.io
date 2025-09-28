@@ -78,13 +78,13 @@ function createNav() {
   }).join('');
 
   const motionLabel = currentSettings.motionPreference === 'minimal' ? 'Motion: Minimal' : 'Motion: Full';
-  const smoothChecked = currentSettings.smoothScroll ? 'checked' : '';
-  const vtChecked = currentSettings.viewTransitions ? 'checked' : '';
 
   navElement.innerHTML = `
     <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
       <div class="flex items-center gap-6">
-        <a href="${resolveUrl('/')}" class="font-display text-lg uppercase tracking-[0.4em] text-white">Team Strive</a>
+        <a href="${resolveUrl('/')}" class="logo-link inline-flex items-center gap-3">
+          <img src="/assets/strive-logo.png" alt="Strive" class="h-8 w-auto" />
+        </a>
         <div class="hidden items-center gap-5 md:flex">
           ${navLinks}
         </div>
@@ -95,19 +95,6 @@ function createNav() {
           data-motion-toggle
           class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-200 transition hover:text-white"
         >${motionLabel}</button>
-        <label class="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[0.65rem] uppercase tracking-[0.35em] text-slate-300 md:inline-flex">
-          <input type="checkbox" data-smooth-toggle class="h-3 w-3 rounded border-white/20 bg-base-900" ${smoothChecked} />
-          Smooth
-        </label>
-        <label class="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[0.65rem] uppercase tracking-[0.35em] text-slate-300 lg:inline-flex">
-          <input type="checkbox" data-view-toggle class="h-3 w-3 rounded border-white/20 bg-base-900" ${vtChecked} />
-          View transitions
-        </label>
-        <button
-          type="button"
-          data-auth-trigger
-          class="rounded-full border border-brand-cyan-500/40 bg-brand-cyan-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-brand-cyan-200 transition hover:bg-brand-cyan-500 hover:text-base-950"
-        >${renderAuthLabel(getSession())}</button>
       </div>
     </div>
   `;

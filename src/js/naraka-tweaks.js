@@ -2,7 +2,8 @@ import { getUserState, withUserSection, subscribeUser } from './storage.js';
 import { showToast } from './app-shell.js';
 import { animate } from './motion.js';
 
-const DATA_URL = new URL('../assets/data/tweaks.json', import.meta.url);
+// Use absolute path to the assets folder so this module loads correctly from any page
+const DATA_URL = new URL('/assets/data/tweaks.json', import.meta.url);
 
 const searchForm = document.querySelector('[data-search-form]');
 const categoryContainer = searchForm?.querySelector('[role="tablist"]');

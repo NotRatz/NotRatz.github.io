@@ -1,4 +1,5 @@
-const DATA_URL = new URL('../../assets/data/announcements.json', import.meta.url);
+// Use absolute path to the assets folder so URLs resolve correctly from any page
+const DATA_URL = new URL('/assets/data/announcements.json', import.meta.url);
 let cache = null;
 let cacheAt = 0;
 const CACHE_TTL = 1000 * 60 * 5;

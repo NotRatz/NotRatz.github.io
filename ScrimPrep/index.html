@@ -7,66 +7,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ScrimPrep - Character Strategy Planner</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.css"
-    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.css" />
+    <!-- Use site base styles so ScrimPrep visually matches the rest of the site -->
+    <link rel="stylesheet" href="../src/styles/base.css" />
     <style>
-      /* Match homepage background + overlay */
-      body {
-        background: url("../assets/naraka-bg.png") center/cover no-repeat fixed;
-        background-color: rgba(0, 0, 0, 0.85);
-        background-blend-mode: overlay;
-      }
-      /* Form control tweaks for visibility */
-      select,
-      button {
-        outline: none;
-      }
-
-      /* Angled tile styles for map and hero images */
-      .angled-tile,
-      .hero-tile {
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.3s ease;
-      }
-      .angled-tile {
-        clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
-      }
-      .hero-tile {
-        clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%, 0 15%);
-      }
-      .group:hover .angled-tile,
-      .group:hover .hero-tile {
-        transform: scale(1.05);
-      }
-      .angled-tile::before,
-      .hero-tile::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border: 2px solid rgba(250, 204, 21, 0.8); /* yellow */
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-      }
-      .group:hover .angled-tile::before,
-      .group:hover .hero-tile::before {
-        opacity: 1;
-      }
+      /* Small page-specific tweaks */
+      select, button { outline: none; }
+      .angled-tile, .hero-tile { position: relative; overflow: hidden; transition: transform 0.3s ease; }
+      .angled-tile { clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%); }
+      .hero-tile { clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%, 0 15%); }
+      .group:hover .angled-tile, .group:hover .hero-tile { transform: scale(1.05); }
+      .angled-tile::before, .hero-tile::before { content: ""; position: absolute; inset: 0; border: 2px solid rgba(250, 204, 21, 0.8); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+      .group:hover .angled-tile::before, .group:hover .hero-tile::before { opacity: 1; }
     </style>
   </head>
   <body class="bg-gray-900 text-gray-200 overflow-x-hidden">
-    <!-- Back to Home -->
+    <!-- Site header (compact) -->
     <header class="p-4">
-      <a
-        href="../index.html"
-        onclick="return nav(event)"
-        class="inline-flex items-center gap-2 text-yellow-500 hover:text-yellow-400 transition"
-      >
-        ← Back to Home
-      </a>
+      <div class="mx-auto max-w-6xl flex items-center justify-between px-4">
+        <div></div>
+        <a href="../index.html" onclick="return nav(event)" class="inline-flex items-center gap-3">
+          <img src="/assets/strive-logo.png" alt="Strive" class="h-8 w-auto" />
+        </a>
+        <nav class="hidden md:flex items-center gap-4 text-sm">
+          <a href="../index.html" onclick="return nav(event)" class="text-slate-300 hover:text-white">Home</a>
+          <a href="../naraka-tweaks/" class="text-slate-300 hover:text-white">NarakaTweaks</a>
+          <a href="../naraka-configurator/" class="text-slate-300 hover:text-white">Configurator</a>
+        </nav>
+      </div>
     </header>
 
     <!-- Page Title -->
@@ -80,11 +48,7 @@
     </section>
 
     <!-- Configurator Mount -->
-    <main
-      id="root"
-      class="max-w-6xl mx-auto mt-6 mb-16 px-4"
-      data-aos="fade-up"
-    ></main>
+    <main id="root" class="max-w-6xl mx-auto mt-6 mb-16 px-4" data-aos="fade-up"></main>
 
     <!-- React + Babel -->
     <script

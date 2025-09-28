@@ -6,30 +6,30 @@ const { useMemo, useState, useCallback } = React;
    Data: Characters & Maps
    ========================= */
 const CHARACTERS = [
-  { name: "Viper Ning", avatarUrl: "/assets/icon_hero_mangjianke_01.png", role: "DPS", difficulty: "★★★" },
-  { name: "Feria Shen", avatarUrl: "/assets/icon_hero_shenmiao_01.png", role: "Support", difficulty: "★★☆" },
-  { name: "Tianhai", avatarUrl: "/assets/icon_hero_youseng_01.png", role: "Tank", difficulty: "★★☆" },
-  { name: "Ziping Yin", avatarUrl: "/assets/icon_hero_yinziping_01.png", role: "DPS", difficulty: "★★★" },
-  { name: "Temulch", avatarUrl: "/assets/icon_hero_caoyuan_01.png", role: "DPS", difficulty: "★★☆" },
-  { name: "Tarka Ji", avatarUrl: "/assets/icon_hero_haoxia_01.png", role: "DPS", difficulty: "★★★" },
-  { name: "Kurumi", avatarUrl: "/assets/icon_hero_onmyoji_01.png", role: "Support", difficulty: "★★★" },
-  { name: "Yoto Hime", avatarUrl: "/assets/icon_hero_yaodaoji_01.png", role: "DPS", difficulty: "★★☆" },
-  { name: "Valda Cui", avatarUrl: "/assets/icon_hero_cuisanniang_01.png", role: "Support", difficulty: "★★☆" },
-  { name: "Yueshan", avatarUrl: "/assets/icon_hero_yueshan_01.png", role: "DPS", difficulty: "★★★" },
-  { name: "Wuchen", avatarUrl: "/assets/icon_hero_wuchen_01.png", role: "Support", difficulty: "★★☆" },
-  { name: "Justina Gu", avatarUrl: "/assets/icon_hero_guqinghan_01.png", role: "DPS", difficulty: "★★★" },
-  { name: "Takeda Nobutada", avatarUrl: "/assets/icon_hero_wutian_01.png", role: "Tank", difficulty: "★★☆" },
-  { name: "Matari", avatarUrl: "/assets/icon_hero_hanhaimomin_01.png", role: "DPS", difficulty: "★★★" },
-  { name: "Akos Hu", avatarUrl: "/assets/icon_hero_huwei_01.png", role: "Tank", difficulty: "★☆☆" },
-  { name: "Zai", avatarUrl: "/assets/icon_hero_jiyingying_01.png", role: "Support", difficulty: "★★☆" },
-  { name: "Tessa", avatarUrl: "/assets/icon_hero_yulinglong_01.png", role: "Support", difficulty: "★★★" },
-  { name: "Hadi", avatarUrl: "/assets/icon_hero_hadi_01.png", role: "DPS", difficulty: "★★☆" },
-  { name: "Shayol Wei", avatarUrl: "/assets/icon_hero_weiqing_01.png", role: "DPS", difficulty: "★★★" },
-  { name: "Lyam Liu", avatarUrl: "/assets/icon_hero_liulian_01.png", role: "Support", difficulty: "★★☆" },
-  { name: "Kylin Zhang", avatarUrl: "/assets/icon_hero_zhangqiling_01.png", role: "DPS", difficulty: "★★★" },
-  { name: "Cyra", avatarUrl: "/assets/icon_hero_xila_01.png", role: "DPS", difficulty: "★★☆" },
-  { name: "Lannie", avatarUrl: "/assets/icon_hero_lanmeng_01.png", role: "Support", difficulty: "★★☆" },
-  { name: "Inor Wan", avatarUrl: "/assets/icon_hero_wanjun_01.png", role: "Tank", difficulty: "★★☆" },
+  { name: "Viper Ning", avatarUrl: "/assets/icon_hero_mangjianke_01.png", difficulty: "★★★" },
+  { name: "Feria Shen", avatarUrl: "/assets/icon_hero_shenmiao_01.png", difficulty: "★★☆" },
+  { name: "Tianhai", avatarUrl: "/assets/icon_hero_youseng_01.png", difficulty: "★★☆" },
+  { name: "Ziping Yin", avatarUrl: "/assets/icon_hero_yinziping_01.png", difficulty: "★★★" },
+  { name: "Temulch", avatarUrl: "/assets/icon_hero_caoyuan_01.png", difficulty: "★★☆" },
+  { name: "Tarka Ji", avatarUrl: "/assets/icon_hero_haoxia_01.png", difficulty: "★★★" },
+  { name: "Kurumi", avatarUrl: "/assets/icon_hero_onmyoji_01.png", difficulty: "★★★" },
+  { name: "Yoto Hime", avatarUrl: "/assets/icon_hero_yaodaoji_01.png", difficulty: "★★☆" },
+  { name: "Valda Cui", avatarUrl: "/assets/icon_hero_cuisanniang_01.png", difficulty: "★★☆" },
+  { name: "Yueshan", avatarUrl: "/assets/icon_hero_yueshan_01.png", difficulty: "★★★" },
+  { name: "Wuchen", avatarUrl: "/assets/icon_hero_wuchen_01.png", difficulty: "★★☆" },
+  { name: "Justina Gu", avatarUrl: "/assets/icon_hero_guqinghan_01.png", difficulty: "★★★" },
+  { name: "Takeda Nobutada", avatarUrl: "/assets/icon_hero_wutian_01.png", difficulty: "★★☆" },
+  { name: "Matari", avatarUrl: "/assets/icon_hero_hanhaimomin_01.png", difficulty: "★★★" },
+  { name: "Akos Hu", avatarUrl: "/assets/icon_hero_huwei_01.png", difficulty: "★☆☆" },
+  { name: "Zai", avatarUrl: "/assets/icon_hero_jiyingying_01.png", difficulty: "★★☆" },
+  { name: "Tessa", avatarUrl: "/assets/icon_hero_yulinglong_01.png", difficulty: "★★★" },
+  { name: "Hadi", avatarUrl: "/assets/icon_hero_hadi_01.png", difficulty: "★★☆" },
+  { name: "Shayol Wei", avatarUrl: "/assets/icon_hero_weiqing_01.png", difficulty: "★★★" },
+  { name: "Lyam Liu", avatarUrl: "/assets/icon_hero_liulian_01.png", difficulty: "★★☆" },
+  { name: "Kylin Zhang", avatarUrl: "/assets/icon_hero_zhangqiling_01.png", difficulty: "★★★" },
+  { name: "Cyra", avatarUrl: "/assets/icon_hero_xila_01.png", difficulty: "★★☆" },
+  { name: "Lannie", avatarUrl: "/assets/icon_hero_lanmeng_01.png", difficulty: "★★☆" },
+  { name: "Inor Wan", avatarUrl: "/assets/icon_hero_wanjun_01.png", difficulty: "★★☆" },
 ];
 
 const MAPS = [
@@ -50,14 +50,7 @@ const ROUND_CONFIGS = [
 /* =========================
    Utility Functions
    ========================= */
-const getRoleColor = (role) => {
-  switch(role) {
-    case "Tank": return "bg-blue-500/20 text-blue-300 border-blue-500/50";
-    case "DPS": return "bg-red-500/20 text-red-300 border-red-500/50";
-    case "Support": return "bg-green-500/20 text-green-300 border-green-500/50";
-    default: return "bg-gray-500/20 text-gray-300 border-gray-500/50";
-  }
-};
+// Roles removed — UI no longer shows Tank/DPS/Support distinctions
 
 const getMapColor = (mapName) => {
   const map = MAPS.find(m => m.name === mapName);
@@ -69,9 +62,16 @@ const getMapColor = (mapName) => {
    ========================= */
 function CharacterModal({ isOpen, onClose, onSelect, currentCharacters }) {
   if (!isOpen) return null;
+  // compute usage counts so we can allow exactly one duplicate hero across the 6 selections
+  const counts = currentCharacters.reduce((acc, n) => {
+    if (!n) return acc;
+    acc[n] = (acc[n] || 0) + 1;
+    return acc;
+  }, {});
+  const duplicateUsed = Object.values(counts).some(c => c >= 2);
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in" role="dialog" aria-modal="true">
       <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 max-w-4xl w-full max-h-[80vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-2xl font-bold text-yellow-400">Select Character</h3>
@@ -84,18 +84,19 @@ function CharacterModal({ isOpen, onClose, onSelect, currentCharacters }) {
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {CHARACTERS.map((char) => {
-            const isUsed = currentCharacters.includes(char.name);
+          {CHARACTERS.map((char, idx) => {
+            const usedCount = currentCharacters.filter(n => n === char.name).length;
+            const isSelectedOnce = usedCount >= 1;
+            const canSelectAgain = isSelectedOnce && !duplicateUsed && usedCount < 2;
+            const disabled = usedCount >= 2;
             return (
               <div
                 key={char.name}
-                onClick={() => !isUsed && onSelect(char)}
+                onClick={() => { if (!disabled && (!isSelectedOnce || canSelectAgain)) onSelect(char); }}
+                style={{ animationDelay: `${idx * 40}ms` }}
                 className={`
-                  relative p-3 rounded-xl border cursor-pointer transition-all
-                  ${isUsed 
-                    ? 'bg-gray-800/50 border-gray-600 opacity-50 cursor-not-allowed' 
-                    : 'bg-gray-800 border-gray-600 hover:border-yellow-500 hover:bg-gray-700'
-                  }
+                  relative p-3 rounded-xl border cursor-pointer transition-all animate-fade-in
+                  ${disabled ? 'bg-gray-800/50 border-gray-600 opacity-50 cursor-not-allowed' : isSelectedOnce ? 'bg-gray-800 border-gray-600 ring-1 ring-yellow-500/20' : 'bg-gray-800 border-gray-600 hover:border-yellow-500 hover:bg-gray-700'}
                 `}
               >
                 <img 
@@ -104,13 +105,10 @@ function CharacterModal({ isOpen, onClose, onSelect, currentCharacters }) {
                   className="w-full h-16 object-cover rounded-lg mb-2"
                 />
                 <h4 className="text-xs font-medium text-white text-center mb-1">{char.name}</h4>
-                <div className={`text-xs px-2 py-1 rounded border text-center ${getRoleColor(char.role)}`}>
-                  {char.role}
-                </div>
                 <div className="text-xs text-center mt-1 text-yellow-400">{char.difficulty}</div>
-                {isUsed && (
+                {usedCount > 0 && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-xl">
-                    <span className="text-red-400 font-bold">USED</span>
+                    <span className="text-yellow-300 font-bold">SELECTED{usedCount > 1 ? ` ×${usedCount}` : ''}</span>
                   </div>
                 )}
               </div>
@@ -131,11 +129,10 @@ function RoundCard({ roundIndex, character, onSelectCharacter, isCompleted }) {
   const charData = CHARACTERS.find(c => c.name === character);
 
   return (
-    <div className={`
-      relative rounded-2xl border-2 p-6 transition-all duration-300
-      ${isCompleted ? 'border-green-500 bg-green-500/10' : 'border-gray-600 bg-gray-800/50'}
-      hover:border-yellow-500 hover:bg-gray-700/50
-    `}>
+    <div
+      className={`relative rounded-2xl border-2 p-6 transition-all duration-300 ${isCompleted ? 'border-green-500 bg-green-500/10' : 'border-gray-600 bg-gray-800/50'} hover:border-yellow-500 hover:bg-gray-700/50 animate-fade-in`}
+      style={{ animationDelay: `${roundIndex * 80}ms` }}
+    >
       {/* Round Header */}
       <div className="flex justify-between items-start mb-4">
         <div>
@@ -169,8 +166,8 @@ function RoundCard({ roundIndex, character, onSelectCharacter, isCompleted }) {
             />
             <div className="flex-1">
               <h4 className="font-medium text-white">{character}</h4>
-              <div className={`inline-block text-xs px-2 py-1 rounded border ${getRoleColor(charData?.role)}`}>
-                {charData?.role} {charData?.difficulty}
+              <div className="inline-block text-xs px-2 py-1 rounded border text-yellow-300">
+                {charData?.difficulty}
               </div>
             </div>
             <span className="text-gray-400">Change</span>
@@ -193,33 +190,20 @@ function RoundCard({ roundIndex, character, onSelectCharacter, isCompleted }) {
    ========================= */
 function TeamSummary({ characters }) {
   const selectedChars = characters.filter(Boolean);
-  const roles = selectedChars.map(name => CHARACTERS.find(c => c.name === name)?.role).filter(Boolean);
-  const roleCount = roles.reduce((acc, role) => {
-    acc[role] = (acc[role] || 0) + 1;
-    return acc;
-  }, {});
-
   if (selectedChars.length === 0) return null;
 
   return (
     <div className="bg-gray-800/70 border border-gray-600 rounded-2xl p-6 mb-8">
       <h3 className="text-xl font-bold text-yellow-400 mb-4">Team Composition</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-        <div className="text-center">
-          <div className="text-2xl font-bold text-blue-300">{roleCount.Tank || 0}</div>
-          <div className="text-sm text-gray-400">Tanks</div>
+      <div className="mb-4">
+        <div className="text-sm text-gray-300">
+          <strong>Selected Characters ({selectedChars.length}/6):</strong>
         </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-red-300">{roleCount.DPS || 0}</div>
-          <div className="text-sm text-gray-400">DPS</div>
+        <div className="mt-3 flex flex-wrap gap-3">
+          {selectedChars.map((name) => (
+            <div key={name} className="px-3 py-1 bg-gray-700/50 border border-gray-600 rounded-lg text-sm text-white">{name}</div>
+          ))}
         </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-green-300">{roleCount.Support || 0}</div>
-          <div className="text-sm text-gray-400">Support</div>
-        </div>
-      </div>
-      <div className="text-sm text-gray-300">
-        <strong>Selected Characters ({selectedChars.length}/6):</strong> {selectedChars.join(", ")}
       </div>
     </div>
   );
@@ -263,10 +247,8 @@ function ImmortalWarConfigurator() {
         character: char || null,
       })),
       teamComposition: currentCharacters.reduce((acc, name) => {
-        const char = CHARACTERS.find(c => c.name === name);
-        if (char) {
-          acc[char.role] = (acc[char.role] || 0) + 1;
-        }
+        if (!name) return acc;
+        acc[name] = (acc[name] || 0) + 1;
         return acc;
       }, {}),
     };
