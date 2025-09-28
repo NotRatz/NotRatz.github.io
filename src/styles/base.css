@@ -2,7 +2,24 @@
   color-scheme: dark;
   font-family: 'Inter', system-ui, sans-serif;
   background-color: oklch(10% 0.02 260);
+  /* Theme tokens for site and configurator */
+  --site-accent: #24e1d6;
+  --site-accent-2: #ff6fb5;
+  --site-muted: rgba(203,213,225,0.9);
+  --control-radius: 10px;
+  --control-shadow: 0 10px 40px rgba(36,225,214,0.08);
   --glow: oklch(74% 0.16 205);
+  /* Hero & logo tweakable tokens */
+  --hero-overlay-start: rgba(5,6,10,0.42);
+  --hero-overlay-mid: rgba(5,6,10,0.62);
+  --hero-overlay-end: rgba(5,6,10,0.78);
+  --hero-zoom-duration: 14s;
+  --hero-zoom-scale: 1.055;
+  --logo-size-desktop: 6.5rem;
+  --logo-size-default: 5rem;
+  --logo-size-mobile: 3.25rem;
+  --logo-pop-duration: 540ms;
+  --hero-bg-brightness: 0.52;
 }
 
 body {
@@ -424,8 +441,8 @@ button[disabled] {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  filter: saturate(0.85) contrast(0.9) brightness(0.55);
-  transition: transform 18s linear;
+  filter: saturate(0.85) contrast(0.9) brightness(0.52);
+  transition: transform var(--hero-zoom-duration) linear;
   will-change: transform;
   pointer-events: none;
   /* ensure hero image is the farthest-back layer so overlays and gradient wash sit above it */
@@ -436,7 +453,8 @@ button[disabled] {
   /* subtle color wash overlay to preserve text contrast */
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(120deg, rgba(5,6,10,0.35) 0%, rgba(5,6,10,0.55) 60%, rgba(5,6,10,0.7) 100%);
+  /* slightly darker overlay for stronger contrast on text */
+  background: linear-gradient(120deg, var(--hero-overlay-start) 0%, var(--hero-overlay-mid) 60%, var(--hero-overlay-end) 100%);
   mix-blend-mode: multiply;
 }
 .hero-slow-zoom[aria-hidden='true']::before {
@@ -444,11 +462,12 @@ button[disabled] {
   content: '';
   position: absolute; inset: 0;
   transform: scale(1);
-  animation: heroZoom 24s linear infinite alternate;
+  /* faster, smoother zoom for more subtle motion */
+  animation: heroZoom var(--hero-zoom-duration) ease-in-out infinite alternate;
 }
 @keyframes heroZoom {
   0% { transform: scale(1); }
-  100% { transform: scale(1.04); }
+  100% { transform: scale(var(--hero-zoom-scale)); }
 }
 
 /* Site header / logo entrance and responsive sizing */
@@ -468,7 +487,7 @@ button[disabled] {
   backdrop-filter: blur(6px);
 }
 .site-logo {
-  height: 5rem; /* default h-20 */
+  height: var(--logo-size-default); /* default */
   width: auto;
   pointer-events: auto;
   transform-origin: center;
@@ -479,6 +498,23 @@ button[disabled] {
   opacity: 1;
   transform: scale(1);
 }
+
+/* larger title-bar logo on desktop, compact on mobile */
+@media (min-width: 1024px) {
+  .site-logo { height: var(--logo-size-desktop); }
+}
+@media (max-width: 640px) {
+  .site-logo { height: var(--logo-size-mobile); transform: translateY(-2px); }
+}
+
+/* logo load-in pop + fade */
+@keyframes logoPop {
+  0% { transform: scale(0.85) rotate(-3deg); opacity: 0; }
+  60% { transform: scale(1.06) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.animate-pop { animation: logoPop 700ms cubic-bezier(.2,.9,.2,1) both; }
+.animate-pop { animation: logoPop var(--logo-pop-duration) cubic-bezier(.2,.9,.2,1) both; }
 @media (max-width: 768px) {
   .site-logo { height: 3.25rem; /* reduce on small screens */ }
 }
@@ -492,6 +528,7 @@ button[disabled] {
   100% { transform: scale(1); opacity: 1; }
 }
 .site-logo.animate-pop { animation: logoPop 540ms cubic-bezier(.2,.9,.2,1) both; }
+.site-logo.animate-pop { animation: logoPop var(--logo-pop-duration) cubic-bezier(.2,.9,.2,1) both; }
 
 [data-readonly='true'] .event-slot {
   opacity: 0.4;

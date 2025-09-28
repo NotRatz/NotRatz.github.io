@@ -6,20 +6,34 @@
     <title>Naraka Settings Configurator</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body class="naraka-bg">
     <header class="site-header">
-      <h1>Naraka Bladepoint - Settings Configurator</h1>
-      <p class="muted">Edit the settings below and export a new <code>QualitySettingsData.json</code>.</p>
+      <img src="/assets/strive-logo.png" alt="Strive" />
+      <h1>Naraka Bladepoint · Settings Configurator</h1>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <a class="toolbar cta" href="/index.html">Home</a>
+        <a class="toolbar" href="/ScrimPrep/">ScrimPrep</a>
+        <a class="toolbar" href="https://notratz.github.io/NarakaTweaks" target="_blank" rel="noopener">NarakaTweaks</a>
+      </div>
+      <p class="muted">Edit settings and export <code>QualitySettingsData.json</code> — no login required.</p>
     </header>
 
     <main class="layout">
       <section class="panel" id="editor-panel">
         <div class="toolbar">
-          <button id="btn-reset">Reset to default</button>
-          <button id="btn-load-file">Load from file…</button>
-          <input id="file-input" type="file" accept="application/json" style="display:none" />
-          <button id="btn-copy">Copy JSON</button>
-          <button id="btn-download">Download JSON</button>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button id="btn-reset">Reset</button>
+            <button id="btn-load-file">Load…</button>
+            <input id="file-input" type="file" accept="application/json" style="display:none" />
+          </div>
+          <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+            <button id="btn-copy">Copy</button>
+            <button id="btn-download" class="cta">Download</button>
+          </div>
+        </div>
+        <div class="presets">
+          <div class="section-title">Presets</div>
+          <div id="preset-chips" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"></div>
         </div>
 
         <div id="editor"></div>

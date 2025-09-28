@@ -43,8 +43,8 @@
               }
             },
             fontFamily: {
-              display: ['\"Rajdhani\"', 'sans-serif'],
-              sans: ['\"Inter\"', 'system-ui', 'sans-serif']
+              display: ['"Rajdhani"', 'sans-serif'],
+              sans: ['"Inter"', 'system-ui', 'sans-serif']
             },
             boxShadow: {
               glow: '0 0 0 1px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 70%), 0 14px 45px -10px color-mix(in oklab, var(--glow, oklch(74% 0.16 205)), black 30%)'
@@ -64,45 +64,21 @@
   </head>
   <body class="bg-base-900 text-white min-h-screen" data-page="landing">
     <div id="app-shell"></div>
-    <!-- Prominent centered site header/logo -->
-    <header class="site-header" id="siteHeader">
-      <div class="mx-auto max-w-6xl px-6 flex justify-center">
-        <img id="siteLogo" src="/assets/strive-logo.png" alt="Strive" class="site-logo" />
-      </div>
-    </header>
-    <script>
-      (function(){
-        const hdr = document.getElementById('siteHeader');
-        const logo = document.getElementById('siteLogo');
-        // entrance animation
-        requestAnimationFrame(()=>{
-          logo.classList.add('animate-pop');
-          logo.classList.add('logo-enter');
-        });
-        // toggle sticky blur when scrolled
-        let lastScroll = 0;
-        function onScroll(){
-          const y = window.scrollY || document.documentElement.scrollTop;
-          if (y > 24) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled');
-          lastScroll = y;
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-      })();
-    </script>
     <main class="relative pt-28 pb-24 overflow-hidden">
       <div class="absolute inset-0 -z-10">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(120,255,255,0.08),_transparent_55%)]"></div>
         <div class="absolute -right-32 top-20 h-80 w-80 rounded-full bg-brand-pink-500/20 blur-3xl"></div>
         <div class="absolute -left-24 bottom-16 h-96 w-96 rounded-full bg-brand-cyan-500/20 blur-3xl"></div>
-  <div class="absolute inset-0 bg-[linear-gradient(120deg,_rgba(255,255,255,0.05)_0%,_rgba(5,6,10,0.9)_45%,_rgba(5,6,10,1)_100%)]"></div>
-  <!-- hero background uses CSS variable --hero-bg; default points to /assets/naraka-bg.png -->
-  <div class="hero-slow-zoom" aria-hidden="true" style="--hero-bg: url('/assets/naraka-bg.png')"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(120deg,_rgba(255,255,255,0.05)_0%,_rgba(5,6,10,0.9)_45%,_rgba(5,6,10,1)_100%)]"></div>
+        <div class="hero-slow-zoom" aria-hidden="true"></div>
       </div>
       <section class="relative z-10 px-6">
         <div class="mx-auto max-w-6xl grid gap-12 lg:grid-cols-[1.15fr,_0.85fr] lg:items-center">
           <div class="space-y-8">
-            <!-- badge removed -->
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.35em] text-slate-300">
+              <span class="h-2 w-2 rounded-full bg-brand-cyan-400 animate-pulse"></span>
+              TOOL AGGREGATOR
+            </span>
             <h1 class="font-display text-4xl leading-tight text-white md:text-5xl xl:text-6xl">
               Fast presets, match prep, and tweakable settings.
             </h1>
@@ -110,6 +86,7 @@
               Scrim-ready tools: planner, presets, and a JSON settings editor.
             </p>
             <div class="flex flex-wrap gap-4 items-center">
+              <img src="./assets/strive-logo.png" alt="Strive logo" class="h-12 w-12 rounded-md drop-shadow-md transform transition-all duration-700 hover:scale-105 animate-fade-in" />
               <a
                 class="group rounded-2xl border border-brand-cyan-500/60 bg-brand-cyan-500/10 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-brand-cyan-200 transition hover:bg-brand-cyan-500 hover:text-base-900"
                 href="https://notratz.github.io/NarakaTweaks"
@@ -199,7 +176,7 @@
             <aside class="space-y-4">
               <div class="rounded-2xl border border-brand-lime-500/40 bg-brand-lime-500/10 p-6 shadow-glow">
                 <p class="text-xs uppercase tracking-[0.35em] text-brand-lime-200">Status</p>
-                <p class="mt-3 text-sm text-brand-lime-100">All services operational · Last publish synced 12 minutes ago.</p>
+                <p class="mt-3 text-sm text-brand-lime-100">All services operational ┬╖ Last publish synced 12 minutes ago.</p>
               </div>
               <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
                 <h3 class="font-semibold uppercase tracking-[0.3em] text-slate-400">Quick actions</h3>
@@ -231,7 +208,7 @@
               </div>
               <footer class="pillar-card__footer">
                 <a class="pillar-card__cta" href="https://notratz.github.io/NarakaTweaks" target="_blank" rel="noopener noreferrer">Open hub</a>
-                <span class="pillar-card__meta">Preset import/export · Instant search</span>
+                <span class="pillar-card__meta">Preset import/export ┬╖ Instant search</span>
               </footer>
             </article>
             <article class="pillar-card group">
@@ -243,7 +220,7 @@
               </div>
               <footer class="pillar-card__footer">
                 <a class="pillar-card__cta" href="./ScrimPrep/">Open ScrimPrep</a>
-                <span class="pillar-card__meta">6×6 planner · Exportable rosters</span>
+                <span class="pillar-card__meta">6├ù6 planner ┬╖ Exportable rosters</span>
               </footer>
             </article>
             <!-- Tournament Scoring Suite removed temporarily (no backend) -->
@@ -263,7 +240,7 @@
                 <a class="community-link" href="https://twitch.tv/notratz" target="_blank" rel="noopener">Twitch</a>
                 <a class="community-link" href="https://www.youtube.com/@notratz" target="_blank" rel="noopener">YouTube</a>
                 <a class="community-link" href="https://discord.gg/teamstrive" target="_blank" rel="noopener">Discord</a>
-                <a class="community-link" href="https://ko-fi.com/notratz" target="_blank" rel="noopener">Ko‑Fi</a>
+                <a class="community-link" href="https://ko-fi.com/notratz" target="_blank" rel="noopener">KoΓÇæFi</a>
                 <a class="community-link" href="https://throne.com/notratz" target="_blank" rel="noopener">Throne</a>
                 <a class="community-link" href="https://github.com/notratz/Strive" target="_blank" rel="noopener">GitHub Source</a>
               </div>
@@ -272,15 +249,15 @@
               <div class="rounded-2xl border border-white/10 bg-base-800/70 p-5">
                 <h3 class="text-xs uppercase tracking-[0.3em] text-slate-400">Broadcast schedule</h3>
                 <ul class="mt-3 space-y-2">
-                  <li>Thu · 19:00 ET — Naraka scrim review</li>
-                  <li>Sat · 15:00 ET — Team Strive community day</li>
-                  <li>Sun · 20:00 ET — Community showmatch & analysis</li>
+                  <li>Thu ┬╖ 19:00 ET ΓÇö Naraka scrim review</li>
+                  <li>Sat ┬╖ 15:00 ET ΓÇö Team Strive community day</li>
+                  <li>Sun ┬╖ 20:00 ET ΓÇö Community showmatch & analysis</li>
                 </ul>
               </div>
               <div class="rounded-2xl border border-white/10 bg-base-800/70 p-5">
                 <h3 class="text-xs uppercase tracking-[0.3em] text-slate-400">Partner highlights</h3>
                 <ul class="mt-3 space-y-2">
-                  <li>GamerSupps × Strive limited bundle</li>
+                  <li>GamerSupps ├ù Strive limited bundle</li>
                   <li>Naraka Academy VOD library</li>
                   <li>Community mod toolkit</li>
                 </ul>

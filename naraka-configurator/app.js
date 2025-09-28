@@ -84,6 +84,10 @@ function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state, nu
 function resetToDefault(){ state = JSON.parse(JSON.stringify(DEFAULT)); saveState(); if (editorHandle) editorHandle.setValue(state); }
 function renderPreview(){ const p = $('#json-preview'); if (p) p.textContent = JSON.stringify(state, null, 2); }
 
+function animatePreview(){ const p = document.getElementById('json-preview'); if (!p) return; p.classList.remove('animate-update'); // restart
+  void p.offsetWidth; p.classList.add('animate-update'); setTimeout(()=> p.classList.remove('animate-update'), 600);
+}
+
 // Lightweight recursive editor
 function createJsonEditor(container, initialJson, options = {}){
   if (!container || !(container instanceof HTMLElement)) throw new Error('container must be an HTMLElement');
@@ -94,6 +98,7 @@ function createJsonEditor(container, initialJson, options = {}){
 
   function makeRow(labelEl, controlEl, actionsEl){
     const row = document.createElement('div');
+    row.className = 'form-row';
     row.style.display = 'flex'; row.style.gap = '8px'; row.style.alignItems = 'center'; row.style.marginBottom = '6px';
     if (labelEl) labelEl.style.minWidth = '140px';
     row.appendChild(labelEl || document.createElement('div'));
@@ -185,6 +190,9 @@ function applyPreset(name){
     state.l22SystemQualitySetting.frameRateLimit = -1;
   }
   saveState(); if (editorHandle) editorHandle.setValue(state);
+  // reflect active preset chip
+  const chips = document.querySelectorAll('#preset-chips .chip'); chips.forEach(c=> c.classList.toggle('active', c.dataset.preset===name));
+  animatePreview();
 }
 
 function handleFileLoad(file){ const r = new FileReader(); r.onload = () => { try{ const parsed = JSON.parse(r.result); state = parsed; saveState(); if (editorHandle) editorHandle.setValue(state); }catch(e){alert('Invalid JSON') } }; r.readAsText(file); }
@@ -194,10 +202,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const container = document.getElementById('editor');
   editorHandle = createJsonEditor(container, state, { onChange: v => { state = v; saveState(); } });
 
+  // create preset chips for quick selection
+  const presetChips = document.getElementById('preset-chips');
+  if (presetChips){ ['low','medium','high','custom'].forEach(p=>{ const el = document.createElement('div'); el.className='chip'; el.textContent = p.toUpperCase(); el.dataset.preset = p; el.addEventListener('click', ()=>{ if (p==='custom'){ alert('Custom preserves current settings'); return; } applyPreset(p); }); presetChips.appendChild(el); }); }
+
   $('#btn-reset').addEventListener('click', ()=>{ if(confirm('Reset to default?')) resetToDefault(); });
   $('#btn-download').addEventListener('click', ()=>{ downloadJSON(); });
   $('#btn-copy').addEventListener('click', ()=>{ copyToClipboard(); alert('Copied to clipboard'); });
   $('#btn-load-file').addEventListener('click', ()=> $('#file-input').click());
   $('#file-input').addEventListener('change', (e)=>{ if(e.target.files && e.target.files[0]) handleFileLoad(e.target.files[0]) });
   $('#preset-select').addEventListener('change', (e)=>{ if(e.target.value) applyPreset(e.target.value); });
+  // hook state save to animate preview
+  const originalSave = saveState; saveState = function(){ originalSave(); animatePreview(); };
 });
