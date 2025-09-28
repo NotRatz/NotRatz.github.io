@@ -70,6 +70,7 @@
         <div class="absolute -right-32 top-20 h-80 w-80 rounded-full bg-brand-pink-500/20 blur-3xl"></div>
         <div class="absolute -left-24 bottom-16 h-96 w-96 rounded-full bg-brand-cyan-500/20 blur-3xl"></div>
         <div class="absolute inset-0 bg-[linear-gradient(120deg,_rgba(255,255,255,0.05)_0%,_rgba(5,6,10,0.9)_45%,_rgba(5,6,10,1)_100%)]"></div>
+        <div class="hero-slow-zoom" aria-hidden="true"></div>
       </div>
       <section class="relative z-10 px-6">
         <div class="mx-auto max-w-6xl grid gap-12 lg:grid-cols-[1.15fr,_0.85fr] lg:items-center">
@@ -79,12 +80,13 @@
               TOOL AGGREGATOR
             </span>
             <h1 class="font-display text-4xl leading-tight text-white md:text-5xl xl:text-6xl">
-              Essential Naraka Tools & Utilities
+              Fast presets, match prep, and tweakable settings.
             </h1>
             <p class="max-w-2xl text-lg text-slate-300 md:text-xl">
-              Access curated tools for competitive Naraka gameplay. Performance tweaks, tournament management, and scrim planning - all in one place.
+              Scrim-ready tools: planner, presets, and a JSON settings editor.
             </p>
-            <div class="flex flex-wrap gap-4">
+            <div class="flex flex-wrap gap-4 items-center">
+              <img src="./assets/strive-logo.png" alt="Strive logo" class="h-12 w-12 rounded-md drop-shadow-md transform transition-all duration-700 hover:scale-105 animate-fade-in" />
               <a
                 class="group rounded-2xl border border-brand-cyan-500/60 bg-brand-cyan-500/10 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-brand-cyan-200 transition hover:bg-brand-cyan-500 hover:text-base-900"
                 href="https://notratz.github.io/NarakaTweaks"
@@ -93,17 +95,18 @@
               >
                 Launch NarakaTweaks
               </a>
+              <!-- Hide EGL Planner for now -->
               <a
                 class="group rounded-2xl border border-white/10 bg-white/5 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-slate-200 transition hover:bg-white/10 hover:text-white"
-                href="./egl/"
+                href="./ScrimPrep/"
               >
-                Plan scrims
+                ScrimPrep
               </a>
               <a
-                class="group rounded-2xl border border-brand-pink-500/60 bg-brand-pink-500/10 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-brand-pink-200 transition hover:bg-brand-pink-500 hover:text-base-900"
-                href="./scoring/"
+                class="group rounded-2xl border border-brand-lime-500/60 bg-brand-lime-500/10 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-brand-lime-200 transition hover:bg-brand-lime-500 hover:text-base-900"
+                href="./naraka-configurator/"
               >
-                Manage tournaments
+                Settings Configurator
               </a>
             </div>
             <div class="grid gap-6 sm:grid-cols-2">
@@ -135,13 +138,13 @@
                   </div>
                   <p class="mt-1 text-xs text-slate-400">Performance optimization tools</p>
                 </div>
-                <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
-                  <div class="flex items-center gap-3">
-                    <div class="h-3 w-3 rounded-full bg-brand-pink-400"></div>
-                    <span class="text-white font-medium">EGL Planner</span>
+                  <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
+                    <div class="flex items-center gap-3">
+                      <div class="h-3 w-3 rounded-full bg-brand-pink-400"></div>
+                      <span class="text-white font-medium">ScrimPrep</span>
+                    </div>
+                    <p class="mt-1 text-xs text-slate-400">Compact scrim planning with esports-focused UI</p>
                   </div>
-                  <p class="mt-1 text-xs text-slate-400">Scrim scheduling tool</p>
-                </div>
                 <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
                   <div class="flex items-center gap-3">
                     <div class="h-3 w-3 rounded-full bg-brand-lime-400"></div>
@@ -179,8 +182,8 @@
                 <h3 class="font-semibold uppercase tracking-[0.3em] text-slate-400">Quick actions</h3>
                 <ul class="mt-4 space-y-3 text-sm text-slate-300">
                   <li><a class="hover:text-white" href="https://notratz.github.io/NarakaTweaks" target="_blank" rel="noopener noreferrer">Review preset manager</a></li>
-                  <li><a class="hover:text-white" href="./egl/#calendar">Schedule next EGL block</a></li>
-                  <li><a class="hover:text-white" href="./scoring/#create">Configure new tournament</a></li>
+                  <li><a class="hover:text-white" href="./ScrimPrep/">Open ScrimPrep</a></li>
+                  <li><a class="hover:text-white" href="./naraka-configurator/">Open Settings Configurator</a></li>
                 </ul>
               </div>
             </aside>
@@ -199,7 +202,7 @@
               <div class="pillar-card__body">
                 <h3 class="pillar-card__title">NarakaTweaks</h3>
                 <p class="pillar-card__copy">
-                  Curated GPU/CPU/OS tweaks, per-category restore scripts, and preset bundles synced to your Discord login or cached
+                  Curated GPU/CPU/OS tweaks, per-category restore scripts, and preset bundles available for download or cached
                   offline for LAN day.
                 </p>
               </div>
@@ -210,30 +213,17 @@
             </article>
             <article class="pillar-card group">
               <div class="pillar-card__body">
-                <h3 class="pillar-card__title">EGL Scrim Planner</h3>
+                <h3 class="pillar-card__title">ScrimPrep</h3>
                 <p class="pillar-card__copy">
-                  Drag-and-drop weekly calendar, squad attendance tracking, CSV/JSON exports, and shareable read-only snapshots for your
-                  staff to align.
+                  Lightweight esports-style scrim planner: prepare lineups, run matchup drills, and export team rosters.
                 </p>
               </div>
               <footer class="pillar-card__footer">
-                <a class="pillar-card__cta" href="./egl/">Plan scrims</a>
-                <span class="pillar-card__meta">Discord post builder · Broadcast sync</span>
+                <a class="pillar-card__cta" href="./ScrimPrep/">Open ScrimPrep</a>
+                <span class="pillar-card__meta">6×6 planner · Exportable rosters</span>
               </footer>
             </article>
-            <article class="pillar-card group">
-              <div class="pillar-card__body">
-                <h3 class="pillar-card__title">Tournament Scoring Suite</h3>
-                <p class="pillar-card__copy">
-                  CSV ingestion with persistent column mapping, pick/ban desk with audit log, live standings, and publishing pipeline
-                  tuned for Naraka metas.
-                </p>
-              </div>
-              <footer class="pillar-card__footer">
-                <a class="pillar-card__cta" href="./scoring/">Manage brackets</a>
-                <span class="pillar-card__meta">Kill multipliers · Hero pools</span>
-              </footer>
-            </article>
+            <!-- Tournament Scoring Suite removed temporarily (no backend) -->
           </div>
         </div>
       </section>
@@ -261,7 +251,7 @@
                 <ul class="mt-3 space-y-2">
                   <li>Thu · 19:00 ET — Naraka scrim review</li>
                   <li>Sat · 15:00 ET — Team Strive community day</li>
-                  <li>Sun · 20:00 ET — Tournament desk with live scoring</li>
+                  <li>Sun · 20:00 ET — Community showmatch & analysis</li>
                 </ul>
               </div>
               <div class="rounded-2xl border border-white/10 bg-base-800/70 p-5">
