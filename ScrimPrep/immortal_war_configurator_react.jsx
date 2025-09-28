@@ -47,6 +47,8 @@ const ROUND_CONFIGS = [
   { map: "Perdoria", time: "Evening", special: "Final Zone" },
 ];
 
+const TIME_OPTIONS = ["Day", "Dawn", "Noon", "Dusk", "Evening", "Night"];
+
 /* =========================
    Utility Functions
    ========================= */
@@ -123,8 +125,7 @@ function CharacterModal({ isOpen, onClose, onSelect, currentCharacters }) {
 /* =========================
    Round Card Component
    ========================= */
-function RoundCard({ roundIndex, character, onSelectCharacter, isCompleted }) {
-  const config = ROUND_CONFIGS[roundIndex];
+function RoundCard({ roundIndex, config, character, onSelectCharacter, isCompleted, onConfigChange }) {
   const mapColor = getMapColor(config.map);
   const charData = CHARACTERS.find(c => c.name === character);
 
@@ -140,7 +141,23 @@ function RoundCard({ roundIndex, character, onSelectCharacter, isCompleted }) {
             <span className="text-2xl font-bold text-yellow-400">R{roundIndex + 1}</span>
             {isCompleted && <span className="text-green-400 text-xl">✓</span>}
           </div>
-          <h3 className="text-lg font-semibold text-white">{config.map}</h3>
+          <div className="flex items-center gap-3">
+            <h3 className="text-lg font-semibold text-white">{config.map}</h3>
+            <select
+              value={config.map}
+              onChange={(e) => onConfigChange(roundIndex, { map: e.target.value })}
+              className="bg-gray-800 text-white rounded px-2 py-1"
+            >
+              {MAPS.map(m => <option key={m.name} value={m.name}>{m.name}</option>)}
+            </select>
+            <select
+              value={config.time}
+              onChange={(e) => onConfigChange(roundIndex, { time: e.target.value })}
+              className="bg-gray-800 text-white rounded px-2 py-1"
+            >
+              {TIME_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </div>
           <p className="text-sm text-gray-400">{config.time} • {config.special}</p>
         </div>
         <div 
@@ -216,6 +233,8 @@ function ImmortalWarConfigurator() {
   const [roundCharacters, setRoundCharacters] = useState(Array(6).fill(""));
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRound, setSelectedRound] = useState(null);
+  // new: move per-round configs into state so edits persist and are included in exports
+  const [roundConfigs, setRoundConfigs] = useState(() => ROUND_CONFIGS.map(c => ({ ...c })));
 
   const currentCharacters = roundCharacters.filter(Boolean);
   const completedRounds = roundCharacters.filter(Boolean).length;
@@ -241,9 +260,9 @@ function ImmortalWarConfigurator() {
       timestamp: new Date().toISOString(),
       strategy: roundCharacters.map((char, idx) => ({
         round: idx + 1,
-        map: ROUND_CONFIGS[idx].map,
-        time: ROUND_CONFIGS[idx].time,
-        special: ROUND_CONFIGS[idx].special,
+        map: roundConfigs[idx].map,
+        time: roundConfigs[idx].time,
+        special: roundConfigs[idx].special,
         character: char || null,
       })),
       teamComposition: currentCharacters.reduce((acc, name) => {
@@ -253,6 +272,7 @@ function ImmortalWarConfigurator() {
       }, {}),
     };
 
+    // Default: download JSON
     const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -264,14 +284,146 @@ function ImmortalWarConfigurator() {
     URL.revokeObjectURL(url);
   }, [roundCharacters, currentCharacters]);
 
+  // New: Export planner as a 1920x1080 canvas PNG with six horizontal map strips
+  const exportPNG = useCallback(async () => {
+    const W = 1920; const H = 1080;
+    const stripH = Math.floor(H / 6);
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext('2d');
+      // background
+      ctx.fillStyle = '#05060a';
+      ctx.fillRect(0, 0, W, H);
+
+      // load all map images (ensure same-origin)
+      const loadImage = (src) => new Promise((res, rej) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => res(img);
+        img.onerror = rej;
+        img.src = src;
+      });
+
+      // preload map images used by rounds
+      const usedMapUrls = [...new Set(roundConfigs.map(rc => MAPS.find(m => m.name === rc.map)?.imageUrl))];
+      const images = {};
+      await Promise.all(usedMapUrls.map(async (url) => {
+        if (!url) return;
+        images[url] = await loadImage(url).catch(() => null);
+      }));
+
+      // draw each strip
+      for (let i = 0; i < 6; i++) {
+        const rc = roundConfigs[i];
+        const y = i * stripH;
+        // draw map image scaled to cover horizontally
+        const mapObj = MAPS.find(m => m.name === rc.map);
+        const img = mapObj ? images[mapObj.imageUrl] : null;
+        if (img) {
+          // compute cover scaling to W x stripH
+          const scale = Math.max(W / img.width, stripH / img.height);
+          const iw = img.width * scale;
+          const ih = img.height * scale;
+          const ix = (W - iw) / 2;
+          const iy = y + (stripH - ih) / 2;
+          ctx.drawImage(img, ix, iy, iw, ih);
+        } else {
+          // fallback fill
+          ctx.fillStyle = getMapColor(rc.map);
+          ctx.fillRect(0, y, W, stripH);
+        }
+
+        // dark overlay for time of day tint
+        if (rc.time && /Night|Dusk|Evening/i.test(rc.time)) {
+          ctx.fillStyle = 'rgba(0,0,30,0.35)';
+          ctx.fillRect(0, y, W, stripH);
+        } else if (rc.time && /Dawn|Day|Noon/i.test(rc.time)) {
+          // slight warm/dawn tint
+          ctx.fillStyle = rc.time === 'Dawn' ? 'rgba(255,160,60,0.06)' : 'rgba(255,255,255,0.02)';
+          ctx.fillRect(0, y, W, stripH);
+        }
+
+        // round label
+        ctx.fillStyle = 'rgba(0,0,0,0.45)';
+        ctx.fillRect(16, y + 16, 260, 64);
+        ctx.fillStyle = '#FFD54D';
+        ctx.font = '28px system-ui, Inter, sans-serif';
+        ctx.fillText(`R${i+1} · ${rc.map} · ${rc.time}`, 28, y + 56);
+
+        // draw character chip at right side
+        const charName = roundCharacters[i];
+        if (charName) {
+          const char = CHARACTERS.find(c => c.name === charName);
+          const chipW = 420; const chipH = 84;
+          const chipX = W - chipW - 40;
+          const chipY = y + (stripH - chipH) / 2;
+          // chip background
+          ctx.fillStyle = 'rgba(0,0,0,0.55)';
+          roundRect(ctx, chipX, chipY, chipW, chipH, 14);
+          ctx.fill();
+          // avatar
+          if (char && char.avatarUrl) {
+            try {
+              const avatar = await loadImage(char.avatarUrl).catch(() => null);
+              if (avatar) {
+                const avSize = 64;
+                ctx.drawImage(avatar, chipX + 12, chipY + (chipH - avSize) / 2, avSize, avSize);
+              }
+            } catch (e) { /* ignore avatar */ }
+          }
+          // text
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = '20px system-ui, Inter, sans-serif';
+          ctx.fillText(charName || 'Unknown', chipX + 92, chipY + 40);
+        }
+      }
+
+      // helper: rounded rect path
+      function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+      }
+
+      // download
+      const url = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `scrim-prep-${new Date().toISOString().split('T')[0]}-1920x1080.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (err) {
+      console.error('Canvas PNG export failed', err);
+      alert('PNG export failed — falling back to JSON export.');
+      handleExport();
+    }
+  }, [roundConfigs, roundCharacters, handleExport]);
+
   const handleReset = useCallback(() => {
     if (confirm('Are you sure you want to reset all character selections?')) {
       setRoundCharacters(Array(6).fill(""));
+      setRoundConfigs(ROUND_CONFIGS.map(c=> ({...c}))); // reset configs too
     }
   }, []);
 
+  // handler to update per-round config in state
+  const handleConfigChange = useCallback((roundIndex, partial) => {
+    setRoundConfigs(prev => {
+      const copy = prev.map(r => ({ ...r }));
+      copy[roundIndex] = { ...copy[roundIndex], ...partial };
+      return copy;
+    });
+  }, []);
+
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto" id="scrim-planner-root">
       {/* Progress Header */}
       <div className="bg-gray-800/70 border border-gray-600 rounded-2xl p-6 mb-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -287,7 +439,17 @@ function ImmortalWarConfigurator() {
               </div>
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 items-center">
+            <div className="flex items-center gap-3">
+              <label className="text-sm text-gray-300">Map:</label>
+              <select id="global-map-select" className="bg-gray-800 text-white rounded px-2 py-1">
+                {MAPS.map(m => <option key={m.name} value={m.name}>{m.name}</option>)}
+              </select>
+              <label className="text-sm text-gray-300">Time:</label>
+              <select id="global-time-select" className="bg-gray-800 text-white rounded px-2 py-1">
+                {TIME_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
+              </select>
+            </div>
             <button
               onClick={handleReset}
               disabled={completedRounds === 0}
@@ -300,7 +462,14 @@ function ImmortalWarConfigurator() {
               disabled={!isComplete}
               className="px-4 py-2 bg-green-500/20 text-green-300 border border-green-500/50 rounded-lg hover:bg-green-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Export Strategy
+              Export JSON
+            </button>
+            <button
+              onClick={exportPNG}
+              disabled={!isComplete}
+              className="px-4 py-2 bg-yellow-400/10 text-yellow-300 border border-yellow-400/40 rounded-lg hover:bg-yellow-400/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Export PNG
             </button>
           </div>
         </div>
@@ -315,9 +484,11 @@ function ImmortalWarConfigurator() {
           <RoundCard
             key={idx}
             roundIndex={idx}
+            config={roundConfigs[idx]}
             character={roundCharacters[idx]}
             onSelectCharacter={() => handleRoundSelect(idx)}
             isCompleted={Boolean(roundCharacters[idx])}
+            onConfigChange={handleConfigChange}
           />
         ))}
       </div>
