@@ -26,8 +26,36 @@ body {
   margin: 0;
   min-height: 100vh;
   background-color: oklch(10% 0.02 260);
-  background-image: radial-gradient(circle at 50% -20%, rgba(120, 255, 255, 0.07), transparent 45%),
-    linear-gradient(180deg, rgba(5, 6, 10, 0.9), rgba(5, 6, 10, 1));
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../assets/naraka-bg.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px) brightness(0.4);
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 50% -20%, rgba(120, 255, 255, 0.07), transparent 45%),
+    radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.85) 100%);
+  pointer-events: none;
+  z-index: -1;
   background-attachment: fixed;
 }
 
@@ -743,6 +771,68 @@ button[disabled] {
 @media (max-width: 768px) {
   .site-nav-links {
     display: none;
+  }
+}
+
+/* ===========================
+   PAGE LAYOUT & FLOW
+   =========================== */
+.content-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+.page-header {
+  padding: 2rem 0;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.page-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--site-accent);
+  border-radius: 3px;
+}
+
+.page-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.75rem;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: var(--site-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--site-accent);
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.75rem;
   }
 }
 

@@ -16,7 +16,7 @@ body{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:linear-gra
 .site-header img{height:44px}
 .site-header h1{margin:0;font-size:1.1rem;font-weight:700}
 .muted{color:var(--muted);font-size:0.95rem}
-.layout{display:flex;gap:20px;padding:22px;max-width:1200px;margin:20px auto}
+.layout{display:flex;gap:20px;padding:0;margin:0 auto 40px}
 .panel{flex:1;padding:18px;position:relative;z-index:5}
 .panel.surface{background:rgba(6,10,16,0.92);border-radius:1.25rem;border:1px solid rgba(255,255,255,0.08);box-shadow:0 24px 60px rgba(3,10,20,0.8)}
 #editor-panel{flex:2}
