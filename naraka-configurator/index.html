@@ -4,9 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Naraka Settings Configurator</title>
+    <link rel="stylesheet" href="../src/styles/base.css" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body class="naraka-bg bg-base-900 text-white min-h-screen">
+  <body class="bg-base-900 text-white min-h-screen">
     <!-- Unified Navigation -->
     <nav class="site-nav">
       <div class="site-nav-content">
@@ -22,51 +23,125 @@
         </div>
       </div>
     </nav>
-    
+
     <header class="page-header content-container">
-      <h1 class="page-title">Naraka Bladepoint · Settings Configurator</h1>
-      <p class="page-subtitle">Edit settings and export <code>QualitySettingsData.json</code> — no login required.</p>
+      <div class="hero-shell">
+        <p class="hero-eyebrow">Visual Optimizer</p>
+        <h1 class="page-title">Naraka Bladepoint Settings Studio</h1>
+        <p class="page-subtitle">
+          Dial in your <code>QualitySettingsData.json</code>, understand what every toggle does, and ship the perfect preset to your squad.
+        </p>
+        <div class="hero-actions" role="group" aria-label="Configurator quick actions">
+          <button class="btn btn-primary" data-scroll-to="#editor">Jump to editor</button>
+          <button class="btn btn-secondary" data-scroll-to="#glossary">See setting guides</button>
+        </div>
+      </div>
     </header>
 
-    <main class="content-container layout">
-      <section class="panel surface surface-elevated" id="editor-panel">
-        <div class="toolbar">
-          <div style="display:flex;gap:8px;align-items:center">
+    <section class="content-container info-strip" aria-label="Configurator workflow overview">
+      <article class="info-card">
+        <span class="info-card__step">01</span>
+        <h2 class="info-card__title">Load or start fresh</h2>
+        <p class="info-card__copy">Import an existing JSON or begin from our curated defaults tuned for tournament play.</p>
+      </article>
+      <article class="info-card">
+        <span class="info-card__step">02</span>
+        <h2 class="info-card__title">Tune with context</h2>
+        <p class="info-card__copy">Each field explains the impact on performance and visuals so you can tweak confidently.</p>
+      </article>
+      <article class="info-card">
+        <span class="info-card__step">03</span>
+        <h2 class="info-card__title">Export &amp; deploy</h2>
+        <p class="info-card__copy">Download or copy the JSON straight into your Naraka install or share it with your roster.</p>
+      </article>
+    </section>
+
+    <main class="content-container layout-grid">
+      <section class="panel surface surface-elevated panel--primary" id="editor-panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title">Interactive JSON editor</h2>
+            <p class="panel-subtitle">Changes auto-save locally. Presets and dropdowns keep values clean.</p>
+          </div>
+          <div class="panel-header__meta" id="autosave-status" role="status" aria-live="polite">Autosaving</div>
+        </div>
+        <div class="toolbar" role="toolbar" aria-label="Editor controls">
+          <div class="toolbar-group">
             <button id="btn-reset" class="btn btn-ghost btn-sm">Reset</button>
             <button id="btn-load-file" class="btn btn-secondary btn-sm">Load…</button>
-            <input id="file-input" type="file" accept="application/json" style="display:none" />
+            <input id="file-input" type="file" accept="application/json" hidden />
           </div>
-          <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <div class="toolbar-group">
             <button id="btn-copy" class="btn btn-secondary btn-sm">Copy</button>
             <button id="btn-download" class="btn btn-primary btn-sm">Download</button>
           </div>
         </div>
-        <div class="presets">
+        <div class="preset-deck" aria-live="polite">
           <div class="section-title">Presets</div>
-          <div id="preset-chips" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"></div>
+          <div id="preset-chips" class="chip-row" role="list"></div>
         </div>
-
-        <div id="editor"></div>
+        <div id="editor" class="editor-shell" aria-label="JSON field editor"></div>
       </section>
 
-      <aside class="panel surface surface-elevated" id="preview-panel">
-        <h2>Preview</h2>
-        <pre id="json-preview" class="preview"></pre>
-        <div class="presets">
-          <label>Presets:</label>
-          <select id="preset-select" class="form-control" style="width: auto; margin-top: 8px;">
-            <option value="">-- choose preset --</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-            <option value="custom">Custom (no changes)</option>
+      <aside class="panel surface surface-elevated panel--preview" id="preview-panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title">Live preview</h2>
+            <p class="panel-subtitle">Everything you change syncs instantly. Use this to double-check before exporting.</p>
+          </div>
+        </div>
+        <pre id="json-preview" class="preview" aria-label="JSON preview"></pre>
+        <div class="preset-select-group">
+          <label for="preset-select" class="preset-select-label">Preset switcher</label>
+          <select id="preset-select" class="form-control select-control">
+            <option value="">Choose a quick preset…</option>
+            <option value="low">Low · Highest FPS</option>
+            <option value="medium">Balanced · 120 FPS target</option>
+            <option value="high">High · Cinematic fidelity</option>
+            <option value="custom">Custom · Keep current values</option>
           </select>
         </div>
       </aside>
+
+      <section class="panel surface surface-elevated panel--info" id="glossary">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title">Setting guides</h2>
+            <p class="panel-subtitle">Quick refreshers on what matters for performance, clarity, and responsiveness.</p>
+          </div>
+        </div>
+        <div class="glossary-grid">
+          <article class="glossary-card">
+            <h3>Graphic Quality Level</h3>
+            <p>Controls core visuals: geometry, textures, shadows, volumetrics, and post-processing. Higher values look richer but cost GPU time.</p>
+          </article>
+          <article class="glossary-card">
+            <h3>System Quality Setting</h3>
+            <p>Resolution scaling, upscalers, framerate caps, V-Sync, HDR, and competitive toggles like NVIDIA Reflex or AMD Anti-Lag.</p>
+          </article>
+          <article class="glossary-card">
+            <h3>Upscaler Modes</h3>
+            <p>DLSS, XeSS, and FSR modes balance sharpness against performance. Choose Automatic for sensible defaults or Quality for LAN play.</p>
+          </article>
+          <article class="glossary-card">
+            <h3>Accessibility</h3>
+            <p>Color blindness profiles and strength controls improve readability for different vision needs without affecting FPS.</p>
+          </article>
+          <article class="glossary-card">
+            <h3>Ray Tracing &amp; Style</h3>
+            <p>Luxury options for showmatches. Disable for scrims to keep frametimes stable unless you showcase hardware.</p>
+          </article>
+          <article class="glossary-card">
+            <h3>Presets &amp; Sharing</h3>
+            <p>Use the preset chips for instant tuning, then copy the JSON to sync teammates. Local storage remembers your last edits.</p>
+          </article>
+        </div>
+      </section>
     </main>
 
-    <footer class="footer muted">Reference: https://old.naraka.wiki/en/Graphic-Settings</footer>
+    <footer class="footer muted">Reference inspiration: <a href="https://old.naraka.wiki/en/Graphic-Settings" target="_blank" rel="noreferrer">old.naraka.wiki</a></footer>
 
+    <script type="module" src="../src/js/background-rotator.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
