@@ -100,7 +100,7 @@ const FIELD_DESCRIPTIONS = {
   'l22SystemQualitySetting.lxFsr2Mode': 'AMD FSR 2 preset for dynamic resolution scaling.',
   'l22SystemQualitySetting.fsr2Sharpness': 'Applies additional edge sharpening when FSR 2 is active.',
   'l22SystemQualitySetting.lxFsr3Mode': 'AMD FSR 3 frame generation preset.',
-  'l22SystemQualitySetting.enbaleFSR3FrameInterpolation': 'Enables FSR 3 frame interpolation pipeline.',
+  'l22SystemQualitySetting.enableFSR3FrameInterpolation': 'Enables FSR 3 frame interpolation pipeline.',
   'l22SystemQualitySetting.nisQuality': 'NVIDIA Image Scaling preset for legacy GPUs.',
   'l22SystemQualitySetting.fullScreenMode': 'Display mode preference when launching Naraka.',
   'l22SystemQualitySetting.resolutionWidth': 'Target render resolution width in pixels.',
