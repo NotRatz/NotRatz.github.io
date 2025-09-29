@@ -11,7 +11,7 @@
 	--control-shadow: var(--control-shadow, 0 8px 30px rgba(3,10,20,0.6));
 }
 *{box-sizing:border-box}
-body{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#05060a,#071021);color:#e9f6ff;margin:0;min-height:100vh}
+body{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:transparent;color:#e9f6ff;margin:0;min-height:100vh}
 .site-header{padding:18px 20px;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;gap:12px}
 .site-header img{height:44px}
 .site-header h1{margin:0;font-size:1.1rem;font-weight:700}
@@ -57,18 +57,9 @@ body{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:linear-gra
 
 .section-title{font-weight:800;margin:6px 0 12px 0;color:#e7fbff}
 
-/* subtle background image for the configurator */
-.naraka-bg {
-	background-image: url('/assets/naraka-bg.png');
-	background-size: cover;
-	background-position: center;
-	/* follow site hero brightness token if present */
-	filter: saturate(0.8) brightness(var(--hero-bg-brightness, 0.45));
-}
-
 @media (max-width:800px){
-	.layout{flex-direction:column;padding:14px}
-	.site-header img{height:36px}
+        .layout{flex-direction:column;padding:14px}
+        .site-header img{height:36px}
 }
 
 /* Use base.css unified chip system */

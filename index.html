@@ -80,125 +80,180 @@
     </nav>
     
     <div id="app-shell"></div>
-    <main class="relative pt-8 pb-24 overflow-hidden">
-      <div class="absolute inset-0 -z-10">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(120,255,255,0.08),_transparent_55%)]"></div>
-        <div class="absolute -right-32 top-20 h-80 w-80 rounded-full bg-brand-pink-500/20 blur-3xl"></div>
-        <div class="absolute -left-24 bottom-16 h-96 w-96 rounded-full bg-brand-cyan-500/20 blur-3xl"></div>
-  <div class="absolute inset-0 bg-[linear-gradient(120deg,_rgba(255,255,255,0.05)_0%,_rgba(5,6,10,0.9)_45%,_rgba(5,6,10,1)_100%)]"></div>
-  <div class="hero-slow-zoom" aria-hidden="true" style="--hero-bg: url('/assets/naraka-bg.png')"></div>
-      </div>
-      <section class="relative z-10 content-container section">
-        <div class="mx-auto max-w-6xl grid gap-12 lg:grid-cols-[1.15fr,_0.85fr] lg:items-center">
-          <div class="space-y-8">
-            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.35em] text-slate-300">
-              <span class="h-2 w-2 rounded-full bg-brand-cyan-400 animate-pulse"></span>
-              TOOL AGGREGATOR
-            </span>
-            <h1 class="font-display text-4xl leading-tight text-white md:text-5xl xl:text-6xl">
-              Fast presets, match prep, and tweakable settings.
-            </h1>
-            <p class="max-w-2xl text-lg text-slate-300 md:text-xl">
-              Scrim-ready tools: planner, presets, and a JSON settings editor.
-            </p>
-            <div class="flex flex-wrap gap-4 items-center">
-              <img src="./assets/strive-logo.png" alt="Strive logo" class="h-12 w-12 rounded-md drop-shadow-md transform transition-all duration-700 hover:scale-105 animate-fade-in" />
-              <a
-                class="btn btn-primary btn-lg"
-                href="https://notratz.github.io/NarakaTweaks"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Launch NarakaTweaks
-              </a>
-              <a
-                class="btn btn-secondary btn-lg"
-                href="./ScrimPrep/"
-              >
-                ScrimPrep
-              </a>
-              <a
-                class="btn btn-ghost btn-lg"
-                href="./naraka-configurator/"
-              >
-                Settings Configurator
-              </a>
-            </div>
-            <div class="grid gap-6 sm:grid-cols-2">
-              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-glow">
-                <p class="font-semibold text-sm uppercase tracking-[0.3em] text-slate-400">Performance Focus</p>
-                <p class="mt-2 text-slate-300">
-                  Curated tools designed for competitive players. Get the performance edge with tested tweaks and optimized tournament workflows.
-                </p>
+
+
+    <main class="page-main">
+      <section class="hero-section section">
+        <div class="content-container">
+          <div data-hero-grid aria-hidden="true"></div>
+          <div class="hero-layout">
+            <div class="hero-copy">
+              <span class="hero-eyebrow">
+                <span class="hero-eyebrow-dot"></span>
+                Team Strive Ops
+              </span>
+              <h1 class="hero-title">Unified Naraka operations</h1>
+              <p class="hero-subtitle">
+                A streamlined workspace for prepping scrims, dialing in performance profiles, and shipping updates to your roster.
+              </p>
+              <div class="hero-actions">
+                <a
+                  class="btn btn-primary btn-lg"
+                  href="https://notratz.github.io/NarakaTweaks"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Launch NarakaTweaks
+                </a>
+                <a class="btn btn-secondary btn-lg" href="./ScrimPrep/">
+                  Open ScrimPrep
+                </a>
+                <a class="hero-link" href="./naraka-configurator/">
+                  Settings Configurator
+                </a>
               </div>
-              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-glow">
-                <p class="font-semibold text-sm uppercase tracking-[0.3em] text-slate-400">Easy Access</p>
-                <p class="mt-2 text-slate-300">
-                  Direct links to essential Naraka tools. No complex setup required - just click and access the tools you need.
-                </p>
-              </div>
+              <dl class="hero-metrics">
+                <div class="hero-metric">
+                  <dt>Prep</dt>
+                  <dd>Lock teams, lanes, and hero plans before lobby call.</dd>
+                </div>
+                <div class="hero-metric">
+                  <dt>Optimize</dt>
+                  <dd>Apply vetted GPU/OS/network tweaks with instant rollback.</dd>
+                </div>
+                <div class="hero-metric">
+                  <dt>Deploy</dt>
+                  <dd>Share exports and updates across the squad in seconds.</dd>
+                </div>
+              </dl>
             </div>
-          </div>
-          <div class="relative">
-            <div class="relative mx-auto flex max-w-md flex-col gap-6 rounded-3xl border border-white/10 bg-white/5/80 p-6 backdrop-blur">
+            <div class="hero-panel surface surface-elevated" data-surface>
               <header>
-                <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Available Tools</p>
-                <p class="mt-1 font-display text-2xl text-white">Quick Access</p>
+                <span class="hero-panel-title">Competition Workflow</span>
+                <p class="hero-panel-subtitle">Plan → Optimize → Execute</p>
               </header>
-              <div class="space-y-4">
-                <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
-                  <div class="flex items-center gap-3">
-                    <div class="h-3 w-3 rounded-full bg-brand-cyan-400"></div>
-                    <span class="text-white font-medium">NarakaTweaks</span>
+              <ol class="hero-panel-list">
+                <li class="hero-panel-step">
+                  <span class="hero-panel-step-index">01</span>
+                  <div class="hero-panel-step-body">
+                    <h3>Map the roster</h3>
+                    <p>ScrimPrep tracks squads, counters, and hero swaps per round.</p>
                   </div>
-                  <p class="mt-1 text-xs text-slate-400">Performance optimization tools</p>
-                </div>
-                  <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
-                    <div class="flex items-center gap-3">
-                      <div class="h-3 w-3 rounded-full bg-brand-pink-400"></div>
-                      <span class="text-white font-medium">ScrimPrep</span>
-                    </div>
-                    <p class="mt-1 text-xs text-slate-400">Compact scrim planning with esports-focused UI</p>
+                </li>
+                <li class="hero-panel-step">
+                  <span class="hero-panel-step-index">02</span>
+                  <div class="hero-panel-step-body">
+                    <h3>Dial in performance</h3>
+                    <p>NarakaTweaks applies curated presets with instant export + restore.</p>
                   </div>
-                <div class="rounded-2xl border border-white/10 bg-base-800/70 p-4">
-                  <div class="flex items-center gap-3">
-                    <div class="h-3 w-3 rounded-full bg-brand-lime-400"></div>
-                    <span class="text-white font-medium">Tournament Suite</span>
+                </li>
+                <li class="hero-panel-step">
+                  <span class="hero-panel-step-index">03</span>
+                  <div class="hero-panel-step-body">
+                    <h3>Ship the build</h3>
+                    <p>Publish configs, CSVs, and notes to staffers without leaving the suite.</p>
                   </div>
-                  <p class="mt-1 text-xs text-slate-400">Competition management</p>
-                </div>
-              </div>
-              <footer class="rounded-2xl border border-brand-cyan-500/40 bg-brand-cyan-500/10 px-4 py-3 text-sm text-brand-cyan-200">
-                All tools are ready to use. Click above to get started.
-              </footer>
+                </li>
+              </ol>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="relative z-10 mt-24 content-container section">
-        <div>
-          <header class="text-center">
-            <p class="text-xs uppercase tracking-[0.35em] text-brand-cyan-200">Updates</p>
-            <h2 class="mt-2 font-display text-3xl text-white md:text-4xl">Latest News</h2>
+      <section class="section">
+        <div class="content-container">
+          <header>
+            <span class="section-eyebrow">Workflow</span>
+            <h2 class="section-heading">One flow from plan to publish</h2>
+            <p class="section-description">
+              The Strive toolkit links prep, optimization, and live operations so every match day follows the same cadence.
+            </p>
           </header>
-          <div class="mt-10 grid gap-6 lg:grid-cols-[2fr,1fr]">
-            <div id="announcement-feed" class="grid gap-4">
-              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-slate-300">
-                Loading announcements...
-              </div>
+          <div class="workflow-grid">
+            <article class="workflow-step">
+              <span class="workflow-step-number">01</span>
+              <h3 class="workflow-step-title">Map your scrims</h3>
+              <p class="workflow-step-copy">Build rosters, track hero locks, and export Discord-ready schedules.</p>
+              <span class="workflow-step-footer">ScrimPrep</span>
+            </article>
+            <article class="workflow-step">
+              <span class="workflow-step-number">02</span>
+              <h3 class="workflow-step-title">Optimize systems</h3>
+              <p class="workflow-step-copy">Deploy vetted GPU, OS, and network tweaks with rollback safety.</p>
+              <span class="workflow-step-footer">NarakaTweaks</span>
+            </article>
+            <article class="workflow-step">
+              <span class="workflow-step-number">03</span>
+              <h3 class="workflow-step-title">Sync the team</h3>
+              <p class="workflow-step-copy">Share presets, JSON exports, and scoring packets from a single hub.</p>
+              <span class="workflow-step-footer">Configurator &amp; Suite</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="content-container">
+          <header>
+            <span class="section-eyebrow">Toolkit</span>
+            <h2 class="section-heading">Tools built for Naraka competition</h2>
+            <p class="section-description">
+              Each pillar focuses on match-day clarity, rapid iteration, and zero-friction exports for staff and players.
+            </p>
+          </header>
+          <div class="tool-grid">
+            <article class="tool-card" data-surface>
+              <h3>NarakaTweaks</h3>
+              <p>Curated GPU/CPU/OS presets, instant search, and revert scripts for LAN-ready machines.</p>
+              <footer>
+                <a class="btn btn-primary btn-sm" href="https://notratz.github.io/NarakaTweaks" target="_blank" rel="noopener noreferrer">Open hub</a>
+                <span>Preset import · Offline cache</span>
+              </footer>
+            </article>
+            <article class="tool-card" data-surface>
+              <h3>ScrimPrep</h3>
+              <p>Esports-style planner for 6×6 rounds with hero matchups, attendance, and roster exports.</p>
+              <footer>
+                <a class="btn btn-secondary btn-sm" href="./ScrimPrep/">Launch planner</a>
+                <span>Lineup matrix · Discord exports</span>
+              </footer>
+            </article>
+            <article class="tool-card" data-surface>
+              <h3>Configurator</h3>
+              <p>Edit and validate <code>QualitySettingsData.json</code> with live preview, copy, and download.</p>
+              <footer>
+                <a class="btn btn-ghost btn-sm" href="./naraka-configurator/">Open editor</a>
+                <span>JSON diff · Fast presets</span>
+              </footer>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="content-container">
+          <header>
+            <span class="section-eyebrow">Latest</span>
+            <h2 class="section-heading">Release radar &amp; status</h2>
+            <p class="section-description">
+              Catch the newest tweaks, scrim features, and scoring updates as soon as they land.
+            </p>
+          </header>
+          <div class="updates-grid">
+            <div class="updates-feed" id="announcement-feed">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-slate-400">Syncing updates...</div>
             </div>
-            <aside class="space-y-4">
-              <div class="rounded-2xl border border-brand-lime-500/40 bg-brand-lime-500/10 p-6 shadow-glow">
-                <p class="text-xs uppercase tracking-[0.35em] text-brand-lime-200">Status</p>
-                <p class="mt-3 text-sm text-brand-lime-100">All services operational ┬╖ Last publish synced 12 minutes ago.</p>
+            <aside class="updates-aside">
+              <div class="status-card">
+                <strong>All systems operational</strong>
+                <p>All services online — last publish synced 12 minutes ago.</p>
               </div>
-              <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                <h3 class="font-semibold uppercase tracking-[0.3em] text-slate-400">Quick actions</h3>
-                <ul class="mt-4 space-y-3 text-sm text-slate-300">
-                  <li><a class="hover:text-white" href="https://notratz.github.io/NarakaTweaks" target="_blank" rel="noopener noreferrer">Review preset manager</a></li>
-                  <li><a class="hover:text-white" href="./ScrimPrep/">Open ScrimPrep</a></li>
-                  <li><a class="hover:text-white" href="./naraka-configurator/">Open Settings Configurator</a></li>
+              <div class="quick-links">
+                <h3>Quick jumps</h3>
+                <ul>
+                  <li><a href="https://notratz.github.io/NarakaTweaks" target="_blank" rel="noopener noreferrer">Review preset manager</a></li>
+                  <li><a href="./ScrimPrep/">Open ScrimPrep</a></li>
+                  <li><a href="./naraka-configurator/">Open Settings Configurator</a></li>
                 </ul>
               </div>
             </aside>
@@ -206,83 +261,32 @@
         </div>
       </section>
 
-      <section class="relative z-10 mt-24 content-container section">
-        <div>
-          <header class="text-center">
-            <p class="text-xs uppercase tracking-[0.35em] text-brand-pink-200">Essential Tools</p>
-            <h2 class="mt-3 font-display text-3xl text-white md:text-4xl">Everything you need for competitive Naraka</h2>
-          </header>
-          <div class="mt-12 grid gap-6 md:grid-cols-3">
-            <article class="pillar-card group">
-              <div class="pillar-card__body">
-                <h3 class="pillar-card__title">NarakaTweaks</h3>
-                <p class="pillar-card__copy">
-                  Curated GPU/CPU/OS tweaks, per-category restore scripts, and preset bundles available for download or cached
-                  offline for LAN day.
-                </p>
-              </div>
-              <footer class="pillar-card__footer">
-                <a class="pillar-card__cta" href="https://notratz.github.io/NarakaTweaks" target="_blank" rel="noopener noreferrer">Open hub</a>
-                <span class="pillar-card__meta">Preset import/export ┬╖ Instant search</span>
-              </footer>
-            </article>
-            <article class="pillar-card group">
-              <div class="pillar-card__body">
-                <h3 class="pillar-card__title">ScrimPrep</h3>
-                <p class="pillar-card__copy">
-                  Lightweight esports-style scrim planner: prepare lineups, run matchup drills, and export team rosters.
-                </p>
-              </div>
-              <footer class="pillar-card__footer">
-                <a class="pillar-card__cta" href="./ScrimPrep/">Open ScrimPrep</a>
-                <span class="pillar-card__meta">6├ù6 planner ┬╖ Exportable rosters</span>
-              </footer>
-            </article>
-            <!-- Tournament Scoring Suite removed temporarily (no backend) -->
-          </div>
-        </div>
-      </section>
-
-      <section class="relative z-10 mt-24 content-container section">
-        <div class="rounded-3xl border border-white/10 bg-white/5 p-10">
-          <div class="grid gap-10 lg:grid-cols-[1.2fr,_0.8fr] lg:items-center">
-            <div class="space-y-6">
-              <h2 class="font-display text-3xl text-white md:text-4xl">Community & Support</h2>
-              <p class="text-lg text-slate-300">
-                Join our community for tournaments, coaching, and the latest updates. Follow us on social media and support the project.
-              </p>
-              <div class="flex flex-wrap gap-4 text-sm">
-                <a class="community-link" href="https://twitch.tv/notratz" target="_blank" rel="noopener">Twitch</a>
-                <a class="community-link" href="https://www.youtube.com/@notratz" target="_blank" rel="noopener">YouTube</a>
-                <a class="community-link" href="https://discord.gg/teamstrive" target="_blank" rel="noopener">Discord</a>
-                <a class="community-link" href="https://ko-fi.com/notratz" target="_blank" rel="noopener">KoΓÇæFi</a>
-                <a class="community-link" href="https://throne.com/notratz" target="_blank" rel="noopener">Throne</a>
-                <a class="community-link" href="https://github.com/notratz/Strive" target="_blank" rel="noopener">GitHub Source</a>
+      <section class="section">
+        <div class="content-container">
+          <div class="community-panel">
+            <div>
+              <h2>Community &amp; support</h2>
+              <p>Join tournaments, request features, or sync with staff for event-day coverage.</p>
+              <div class="community-links">
+                <a href="https://discord.gg/teamstrive" target="_blank" rel="noopener">Discord</a>
+                <a href="https://twitch.tv/notratz" target="_blank" rel="noopener">Twitch</a>
+                <a href="https://www.youtube.com/@notratz" target="_blank" rel="noopener">YouTube</a>
+                <a href="https://ko-fi.com/notratz" target="_blank" rel="noopener">Ko‑Fi</a>
+                <a href="https://github.com/notratz/Strive" target="_blank" rel="noopener">GitHub</a>
               </div>
             </div>
-            <div class="space-y-4 text-sm text-slate-300">
-              <div class="rounded-2xl border border-white/10 bg-base-800/70 p-5">
-                <h3 class="text-xs uppercase tracking-[0.3em] text-slate-400">Broadcast schedule</h3>
-                <ul class="mt-3 space-y-2">
-                  <li>Thu ┬╖ 19:00 ET ΓÇö Naraka scrim review</li>
-                  <li>Sat ┬╖ 15:00 ET ΓÇö Team Strive community day</li>
-                  <li>Sun ┬╖ 20:00 ET ΓÇö Community showmatch & analysis</li>
-                </ul>
-              </div>
-              <div class="rounded-2xl border border-white/10 bg-base-800/70 p-5">
-                <h3 class="text-xs uppercase tracking-[0.3em] text-slate-400">Partner highlights</h3>
-                <ul class="mt-3 space-y-2">
-                  <li>GamerSupps ├ù Strive limited bundle</li>
-                  <li>Naraka Academy VOD library</li>
-                  <li>Community mod toolkit</li>
-                </ul>
-              </div>
-            </div>
+            <aside>
+              <p class="community-note">Broadcast cadence: Thu 19:00 ET scrim review · Sat 15:00 ET community day · Sun 20:00 ET showmatch.</p>
+              <p class="community-note">Need support? Email <a href="mailto:ops@teamstrive.gg">ops@teamstrive.gg</a> for tournament coordination.</p>
+            </aside>
           </div>
         </div>
       </section>
     </main>
+
+
     <div id="modal-root"></div>
+    <script type="module" src="./src/js/background-rotator.js"></script>
     <script type="module" src="./src/js/app-shell.js"></script>
     <script type="module" src="./src/js/landing-page.js"></script>
   </body>

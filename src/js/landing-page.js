@@ -2,8 +2,9 @@ import { getAnnouncements, formatAnnouncementDate } from './announcements.js';
 import { animate, inView } from './motion.js';
 
 const feed = document.getElementById('announcement-feed');
-const heroSection = document.querySelector('section');
-const productCards = document.querySelectorAll('.pillar-card');
+const heroSection = document.querySelector('.hero-section');
+const toolCards = document.querySelectorAll('.tool-card');
+const workflowSteps = document.querySelectorAll('.workflow-step');
 
 async function renderAnnouncements() {
   if (!feed) return;
@@ -38,16 +39,18 @@ async function renderAnnouncements() {
 
 function animateHero() {
   if (!heroSection) return;
-  animate(heroSection.querySelectorAll('h1, p, .flex.flex-wrap, .grid'), { opacity: [0, 1], transform: ['translateY(24px)', 'translateY(0)'] }, { delay: 0.08, duration: 0.5, easing: 'cubic-bezier(.2,.8,.2,1)', stagger: 0.05 });
+  const targets = heroSection.querySelectorAll('.hero-eyebrow, .hero-title, .hero-subtitle, .hero-actions, .hero-metrics, .hero-panel');
+  animate(targets, { opacity: [0, 1], transform: ['translateY(24px)', 'translateY(0)'] }, { delay: 0.08, duration: 0.6, easing: 'cubic-bezier(.2,.8,.2,1)', stagger: 0.06 });
 }
 
-function animateProductCards() {
-  if (!productCards.length) return;
-  inView(productCards, ({ target }) => {
-    animate(target, { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] }, { duration: 0.4, easing: 'cubic-bezier(.2,.8,.2,1)' });
+function animateTools() {
+  const items = [...toolCards, ...workflowSteps];
+  if (!items.length) return;
+  inView(items, ({ target }) => {
+    animate(target, { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] }, { duration: 0.45, easing: 'cubic-bezier(.2,.8,.2,1)' });
   }, { margin: '-10% 0px -10% 0px' });
 }
 
 renderAnnouncements();
 animateHero();
-animateProductCards();
+animateTools();
