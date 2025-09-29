@@ -112,8 +112,8 @@ function createJsonEditor(container, initialJson, options = {}){
 
   function renderPrimitive(key, value, onUpdate){
     const wrapper = document.createElement('div');
-    const input = document.createElement('input'); input.style.minWidth = '260px'; input.value = value === null ? '' : String(value);
-    const typeSelect = document.createElement('select'); ['string','number','boolean','null'].forEach(t=>{ const o = document.createElement('option'); o.value = t; o.textContent = t; if (t===inferType(value)) o.selected = true; typeSelect.appendChild(o); });
+    const input = document.createElement('input'); input.className = 'form-control'; input.style.minWidth = '260px'; input.value = value === null ? '' : String(value);
+    const typeSelect = document.createElement('select'); typeSelect.className = 'form-control'; ['string','number','boolean','null'].forEach(t=>{ const o = document.createElement('option'); o.value = t; o.textContent = t; if (t===inferType(value)) o.selected = true; typeSelect.appendChild(o); });
     input.addEventListener('input', ()=> onUpdate(coerceValue(input.value, typeSelect.value)));
     typeSelect.addEventListener('change', ()=> onUpdate(coerceValue(input.value, typeSelect.value)));
     wrapper.appendChild(input); wrapper.appendChild(typeSelect); return wrapper;
@@ -126,25 +126,25 @@ function createJsonEditor(container, initialJson, options = {}){
       const actions = document.createElement('div'); actions.style.display = 'flex'; actions.style.gap = '6px';
       if (isObject(value)){
         const child = renderObject(value, path.concat(key)); const row = makeRow(label, child, opts.allowAddRemove ? actions : null);
-        if (opts.allowAddRemove){ const del = document.createElement('button'); del.textContent = 'Remove'; del.type = 'button'; del.addEventListener('click', ()=>{ deleteAtPath(path.concat(key)); rerender(); triggerChange(); }); actions.appendChild(del);
-          const add = document.createElement('button'); add.textContent = '+'; add.type = 'button'; add.title = 'Add nested key'; add.addEventListener('click', ()=>{ const newKey = prompt('New nested key name:'); if (!newKey) return; value[newKey] = ''; rerender(); triggerChange(); }); actions.appendChild(add); }
+        if (opts.allowAddRemove){ const del = document.createElement('button'); del.className = 'btn btn-danger btn-sm'; del.textContent = 'Remove'; del.type = 'button'; del.addEventListener('click', ()=>{ deleteAtPath(path.concat(key)); rerender(); triggerChange(); }); actions.appendChild(del);
+          const add = document.createElement('button'); add.className = 'btn btn-secondary btn-sm'; add.textContent = '+'; add.type = 'button'; add.title = 'Add nested key'; add.addEventListener('click', ()=>{ const newKey = prompt('New nested key name:'); if (!newKey) return; value[newKey] = ''; rerender(); triggerChange(); }); actions.appendChild(add); }
         c.appendChild(row);
       } else if (Array.isArray(value)){
         const arrNode = renderArray(value, path.concat(key)); const row = makeRow(label, arrNode, opts.allowAddRemove ? actions : null);
-        if (opts.allowAddRemove){ const addItem = document.createElement('button'); addItem.textContent = 'Add item'; addItem.type = 'button'; addItem.addEventListener('click', ()=>{ value.push(null); rerender(); triggerChange(); }); actions.appendChild(addItem);
-          const del = document.createElement('button'); del.textContent = 'Remove'; del.type = 'button'; del.addEventListener('click', ()=>{ deleteAtPath(path.concat(key)); rerender(); triggerChange(); }); actions.appendChild(del); }
+        if (opts.allowAddRemove){ const addItem = document.createElement('button'); addItem.className = 'btn btn-secondary btn-sm'; addItem.textContent = 'Add item'; addItem.type = 'button'; addItem.addEventListener('click', ()=>{ value.push(null); rerender(); triggerChange(); }); actions.appendChild(addItem);
+          const del = document.createElement('button'); del.className = 'btn btn-danger btn-sm'; del.textContent = 'Remove'; del.type = 'button'; del.addEventListener('click', ()=>{ deleteAtPath(path.concat(key)); rerender(); triggerChange(); }); actions.appendChild(del); }
         c.appendChild(row);
       } else {
         const prim = renderPrimitive(key, value, newVal => { setAtPath(path.concat(key), newVal); triggerChange(); }); const row = makeRow(label, prim, opts.allowAddRemove ? actions : null);
-        if (opts.allowAddRemove){ const del = document.createElement('button'); del.textContent = 'Remove'; del.type = 'button'; del.addEventListener('click', ()=>{ deleteAtPath(path.concat(key)); rerender(); triggerChange(); }); actions.appendChild(del); }
+                  if (opts.allowAddRemove){ const del = document.createElement('button'); del.className = 'btn btn-danger btn-sm'; del.textContent = 'Remove'; del.type = 'button'; del.addEventListener('click', ()=>{ arr.splice(idx,1); rerender(); triggerChange(); }); actions.appendChild(del); }
         c.appendChild(row);
       }
     });
-    if (opts.allowAddRemove){ const footer = document.createElement('div'); footer.style.marginTop = '6px'; const k = document.createElement('input'); k.placeholder = 'new key'; const v = document.createElement('input'); v.placeholder = 'value'; const b = document.createElement('button'); b.type = 'button'; b.textContent = 'Add key'; b.addEventListener('click', ()=>{ const keyName = k.value && k.value.trim(); if (!keyName){ alert('Enter a key name'); return; } if (Object.prototype.hasOwnProperty.call(obj, keyName)){ alert('Key exists'); return; } obj[keyName] = v.value; k.value = ''; v.value = ''; rerender(); triggerChange(); }); footer.appendChild(k); footer.appendChild(v); footer.appendChild(b); c.appendChild(footer); }
+    if (opts.allowAddRemove){ const footer = document.createElement('div'); footer.style.marginTop = '6px'; const k = document.createElement('input'); k.className = 'form-control'; k.placeholder = 'new key'; const v = document.createElement('input'); v.className = 'form-control'; v.placeholder = 'value'; const b = document.createElement('button'); b.className = 'btn btn-secondary btn-sm'; b.type = 'button'; b.textContent = 'Add key'; b.addEventListener('click', ()=>{ const keyName = k.value && k.value.trim(); if (!keyName){ alert('Enter a key name'); return; } if (Object.prototype.hasOwnProperty.call(obj, keyName)){ alert('Key exists'); return; } obj[keyName] = v.value; k.value = ''; v.value = ''; rerender(); triggerChange(); }); footer.appendChild(k); footer.appendChild(v); footer.appendChild(b); c.appendChild(footer); }
     return c;
   }
 
-  function renderArray(arr, path = []){ const container = document.createElement('div'); container.style.display = 'flex'; container.style.flexDirection = 'column'; container.style.gap = '6px'; arr.forEach((item, idx)=>{ const idxLabel = document.createElement('label'); idxLabel.textContent = `[${idx}]`; if (isObject(item)){ const child = renderObject(item, path.concat(idx)); const actions = document.createElement('div'); if (opts.allowAddRemove){ const del = document.createElement('button'); del.textContent = 'Remove'; del.type = 'button'; del.addEventListener('click', ()=>{ arr.splice(idx,1); rerender(); triggerChange(); }); actions.appendChild(del); } container.appendChild(makeRow(idxLabel, child, actions)); } else if (Array.isArray(item)){ const nested = renderArray(item, path.concat(idx)); container.appendChild(makeRow(idxLabel, nested, null)); } else { const prim = renderPrimitive(idx, item, newVal => { arr[idx] = newVal; triggerChange(); }); const actions = document.createElement('div'); if (opts.allowAddRemove){ const del = document.createElement('button'); del.textContent = 'Remove'; del.type = 'button'; del.addEventListener('click', ()=>{ arr.splice(idx,1); rerender(); triggerChange(); }); actions.appendChild(del); } container.appendChild(makeRow(idxLabel, prim, actions)); } }); return container; }
+  function renderArray(arr, path = []){ const container = document.createElement('div'); container.style.display = 'flex'; container.style.flexDirection = 'column'; container.style.gap = '6px'; arr.forEach((item, idx)=>{ const idxLabel = document.createElement('label'); idxLabel.textContent = `[${idx}]`; if (isObject(item)){ const child = renderObject(item, path.concat(idx)); const actions = document.createElement('div'); if (opts.allowAddRemove){ const del = document.createElement('button'); del.className = 'btn btn-danger btn-sm'; del.textContent = 'Remove'; del.type = 'button'; del.addEventListener('click', ()=>{ arr.splice(idx,1); rerender(); triggerChange(); }); actions.appendChild(del); } container.appendChild(makeRow(idxLabel, child, actions)); } else if (Array.isArray(item)){ const nested = renderArray(item, path.concat(idx)); container.appendChild(makeRow(idxLabel, nested, null)); } else { const prim = renderPrimitive(idx, item, newVal => { arr[idx] = newVal; triggerChange(); }); const actions = document.createElement('div'); if (opts.allowAddRemove){ const del = document.createElement('button'); del.className = 'btn btn-danger btn-sm'; del.textContent = 'Remove'; del.type = 'button'; del.addEventListener('click', ()=>{ arr.splice(idx,1); rerender(); triggerChange(); }); actions.appendChild(del); } container.appendChild(makeRow(idxLabel, prim, actions)); } }); return container; }
 
   function setAtPath(path, value){ let cur = localState; for (let i=0;i<path.length-1;i++) cur = cur[path[i]]; cur[path[path.length-1]] = value; }
   function deleteAtPath(path){ let cur = localState; for (let i=0;i<path.length-1;i++) cur = cur[path[i]]; const last = path[path.length-1]; if (Array.isArray(cur)) cur.splice(last,1); else delete cur[last]; }
@@ -190,8 +190,8 @@ function applyPreset(name){
     state.l22SystemQualitySetting.frameRateLimit = -1;
   }
   saveState(); if (editorHandle) editorHandle.setValue(state);
-  // reflect active preset chip
-  const chips = document.querySelectorAll('#preset-chips .chip'); chips.forEach(c=> c.classList.toggle('active', c.dataset.preset===name));
+  // reflect active preset chip using unified chip system
+  const chips = document.querySelectorAll('#preset-chips .chip'); chips.forEach(c=> c.classList.toggle('chip-active', c.dataset.preset===name));
   animatePreview();
 }
 
@@ -202,9 +202,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const container = document.getElementById('editor');
   editorHandle = createJsonEditor(container, state, { onChange: v => { state = v; saveState(); } });
 
-  // create preset chips for quick selection
+  // create preset chips for quick selection using unified chip system
   const presetChips = document.getElementById('preset-chips');
-  if (presetChips){ ['low','medium','high','custom'].forEach(p=>{ const el = document.createElement('div'); el.className='chip'; el.textContent = p.toUpperCase(); el.dataset.preset = p; el.addEventListener('click', ()=>{ if (p==='custom'){ alert('Custom preserves current settings'); return; } applyPreset(p); }); presetChips.appendChild(el); }); }
+  if (presetChips){ ['low','medium','high','custom'].forEach(p=>{ const el = document.createElement('div'); el.className='chip chip-clickable'; el.textContent = p.toUpperCase(); el.dataset.preset = p; el.addEventListener('click', ()=>{ if (p==='custom'){ alert('Custom preserves current settings'); return; } applyPreset(p); }); presetChips.appendChild(el); }); }
 
   $('#btn-reset').addEventListener('click', ()=>{ if(confirm('Reset to default?')) resetToDefault(); });
   $('#btn-download').addEventListener('click', ()=>{ downloadJSON(); });

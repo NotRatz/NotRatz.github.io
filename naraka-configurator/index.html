@@ -6,29 +6,39 @@
     <title>Naraka Settings Configurator</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body class="naraka-bg">
-    <header class="site-header">
-      <img src="/assets/strive-logo.png" alt="Strive" />
-      <h1>Naraka Bladepoint · Settings Configurator</h1>
-      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-        <a class="toolbar cta" href="/index.html">Home</a>
-        <a class="toolbar" href="/ScrimPrep/">ScrimPrep</a>
-        <a class="toolbar" href="https://notratz.github.io/NarakaTweaks" target="_blank" rel="noopener">NarakaTweaks</a>
+  <body class="naraka-bg bg-base-900 text-white min-h-screen">
+    <!-- Unified Navigation -->
+    <nav class="site-nav">
+      <div class="site-nav-content">
+        <a href="../" class="site-nav-logo">
+          <img src="/assets/strive-logo.png" alt="Strive" />
+          Team Strive
+        </a>
+        <div class="site-nav-links">
+          <a href="../" class="site-nav-link">Home</a>
+          <a href="https://notratz.github.io/NarakaTweaks" target="_blank" class="site-nav-link">NarakaTweaks</a>
+          <a href="../ScrimPrep/" class="site-nav-link">ScrimPrep</a>
+          <a href="/naraka-configurator/" class="site-nav-link active">Configurator</a>
+        </div>
       </div>
-      <p class="muted">Edit settings and export <code>QualitySettingsData.json</code> — no login required.</p>
+    </nav>
+    
+    <header class="text-center py-6">
+      <h1 class="text-2xl font-bold text-white">Naraka Bladepoint · Settings Configurator</h1>
+      <p class="text-sm mt-2" style="color: var(--site-muted)">Edit settings and export <code>QualitySettingsData.json</code> — no login required.</p>
     </header>
 
     <main class="layout">
-      <section class="panel" id="editor-panel">
+      <section class="panel surface surface-elevated" id="editor-panel">
         <div class="toolbar">
           <div style="display:flex;gap:8px;align-items:center">
-            <button id="btn-reset">Reset</button>
-            <button id="btn-load-file">Load…</button>
+            <button id="btn-reset" class="btn btn-ghost btn-sm">Reset</button>
+            <button id="btn-load-file" class="btn btn-secondary btn-sm">Load…</button>
             <input id="file-input" type="file" accept="application/json" style="display:none" />
           </div>
           <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-            <button id="btn-copy">Copy</button>
-            <button id="btn-download" class="cta">Download</button>
+            <button id="btn-copy" class="btn btn-secondary btn-sm">Copy</button>
+            <button id="btn-download" class="btn btn-primary btn-sm">Download</button>
           </div>
         </div>
         <div class="presets">
@@ -39,12 +49,12 @@
         <div id="editor"></div>
       </section>
 
-      <aside class="panel" id="preview-panel">
+      <aside class="panel surface surface-elevated" id="preview-panel">
         <h2>Preview</h2>
         <pre id="json-preview" class="preview"></pre>
         <div class="presets">
           <label>Presets:</label>
-          <select id="preset-select">
+          <select id="preset-select" class="form-control" style="width: auto; margin-top: 8px;">
             <option value="">-- choose preset --</option>
             <option value="low">Low</option>
             <option value="medium">Medium</option>

@@ -146,14 +146,16 @@ function RoundCard({ roundIndex, config, character, onSelectCharacter, isComplet
             <select
               value={config.map}
               onChange={(e) => onConfigChange(roundIndex, { map: e.target.value })}
-              className="bg-gray-800 text-white rounded px-2 py-1"
+              className="form-control"
+              style={{ width: 'auto', minWidth: '120px' }}
             >
               {MAPS.map(m => <option key={m.name} value={m.name}>{m.name}</option>)}
             </select>
             <select
               value={config.time}
               onChange={(e) => onConfigChange(roundIndex, { time: e.target.value })}
-              className="bg-gray-800 text-white rounded px-2 py-1"
+              className="form-control"
+              style={{ width: 'auto', minWidth: '100px' }}
             >
               {TIME_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
             </select>
@@ -192,7 +194,8 @@ function RoundCard({ roundIndex, config, character, onSelectCharacter, isComplet
         ) : (
           <button
             onClick={onSelectCharacter}
-            className="w-full p-4 border-2 border-dashed border-gray-600 rounded-xl text-gray-400 hover:border-yellow-500 hover:text-yellow-400 transition-colors"
+            className="btn btn-ghost w-full"
+            style={{ borderStyle: 'dashed' }}
           >
             + Select Character
           </button>
@@ -442,32 +445,32 @@ function ImmortalWarConfigurator() {
           <div className="flex gap-3 items-center">
             <div className="flex items-center gap-3">
               <label className="text-sm text-gray-300">Map:</label>
-              <select id="global-map-select" className="bg-gray-800 text-white rounded px-2 py-1">
+              <select id="global-map-select" className="form-control" style={{ width: 'auto', minWidth: '120px' }}>
                 {MAPS.map(m => <option key={m.name} value={m.name}>{m.name}</option>)}
               </select>
-              <label className="text-sm text-gray-300">Time:</label>
-              <select id="global-time-select" className="bg-gray-800 text-white rounded px-2 py-1">
+              <label className="text-sm" style={{ color: 'var(--site-muted)' }}>Time:</label>
+              <select id="global-time-select" className="form-control" style={{ width: 'auto', minWidth: '100px' }}>
                 {TIME_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
             <button
               onClick={handleReset}
               disabled={completedRounds === 0}
-              className="px-4 py-2 bg-red-500/20 text-red-300 border border-red-500/50 rounded-lg hover:bg-red-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn btn-danger btn-sm"
             >
               Reset All
             </button>
             <button
               onClick={handleExport}
               disabled={!isComplete}
-              className="px-4 py-2 bg-green-500/20 text-green-300 border border-green-500/50 rounded-lg hover:bg-green-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn btn-success btn-sm"
             >
               Export JSON
             </button>
             <button
               onClick={exportPNG}
               disabled={!isComplete}
-              className="px-4 py-2 bg-yellow-400/10 text-yellow-300 border border-yellow-400/40 rounded-lg hover:bg-yellow-400/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn btn-primary btn-sm"
             >
               Export PNG
             </button>
@@ -503,7 +506,7 @@ function ImmortalWarConfigurator() {
           </p>
           <button
             onClick={handleExport}
-            className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-bold rounded-xl hover:from-yellow-400 hover:to-yellow-300 transition-all"
+            className="btn btn-primary btn-lg"
           >
             Download Strategy Plan
           </button>

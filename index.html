@@ -63,8 +63,24 @@
     <link rel="stylesheet" href="./src/styles/base.css" />
   </head>
   <body class="bg-base-900 text-white min-h-screen" data-page="landing">
+    <!-- Unified Navigation -->
+    <nav class="site-nav">
+      <div class="site-nav-content">
+        <a href="/" class="site-nav-logo">
+          <img src="/assets/strive-logo.png" alt="Strive" />
+          Team Strive
+        </a>
+        <div class="site-nav-links">
+          <a href="/" class="site-nav-link active">Home</a>
+          <a href="https://notratz.github.io/NarakaTweaks" target="_blank" class="site-nav-link">NarakaTweaks</a>
+          <a href="/ScrimPrep/" class="site-nav-link">ScrimPrep</a>
+          <a href="/naraka-configurator/" class="site-nav-link">Configurator</a>
+        </div>
+      </div>
+    </nav>
+    
     <div id="app-shell"></div>
-    <main class="relative pt-28 pb-24 overflow-hidden">
+    <main class="relative pt-8 pb-24 overflow-hidden">
       <div class="absolute inset-0 -z-10">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(120,255,255,0.08),_transparent_55%)]"></div>
         <div class="absolute -right-32 top-20 h-80 w-80 rounded-full bg-brand-pink-500/20 blur-3xl"></div>
@@ -88,22 +104,21 @@
             <div class="flex flex-wrap gap-4 items-center">
               <img src="./assets/strive-logo.png" alt="Strive logo" class="h-12 w-12 rounded-md drop-shadow-md transform transition-all duration-700 hover:scale-105 animate-fade-in" />
               <a
-                class="group rounded-2xl border border-brand-cyan-500/60 bg-brand-cyan-500/10 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-brand-cyan-200 transition hover:bg-brand-cyan-500 hover:text-base-900"
+                class="btn btn-primary btn-lg"
                 href="https://notratz.github.io/NarakaTweaks"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Launch NarakaTweaks
               </a>
-              <!-- Hide EGL Planner for now -->
               <a
-                class="group rounded-2xl border border-white/10 bg-white/5 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-slate-200 transition hover:bg-white/10 hover:text-white"
+                class="btn btn-secondary btn-lg"
                 href="./ScrimPrep/"
               >
                 ScrimPrep
               </a>
               <a
-                class="group rounded-2xl border border-brand-lime-500/60 bg-brand-lime-500/10 px-6 py-3 font-semibold uppercase tracking-[0.3em] text-brand-lime-200 transition hover:bg-brand-lime-500 hover:text-base-900"
+                class="btn btn-ghost btn-lg"
                 href="./naraka-configurator/"
               >
                 Settings Configurator
