@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styling Test - StirveTools</title>
+    <link rel="stylesheet" href="src/styles/base.css">
+    <style>
+        body { padding: 20px; font-family: system-ui; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>StirveTools Unified Styling Test</h1>
+    
+    <div class="test-section">
+        <h2>Navigation</h2>
+        <nav class="site-nav">
+            <div class="nav-brand">
+                <img src="assets/strive-logo.png" alt="StirveTools" class="nav-logo">
+                <span class="nav-title">StirveTools</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/ScrimPrep/" class="nav-link">ScrimPrep</a>
+                <a href="/naraka-tweaks/" class="nav-link">Tweaks</a>
+                <a href="/naraka-configurator/" class="nav-link">Configurator</a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="test-section">
+        <h2>Buttons - Primary & Secondary</h2>
+        <div class="test-grid">
+            <button class="btn btn-primary">Primary</button>
+            <button class="btn btn-secondary">Secondary</button>
+            <button class="btn btn-ghost">Ghost</button>
+            <button class="btn btn-danger">Danger</button>
+            <button class="btn btn-success">Success</button>
+        </div>
+        
+        <h3>Button Sizes</h3>
+        <div class="test-grid">
+            <button class="btn btn-primary btn-sm">Small Primary</button>
+            <button class="btn btn-secondary btn-sm">Small Secondary</button>
+            <button class="btn btn-danger btn-sm">Small Danger</button>
+            <button class="btn btn-primary btn-lg">Large Primary</button>
+            <button class="btn btn-secondary btn-lg">Large Secondary</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Chips</h2>
+        <div class="test-grid">
+            <div class="chip">Basic Chip</div>
+            <div class="chip chip-clickable">Clickable</div>
+            <div class="chip chip-active">Active</div>
+            <div class="chip chip-clickable chip-active">Active Clickable</div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Form Controls</h2>
+        <div style="display: flex; flex-direction: column; gap: 10px; max-width: 300px;">
+            <input type="text" class="form-control" placeholder="Text input">
+            <select class="form-control">
+                <option>Select option 1</option>
+                <option>Select option 2</option>
+            </select>
+            <textarea class="form-control" placeholder="Textarea" rows="3"></textarea>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Surfaces</h2>
+        <div class="surface" style="padding: 20px; margin: 10px 0;">
+            <h3>Basic Surface</h3>
+            <p>This is a basic surface with consistent background and borders.</p>
+        </div>
+        <div class="surface-elevated" style="padding: 20px; margin: 10px 0;">
+            <h3>Elevated Surface</h3>
+            <p>This is an elevated surface with shadow and enhanced styling.</p>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Page Links</h2>
+        <p>Test the actual pages:</p>
+        <div class="test-grid">
+            <a href="index.html" class="btn btn-primary">Landing Page</a>
+            <a href="ScrimPrep/index.html" class="btn btn-secondary">ScrimPrep</a>
+            <a href="naraka-configurator/index.html" class="btn btn-ghost">Configurator</a>
+        </div>
+    </div>
+</body>
+</html>
